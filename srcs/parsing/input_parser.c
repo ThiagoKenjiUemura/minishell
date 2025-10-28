@@ -6,9 +6,15 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:56:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/10/28 17:13:32 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/10/28 19:24:25 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+bool	parse_just_spaces(char *input)
+{
+	int	i;
+	
+	i = 0;
+}
