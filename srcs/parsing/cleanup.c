@@ -1,38 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/10/29 14:54:20 by tkenji-u         ###   ########.fr       */
+/*   Created: 2025/10/29 14:45:50 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/10/29 14:45:51 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-static void	minishell_loop(t_shell *data)
-{
-	while (1)
-	{
-		data->input = readline("minishel> ");
-		if (!data->input)
-		{
-			ft_printf("exit\n");
-			break ;
-		}
-		if (*data->input)
-			add_history(data->input);
-	}
-}
-int	main(int argc, char **argv, char **envp)
-{
-	t_shell	*data;
-	
-	data = ft_calloc(1, sizeof(t_shell));
-	(void)argv;
-	(void)argc;
-	(void)envp;
-	minishell_loop(data);
-}
