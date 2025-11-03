@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 14:32:55 by liferrei          #+#    #+#             */
-/*   Updated: 2025/07/27 14:57:33 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:26:24 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	s_len;
-	size_t	i;
 	size_t	max_len;
 	char	*sub_str;
 
-	i = 0;
 	s_len = ft_strlen(s);
 	if (start > s_len)
 		return (ft_strdup(""));

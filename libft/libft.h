@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:27:59 by liferrei          #+#    #+#             */
-/*   Updated: 2025/09/09 17:07:45 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:25:50 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 # define LIBFT_H
 
-# include	<unistd.h>
-# include	<stdlib.h>
-# include	<fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
 # include "ft_printf/ft_printf.h"
 
 # ifndef BUFFER_SIZE

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:48:42 by liferrei          #+#    #+#             */
-/*   Updated: 2025/07/29 15:52:27 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/03 18:27:03 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,8 @@ static char	**array_words(char const *s, int words, char c, char **array)
 char	**ft_split(char const *s, char c)
 {
 	char	**array_result;
-	size_t	i;
-	size_t	j;
 	size_t	count_words;
 
-	i = 0;
-	j = 0;
 	count_words = ft_count_words(s, c);
 	array_result = (char **)ft_calloc(count_words + 1, sizeof(char *));
 	if (!array_result)
