@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parser.c                                     :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 16:56:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/03 19:20:21 by thiagouemur      ###   ########.fr       */
+/*   Created: 2025/11/03 19:31:07 by thiagouemur       #+#    #+#             */
+/*   Updated: 2025/11/03 19:49:59 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_argc(int argc)
+void	handle_sigint(int sig_num)
 {
-	if (argc != 1)
-	{
-		printf("Minishell does not accept arguments \n");
-		return (false);
-	}
-	return (true);
+	(void)sig_num;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_redisplay();
 }

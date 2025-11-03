@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/10/28 17:58:56 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/03 19:47:30 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ typedef struct  s_shell
 	int		last_exit_status;
 }			t_shell;
 
-int	main(int argc, char **argv, char **envp);
+int		main(int argc, char **argv, char **envp);
+bool	check_argc(int argc);
+void	handle_sigint(int sig_num);
 
 #endif
