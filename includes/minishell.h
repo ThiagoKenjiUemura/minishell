@@ -6,7 +6,7 @@
 /*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/03 19:47:30 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/04 15:10:38 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,36 @@
 # include <errno.h>
 # include <sys/wait.h>
 
-typedef struct  s_shell
+typedef struct	s_shell
 {
 	char	*input;
 	char	**envp;
 	int		last_exit_status;
 }			t_shell;
+
+typedef enum e_token_types
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_DELIMITER,
+}	t_type;
+
+typedef struct s_redir
+{
+	t_type			type;
+	char			*filename_or_delimiter;
+	struct s_redir  *next;
+}	t_redir;
+
+typedef struct	s_cmd
+{
+	char			**args;
+	t_redir			*redirs;
+	struct s_cmd	*next;
+}					t_cmd;
 
 int		main(int argc, char **argv, char **envp);
 bool	check_argc(int argc);
