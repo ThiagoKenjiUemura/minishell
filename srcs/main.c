@@ -6,7 +6,7 @@
 /*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/03 19:49:43 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/05 17:40:39 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,4 @@ int	main(int argc, char **argv, char **envp)
 	minishell_loop(data);
 	return (0);
 }
+//teste
