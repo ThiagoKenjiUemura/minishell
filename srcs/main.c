@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/05 11:44:26 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:00:24 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static void	minishell_loop(t_shell *data)
 		if (!data->input)
 		{
 			ft_printf("exit\n");
-			free(data);
 			break ;
 		}
 		if (*data->input)
 			add_history(data->input);
 		free(data->input);
+		data->input = NULL; 
 	}
 }
 
@@ -40,13 +40,19 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	*data;
 	
 	(void)argv;
-	(void)envp;
 	if(!check_argc(argc))
 		return (1);
 	init_signals();
 	data = ft_calloc(1, sizeof(t_shell));
 	if (!data)
 		return (1);
+	data->envp = init_envp(envp);
+	if (!data->envp)
+	{
+		free(data);
+		return (1);
+	}
 	minishell_loop(data);
+	free_shell(data); 
 	return (0);
 }
