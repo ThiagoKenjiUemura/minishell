@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/05 11:56:16 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:34:10 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,31 @@
 
 typedef struct  s_shell
 {
-	char	*input;
-	char	**envp;
-	int		last_exit_status;
-}			t_shell;
+	char		*input;
+	char		**envp;
+	int			last_exit_status;
+	t_garbage	*garbage;
+}				t_shell;
+
+typedef struct s_garbage
+{
+    void                *ptr;
+    struct s_garbage    *next;
+}   					t_garbage;
 
 int		main(int argc, char **argv, char **envp);
 bool	check_argc(int argc);
 void	handle_sigint(int sig_num);
+
 char	**init_envp(char **envp);
 void	free_envp(char **envp);
 void	free_shell(t_shell *data);
+
+
+void	*garbage_calloc(t_shell *data, size_t size);
+char	*garbage_strdup(t_shell *data, const char *src);
+int		garbage_add(t_shell *data, void *ptr);
+void	garbage_free_all(t_shell *data);
+
 
 #endif

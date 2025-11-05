@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:43:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/05 11:56:39 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:31:56 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	free_shell(t_shell *data)
 {
 	if (!data)
 		return ;
+	gc_free_all(data);
 	if (data->envp)
 		free_envp(data->envp);
 	if (data->input)
