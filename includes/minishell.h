@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/04 15:10:38 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/05 19:49:12 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,17 @@
 
 typedef struct	s_shell
 {
-	char	*input;
-	char	**envp;
-	int		last_exit_status;
-}			t_shell;
+	char		*input;
+	char		**envp;
+	int			last_exit_status;
+	t_garbage	*garbage;
+}				t_shell;
+
+typedef struct s_garbage
+{
+    void                *ptr;
+    struct s_garbage    *next;
+}   					t_garbage;
 
 typedef enum e_token_types
 {
@@ -60,5 +67,15 @@ typedef struct	s_cmd
 int		main(int argc, char **argv, char **envp);
 bool	check_argc(int argc);
 void	handle_sigint(int sig_num);
+
+char	**init_envp(t_shell *data, char **envp);
+void	free_shell(t_shell *data);
+
+
+void	*garbage_calloc(t_shell *data, size_t size);
+char	*garbage_strdup(t_shell *data, const char *src);
+int		garbage_add(t_shell *data, void *ptr);
+void	garbage_free_all(t_shell *data);
+
 
 #endif

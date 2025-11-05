@@ -1,29 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/15 15:16:49 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/05 11:51:58 by liferrei         ###   ########.fr       */
+/*   Created: 2025/11/03 19:31:07 by thiagouemur       #+#    #+#             */
+/*   Updated: 2025/11/05 11:27:52 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+void	handle_sigint(int sig_num)
 {
-	size_t	len;
-
-	len = ft_strlen(src);
-	if (size == 0)
-		return (len);
-	while (*src && size > 1)
-	{
-		*dst++ = *src++;
-		size--;
-	}
-	*dst = '\0';
-	return (len);
+	(void)sig_num;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }

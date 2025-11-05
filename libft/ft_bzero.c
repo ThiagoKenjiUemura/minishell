@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 10:48:49 by liferrei          #+#    #+#             */
-/*   Updated: 2025/07/27 14:53:35 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 11:50:28 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,5 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	unsigned char	*ptr;
-
-	ptr = (unsigned char *)s;
-	while (n--)
-	{
-		*ptr++ = 0;
-	}
+	ft_memset(s, '\0', n);
 }

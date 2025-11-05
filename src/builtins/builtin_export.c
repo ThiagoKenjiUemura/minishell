@@ -1,21 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/03 19:31:07 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/03 19:49:59 by thiagouemur      ###   ########.fr       */
+/*   Created: 2025/11/05 12:30:09 by liferrei          #+#    #+#             */
+/*   Updated: 2025/11/05 12:30:10 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-void	handle_sigint(int sig_num)
-{
-	(void)sig_num;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}

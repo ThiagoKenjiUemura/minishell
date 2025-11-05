@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+         #
+#    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/03 19:47:50 by thiagouemur      ###   ########.fr        #
+#    Updated: 2025/11/05 12:07:48 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ LIBFT_A = $(LIBFT_DIR)/libft.a
 LDFLAGS = -L$(LIBFT_DIR)
 LDLIBS = -lft -lreadline
 
-SRCS = srcs/main.c \
-	srcs/parsing/input_parser.c \
-	srcs/signals/signals.c
+SRCS = src/main.c \
+	src/parsing/input_parser.c \
+	src/signals/signals.c \
+	src/env_init.c \
 
 OBJS = $(SRCS:.c=.o)
 
