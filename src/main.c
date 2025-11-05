@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/05 19:49:15 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 19:50:55 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,3 @@ int	main(int argc, char **argv, char **envp)
 	free_shell(data); 
 	return (0);
 }
-<<<<<<< HEAD:srcs/main.c
-//teste
-=======
->>>>>>> livia:src/main.c
