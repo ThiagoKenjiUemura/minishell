@@ -3,10 +3,11 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 14:45:50 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/04 13:52:58 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/05 19:54:15 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
