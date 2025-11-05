@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:34:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/05 14:42:54 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:25:26 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	*garbage_calloc(t_shell *data, size_t size)
 	void	*ptr;
 
 	ptr = ft_calloc(1, size);
+	if (!ptr)
 		return (NULL);
 	if (garbage_add(data, ptr))
 	{

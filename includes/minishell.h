@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/05 12:34:10 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 17:31:29 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		main(int argc, char **argv, char **envp);
 bool	check_argc(int argc);
 void	handle_sigint(int sig_num);
 
-char	**init_envp(char **envp);
+char	**init_envp(t_shell *data, char **envp);
 void	free_envp(char **envp);
 void	free_shell(t_shell *data);
 
