@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:34:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/05 12:37:50 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:38:46 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	garbage_add(t_shell *data, void *ptr)
 	new_node = 
 }
 
-void	*gc_malloc(t_shell *data, size_t size)
+void	*garbage_calloc(t_shell *data, size_t size)
 {
 	void	*ptr;
 
 	ptr = calloc(1, size);
 		return (NULL);
-	if (gc_add(data, ptr))
+	if (garbage_add(data, ptr))
 	{
 		free(ptr);
 		return (NULL);
