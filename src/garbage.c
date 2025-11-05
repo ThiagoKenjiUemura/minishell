@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:34:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/05 12:38:46 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 12:40:39 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,20 @@ int	garbage_add(t_shell *data, void *ptr)
 
 	if (!data || !ptr)
 		return (1);
-	new_node = 
+	new_node = ft_calloc(1, sizeof(t_garbage));
+	if (!new_node)
+		return (1);
+	new_node->ptr = ptr;
+	new_node->next = data->garbage;
+	data->garbage = new_node;
+	return (0);
 }
 
 void	*garbage_calloc(t_shell *data, size_t size)
 {
 	void	*ptr;
 
-	ptr = calloc(1, size);
+	ptr = ft_calloc(1, size);
 		return (NULL);
 	if (garbage_add(data, ptr))
 	{
