@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 17:14:00 by liferrei          #+#    #+#             */
-/*   Updated: 2025/07/27 14:55:03 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 11:51:05 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,10 @@
 
 void	*ft_memset(void *s, int c, size_t n)
 {
-	unsigned char	*ptr;
+	unsigned char	*p;
 
-	ptr = (unsigned char *)s;
+	p = (unsigned char *)s;
 	while (n--)
-	{
-		*ptr = (unsigned char)c;
-		ptr++;
-	}
+		*p++ = (unsigned char)c;
 	return (s);
 }

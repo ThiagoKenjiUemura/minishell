@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 15:16:49 by liferrei          #+#    #+#             */
-/*   Updated: 2025/07/29 10:56:54 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/05 11:51:58 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,16 @@
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	size_t	src_len;
 	size_t	len;
-	size_t	i;
 
-	i = 0;
-	src_len = 0;
-	src_len = ft_strlen(src);
-	len = src_len;
+	len = ft_strlen(src);
 	if (size == 0)
-		return (src_len);
-	if (src_len >= size)
-		len = size - 1;
-	while (i < len)
+		return (len);
+	while (*src && size > 1)
 	{
-		dst[i] = src[i];
-		i++;
+		*dst++ = *src++;
+		size--;
 	}
-	dst[len] = '\0';
-	return (src_len);
+	*dst = '\0';
+	return (len);
 }
