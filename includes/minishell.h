@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/05 19:53:18 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/06 15:27:09 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,30 @@ typedef struct s_shell
 	int			last_exit_status;
 	t_garbage	*garbage;
 }				t_shell;
+
+typedef enum e_token_types
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_DELIMITER,
+}   t_type;
+
+typedef struct s_redir
+{
+	t_type			type;
+	char			*filename_or_delimiter;
+	struct s_redir	*next;
+}					t_redir;
+
+typedef struct  s_cmd
+{
+	char			**args;
+	t_redir			*redirs;
+	struct s_cmd	*next;
+}					t_cmd;
 
 typedef struct s_garbage
 {
