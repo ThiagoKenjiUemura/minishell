@@ -6,7 +6,7 @@
 #    By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/10 12:47:07 by tkenji-u         ###   ########.fr        #
+#    Updated: 2025/11/10 19:48:32 by tkenji-u         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,9 @@ SRCS = src/main.c \
 	src/parsing/input_parser.c \
 	src/parsing/count_token.c \
 	src/parsing/lexer.c \
+	src/parsing/token_utils.c \
 	src/signals/signals.c \
-	src/env_init.c \
+	src/envp/env_init.c \
 
 OBJS = $(SRCS:.c=.o)
 
