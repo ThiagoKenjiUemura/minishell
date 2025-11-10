@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/06 15:27:09 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/10 12:42:05 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ typedef struct s_shell
 	int			last_exit_status;
 	t_garbage	*garbage;
 }				t_shell;
+
+typedef struct s_token
+{
+	char			*value;
+	t_type			type;
+	struct s_token	*next;
+}	t_token;
 
 typedef enum e_token_types
 {
@@ -73,5 +80,7 @@ void	*garbage_calloc(t_shell *data, size_t size);
 char	*garbage_strdup(t_shell *data, const char *src);
 int		garbage_add(t_shell *data, void *ptr);
 void	garbage_free_all(t_shell *data);
+int		count_tokens(char *input);
+int		skip_spaces(char *input, int i);
 
 #endif
