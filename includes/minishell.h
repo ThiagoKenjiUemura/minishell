@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/10 12:42:05 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:47:30 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@
 # include <errno.h>
 # include <sys/wait.h>
 
+typedef enum e_token_types
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_DELIMITER,
+}   t_type;
+
+typedef struct s_garbage
+{
+	void				*ptr;
+	struct s_garbage	*next;
+}						t_garbage;
+
 typedef struct s_shell
 {
 	char		*input;
@@ -41,16 +57,6 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef enum e_token_types
-{
-	WORD,
-	PIPE,
-	REDIR_IN,
-	REDIR_OUT,
-	REDIR_APPEND,
-	REDIR_DELIMITER,
-}   t_type;
-
 typedef struct s_redir
 {
 	t_type			type;
@@ -65,12 +71,6 @@ typedef struct  s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-typedef struct s_garbage
-{
-	void				*ptr;
-	struct s_garbage	*next;
-}						t_garbage;
-
 int		main(int argc, char **argv, char **envp);
 bool	check_argc(int argc);
 void	handle_sigint(int sig_num);
@@ -82,5 +82,12 @@ int		garbage_add(t_shell *data, void *ptr);
 void	garbage_free_all(t_shell *data);
 int		count_tokens(char *input);
 int		skip_spaces(char *input, int i);
+t_token	*create_token(t_shell *data, char *value, t_type type);
+t_type	get_token_type(char *input, int i);
+void	token_add_back(t_token **head, t_token *new_node);
+int		get_token_len(char *input, int i);
+int		get_operator_len(char *input, int i);
+int		get_quote_len(char *input, int i);
+int		get_word_len(char *input, int i);
 
 #endif
