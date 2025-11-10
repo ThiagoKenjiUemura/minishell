@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
+#    By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/05 12:07:48 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/10 12:47:07 by tkenji-u         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,8 @@ LDLIBS = -lft -lreadline
 
 SRCS = src/main.c \
 	src/parsing/input_parser.c \
+	src/parsing/count_token.c \
+	src/parsing/lexer.c \
 	src/signals/signals.c \
 	src/env_init.c \
 
