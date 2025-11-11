@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:54:03 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/10 19:47:53 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/11 19:06:03 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,17 @@ t_type	get_token_type(char *input, int i)
 		return (WORD);
 	return (WORD);
 }
+
 void	token_add_back(t_token **head, t_token *new_node)
 {
-	t_token *current;
-	
+	t_token	*current;
+
 	current = *head;
 	if (!head || !new_node)
 		return ;
 	if (*head == NULL)
 		*head = new_node;
-	else 
+	else
 	{
 		while (current->next != NULL)
 			current = current->next;
@@ -65,7 +66,7 @@ int	get_token_len(char *input, int i)
 {
 	if (input[i] == '\'' || input[i] == '\"')
 		return (get_quote_len(input, i));
-	else if (input[i] == '>'|| input[i] == '<' || input[i] == '|')
+	else if (input[i] == '>' || input[i] == '<' || input[i] == '|')
 		return (get_operator_len(input, i));
 	else
 		return (get_word_len(input, i));

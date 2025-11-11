@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/11 16:59:02 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/11 19:01:58 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	minishell_loop(t_shell *data)
 {
 	t_token	*token_list;
-	
+
 	while (1)
 	{
 		data->input = readline("minishell$ ");
@@ -32,13 +32,12 @@ static void	minishell_loop(t_shell *data)
 			if (garbage_add(data, data->input))
 				break ;
 			token_list = lexer(data, data->input);
-			if(token_list == NULL)
+			if (token_list == NULL)
 			{
 				garbage_free_all(data);
 				continue ;
 			}
 		}
-		garbage_free_all(data);
 	}
 }
 
