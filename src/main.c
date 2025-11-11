@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/05 19:55:40 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:08:40 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	minishell_loop(t_shell *data)
 {
+	t_token	*token_list;
+	
 	while (1)
 	{
 		data->input = readline("minishell$ ");
@@ -23,13 +25,18 @@ static void	minishell_loop(t_shell *data)
 			break ;
 		}
 		if (*data->input)
-			add_history(data->input);
-		if (garbage_add(data, data->input))
 		{
-			free(data->input);
-			break ;
+			add_history(data->input);
+			if (garbage_add(data, data->input))
+				break ;
+			token_list = lexer(data, data->input);
+			if(token_list == NULL)
+			{
+				garbage_free_all(data);
+				continue ;
+			}
 		}
-		data->input = NULL;
+		garbage_free_all(data);
 	}
 }
 

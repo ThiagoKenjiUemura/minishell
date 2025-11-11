@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/10 19:47:30 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/11 14:56:06 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ int		get_token_len(char *input, int i);
 int		get_operator_len(char *input, int i);
 int		get_quote_len(char *input, int i);
 int		get_word_len(char *input, int i);
+t_token	*lexer(t_shell *data, char *input);
 
 #endif
