@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/11 16:34:42 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/11 19:06:57 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef enum e_token_types
 	REDIR_OUT,
 	REDIR_APPEND,
 	REDIR_DELIMITER,
-}   t_type;
+}	t_type;
 
 typedef struct s_garbage
 {
@@ -64,7 +64,7 @@ typedef struct s_redir
 	struct s_redir	*next;
 }					t_redir;
 
-typedef struct  s_cmd
+typedef struct s_cmd
 {
 	char			**args;
 	t_redir			*redirs;
