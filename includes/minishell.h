@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/05 19:53:18 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:47:30 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@
 # include <errno.h>
 # include <sys/wait.h>
 
+typedef enum e_token_types
+{
+	WORD,
+	PIPE,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	REDIR_DELIMITER,
+}   t_type;
+
+typedef struct s_garbage
+{
+	void				*ptr;
+	struct s_garbage	*next;
+}						t_garbage;
+
 typedef struct s_shell
 {
 	char		*input;
@@ -34,11 +50,26 @@ typedef struct s_shell
 	t_garbage	*garbage;
 }				t_shell;
 
-typedef struct s_garbage
+typedef struct s_token
 {
-	void				*ptr;
-	struct s_garbage	*next;
-}						t_garbage;
+	char			*value;
+	t_type			type;
+	struct s_token	*next;
+}	t_token;
+
+typedef struct s_redir
+{
+	t_type			type;
+	char			*filename_or_delimiter;
+	struct s_redir	*next;
+}					t_redir;
+
+typedef struct  s_cmd
+{
+	char			**args;
+	t_redir			*redirs;
+	struct s_cmd	*next;
+}					t_cmd;
 
 int		main(int argc, char **argv, char **envp);
 bool	check_argc(int argc);
@@ -49,5 +80,14 @@ void	*garbage_calloc(t_shell *data, size_t size);
 char	*garbage_strdup(t_shell *data, const char *src);
 int		garbage_add(t_shell *data, void *ptr);
 void	garbage_free_all(t_shell *data);
+int		count_tokens(char *input);
+int		skip_spaces(char *input, int i);
+t_token	*create_token(t_shell *data, char *value, t_type type);
+t_type	get_token_type(char *input, int i);
+void	token_add_back(t_token **head, t_token *new_node);
+int		get_token_len(char *input, int i);
+int		get_operator_len(char *input, int i);
+int		get_quote_len(char *input, int i);
+int		get_word_len(char *input, int i);
 
 #endif
