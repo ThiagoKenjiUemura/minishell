@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/11 16:08:40 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/11 16:59:02 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	minishell_loop(t_shell *data)
 		if (*data->input)
 		{
 			add_history(data->input);
+			if (!quote_parser(data->input))
+				continue ;
 			if (garbage_add(data, data->input))
 				break ;
 			token_list = lexer(data, data->input);
