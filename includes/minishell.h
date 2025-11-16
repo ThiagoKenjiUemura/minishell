@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/10 19:47:30 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/16 16:18:35 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_shell
 	char		**envp;
 	int			last_exit_status;
 	t_garbage	*garbage;
+	t_cmd		*cmds;
 }				t_shell;
 
 typedef struct s_token
@@ -66,8 +67,13 @@ typedef struct s_redir
 
 typedef struct  s_cmd
 {
+	char			*cmd;
 	char			**args;
 	t_redir			*redirs;
+	int				is_builtin;
+	int				input_fd;
+	int				output_fd;
+	int				index;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -89,5 +95,11 @@ int		get_token_len(char *input, int i);
 int		get_operator_len(char *input, int i);
 int		get_quote_len(char *input, int i);
 int		get_word_len(char *input, int i);
+
+// Builtins
+int		is_builtin(char *cmd);
+
+// Utils
+int		ft_strcmp(const char *s1, const char *s2);
 
 #endif
