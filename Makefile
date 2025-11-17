@@ -6,7 +6,7 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/17 17:02:15 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/17 17:15:19 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,6 @@ SRCS = src/main.c \
 	src/envp/env_init.c \
 	src/builtins/builtin.c \
 	src/builtins/builtin_exit.c \
-	src/builtins/builtin_cd.c \
-	src/builtins/builtin_env.c \
-	src/builtins/builtin_echo.c \
 	src/builtins/fake_parse.c \
 	src/garbage.c \
 

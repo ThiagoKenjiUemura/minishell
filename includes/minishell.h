@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/17 17:10:06 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:14:25 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ bool	check_argc(int argc);
 void	handle_sigint(int sig_num);
 char	**init_envp(t_shell *data, char **envp);
 void	free_shell(t_shell *data);
+//Garbage
 void	*garbage_calloc(t_shell *data, size_t size);
-char	*garbage_strdup(t_shell *data, const char *src);
 int		garbage_add(t_shell *data, void *ptr);
+char	*garbage_strdup(t_shell *data, const char *src);
 void	garbage_free_all(t_shell *data);
 int		count_tokens(char *input);
 int		skip_spaces(char *input, int i);
@@ -105,5 +106,4 @@ int		ft_cd(char **args, t_shell *data);
 int		ft_env(char **envp);
 int		ft_echo(char **args);
 int		ft_pwd(void);
-
 #endif
