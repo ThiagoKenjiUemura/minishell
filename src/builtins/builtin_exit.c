@@ -6,8 +6,15 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:07 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/05 19:54:36 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/16 17:43:45 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int ft_exit(t_shell *shell, t_cmd *cmd)
+{
+	(void)cmd;
+	shell->running = 0;
+	ruturn (0);
+}
