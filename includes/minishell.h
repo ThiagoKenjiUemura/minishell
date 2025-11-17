@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/17 16:35:42 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:38:34 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args, t_shell *data);
 int		ft_env(char **envp);
+int		ft_echo(char **args);
 
 // Utils
 int		ft_strcmp(const char *s1, const char *s2);
