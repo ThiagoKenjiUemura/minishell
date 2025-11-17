@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/17 16:08:48 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:13:19 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!data)
 		return (1);
 	data->garbage = NULL;
+	data->running = 1;
 	data->envp = init_envp(data, envp);
 	if (!data->envp)
 	{

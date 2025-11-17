@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/16 17:42:34 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:14:02 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_shell
 	t_cmd		*cmds;
 	int			cmd_count;
 	int			**pipes;
-	int			running //main loop, while (1)
+	int			running
 	
 }				t_shell;
 
