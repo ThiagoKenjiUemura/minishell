@@ -6,13 +6,13 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:15:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/17 16:35:30 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:52:34 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_env(char **envp)
+int	ft_env(char **envp)
 {
 	int	i;
 

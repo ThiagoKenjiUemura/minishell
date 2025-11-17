@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/17 16:38:34 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:48:50 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef enum e_token_types
 	REDIR_OUT,
 	REDIR_APPEND,
 	REDIR_DELIMITER,
-}   t_type;
+}	t_type;
 
 typedef struct s_garbage
 {
@@ -56,7 +56,7 @@ typedef struct s_redir
 	struct s_redir	*next;
 }					t_redir;
 
-typedef struct  s_cmd
+typedef struct s_cmd
 {
 	char			*cmd;
 	char			**args;
@@ -76,7 +76,6 @@ typedef struct s_shell
 	t_garbage	*garbage;
 	t_cmd		*name_cmd;
 	int			running;
-	
 }				t_shell;
 
 int		main(int argc, char **argv, char **envp);
@@ -97,15 +96,11 @@ int		get_token_len(char *input, int i);
 int		get_operator_len(char *input, int i);
 int		get_quote_len(char *input, int i);
 int		get_word_len(char *input, int i);
-
 // Builtins
-int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args, t_shell *data);
 int		ft_env(char **envp);
 int		ft_echo(char **args);
-
-// Utils
-int		ft_strcmp(const char *s1, const char *s2);
+int		ft_pwd(void);
 
 #endif

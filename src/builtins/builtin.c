@@ -6,13 +6,13 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 16:09:35 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/17 16:30:06 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:46:51 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(char *cmd)
+static int	is_builtin(char *cmd)
 {
 	if (!cmd)
 		return (0);
@@ -32,17 +32,7 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
-
-int	execute(t_shell *data)
-{
-	if(!data->name_cmd)
-		return (0);
-	if (data->name_cmd->is_builtin)
-		return(execute_builtin(data));
-	return (0);
-}
-
-int	execute_builtin(t_shell *data)
+static int	execute_builtin(t_shell *data)
 {
 	char	*cmd;
 
@@ -57,7 +47,16 @@ int	execute_builtin(t_shell *data)
 		return (ft_cd(data->name_cmd->args, data));
 	return (0);
 }
-// Excluir depois que integrar ao parse do thiago 
+static int	execute(t_shell *data)
+{
+	if(!data->name_cmd)
+		return (0);
+	if (data->name_cmd->is_builtin)
+		return(execute_builtin(data));
+	return (0);
+}
+
+
 void fake_parser(t_shell *data)
 {
     t_cmd *cmd;
