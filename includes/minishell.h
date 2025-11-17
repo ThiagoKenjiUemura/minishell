@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/17 16:14:02 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:33:34 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,6 @@ typedef struct s_garbage
 	struct s_garbage	*next;
 }						t_garbage;
 
-typedef struct s_shell
-{
-	char		*input;
-	char		**envp;
-	int			last_exit_status;
-	t_garbage	*garbage;
-	t_cmd		*cmds;
-	int			cmd_count;
-	int			**pipes;
-	int			running
-	
-}				t_shell;
-
 typedef struct s_token
 {
 	char			*value;
@@ -81,6 +68,17 @@ typedef struct  s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
+typedef struct s_shell
+{
+	char		*input;
+	char		**envp;
+	int			last_exit_status;
+	t_garbage	*garbage;
+	t_cmd		*name_cmd;
+	int			running;
+	
+}				t_shell;
+
 int		main(int argc, char **argv, char **envp);
 bool	check_argc(int argc);
 void	handle_sigint(int sig_num);
@@ -102,6 +100,8 @@ int		get_word_len(char *input, int i);
 
 // Builtins
 int		is_builtin(char *cmd);
+int		ft_exit(t_shell *shell, t_cmd *cmd);
+int		ft_cd(char **args, t_shell *data);
 
 // Utils
 int		ft_strcmp(const char *s1, const char *s2);

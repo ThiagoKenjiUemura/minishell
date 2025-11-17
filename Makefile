@@ -6,7 +6,7 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/11 13:38:45 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/17 16:33:53 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,9 @@ SRCS = src/main.c \
 	src/parsing/token_utils.c \
 	src/signals/signals.c \
 	src/envp/env_init.c \
+	src/builtins/builtin.c \
+	src/builtins/builtin_exit.c \
+	src/builtins/builtin_cd.c \
 	src/garbage.c \
 
 OBJS = $(SRCS:.c=.o)
