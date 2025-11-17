@@ -6,13 +6,13 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/17 16:13:19 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:08:29 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	minishell_loop(t_shell *data)
+static	void minishell_loop(t_shell *data)
 {
 	while (data->running)
 	{
@@ -23,20 +23,21 @@ static void	minishell_loop(t_shell *data)
 			data->running = 0;
 			break;
 		}
-
 		if (*data->input)
 			add_history(data->input);
-
 		if (garbage_add(data, data->input))
 		{
 			free(data->input);
 			data->running = 0;
 			break;
 		}
+		fake_parser(data);
+		execute(data);
+		garbage_free_all(data);
 	}
 }
 
-static void	init_signals(void)
+static	void init_signals(void)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
@@ -55,6 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	data->garbage = NULL;
 	data->running = 1;
+	data->name_cmd = NULL;
 	data->envp = init_envp(data, envp);
 	if (!data->envp)
 	{

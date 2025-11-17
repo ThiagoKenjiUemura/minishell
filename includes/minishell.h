@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/17 16:48:50 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/17 17:10:06 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ int		get_token_len(char *input, int i);
 int		get_operator_len(char *input, int i);
 int		get_quote_len(char *input, int i);
 int		get_word_len(char *input, int i);
+void	fake_parser(t_shell *data);
 // Builtins
+int		execute(t_shell *data);
+int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args, t_shell *data);
 int		ft_env(char **envp);
