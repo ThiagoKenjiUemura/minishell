@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:15:41 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/17 16:53:25 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/18 15:47:04 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 int	ft_pwd(void)
 {
-	char	buf[4096];
+	char	*cwd;
 
-	if (getcwd(buf, sizeof(buf)))
-	{
-		ft_printf("%s\n", buf);
-		return (0);
-	}
-	perror("pwd");
-	return (1);
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (1);
+	ft_printf("%s\n", cwd);
+	free(cwd);
+	return (0);
 }
