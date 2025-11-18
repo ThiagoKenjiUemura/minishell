@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:39:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/10 19:46:31 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/11 19:03:08 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	process_one_token(t_shell *data, t_token **head, char *input, int i)
 	}
 	new_node = create_token(data, value, type);
 	if (!new_node)
- 		return (-1);
+		return (-1);
 	token_add_back(head, new_node);
 	return (i + len);
 }
@@ -102,4 +102,3 @@ t_token	*lexer(t_shell *data, char *input)
 	}
 	return (head);
 }
-

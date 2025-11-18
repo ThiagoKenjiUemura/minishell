@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:54:03 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/17 16:51:27 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/18 12:27:31 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_type	get_token_type(char *input, int i)
 		return (WORD);
 	return (WORD);
 }
+
 void	token_add_back(t_token **head, t_token *new_node)
 {
 	t_token	*current;
