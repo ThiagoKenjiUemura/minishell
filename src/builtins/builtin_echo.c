@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:14:57 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/17 16:53:36 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:01:08 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_echo(char **args)
 
 	i = 1;
 	newline = 1;
+	if (!args)
+		return (0);
 	if (args[1] && ft_strcmp(args[1], "-n") == 0)
 	{
 		newline = 0;
