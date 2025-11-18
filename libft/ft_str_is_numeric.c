@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_str_is_numeric.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/17 12:41:13 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/17 18:23:53 by liferrei         ###   ########.fr       */
+/*   Created: 2025/11/17 17:45:44 by liferrei          #+#    #+#             */
+/*   Updated: 2025/11/17 20:40:02 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned char	ft_atoi(const char *nptr)
+int	ft_str_is_numeric(const char *s)
 {
-	int		convert;
-	size_t	i;
-	int		sign;
+	int i = 0;
 
-	sign = 1;
-	i = 0;
-	convert = 0;
-	while (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13))
+	if (!s || *s == '\0')
+		return (0);
+	if (s[i] == '-' || s[i] == '+')
 		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
+	if (s[i] == '\0')
+		return (0);
+	while (s[i] != '\0')
 	{
-		if (nptr[i] == '-')
-			sign = -1;
+		if (!(s[i] >= '0' && s[i] <= '9'))
+		{
+			return (0);
+		}
 		i++;
 	}
-	while ((nptr[i] >= '0') && (nptr[i] <= '9'))
-	{
-		convert = convert * 10 + (nptr[i] - '0');
-		i++;
-	}
-	return ((unsigned char)(convert * sign));
+	return 1;
 }
