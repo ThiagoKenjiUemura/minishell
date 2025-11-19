@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/18 15:44:25 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/19 14:24:13 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ bool	quote_parser(char *input);
 int		execute(t_shell *data);
 int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
-int		ft_cd(char **args, t_shell *data);
+int		ft_cd(char **args);
 int		ft_env(char **envp);
 int		ft_echo(char **args);
 int		ft_pwd(void);
