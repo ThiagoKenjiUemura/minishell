@@ -6,7 +6,7 @@
 /*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/19 16:51:17 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/19 17:06:22 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 
 int	add_redir_to_cmd(t_shell *data, t_cmd *cmd, t_token *op_token, t_token *file_token)
 {
+	(void)cmd;
 	t_redir *new_redir;
-	new_redir = garbage_add(data, sizeof(t_redir));
+	new_redir = garbage_calloc(data, sizeof(t_redir));
 	if (!new_redir)
 		return (1);
 	new_redir->type = op_token->type;

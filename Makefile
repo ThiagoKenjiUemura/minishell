@@ -6,7 +6,7 @@
 #    By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/19 16:51:11 by thiagouemur      ###   ########.fr        #
+#    Updated: 2025/11/19 17:03:18 by thiagouemur      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRCS = src/main.c \
 	src/parsing/lexer.c \
 	src/parsing/token_utils.c \
 	src/parsing/parser.c \
-	src/parsing/parser_utils.c
+	src/parsing/parser_utils.c \
 	src/signals/signals.c \
 	src/envp/env_init.c \
 	src/builtins/builtin.c \
