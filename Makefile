@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
+#    By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/18 16:15:17 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/19 16:51:11 by thiagouemur      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ SRCS = src/main.c \
 	src/parsing/count_token.c \
 	src/parsing/lexer.c \
 	src/parsing/token_utils.c \
+	src/parsing/parser.c \
+	src/parsing/parser_utils.c
 	src/signals/signals.c \
 	src/envp/env_init.c \
 	src/builtins/builtin.c \
