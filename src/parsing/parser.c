@@ -3,63 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:53:38 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/18 16:37:02 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:56:06 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_str_arr_len(t_cmd *cmd)
+static int	handle_pipe(t_shell *data, t_cmd **current_cmd, t_token *token)
 {
-	int i;
-	
-	i = 0;
-	if (cmd == NULL || cmd->args == NULL)
-		return (0);
-	while(cmd->args[i] != NULL)
-		i++;
-	return (i);
+	t_cmd	*next_cmd;
+
+	if (!token->next || token->next->type == PIPE)
+		return (1);
+	next_cmd = garbage_calloc(data, sizeof(t_cmd));
+	if (!next_cmd)
+		return (1);
+	(*current_cmd)->next = next_cmd;
+	*current_cmd = next_cmd;
+	return (0);
 }
 
-int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
+static int	process_token_type(t_shell *data, t_cmd *cmd, t_token *token)
 {
-	cmd->args = garbage_calloc(data, sizeof(t_cmd));
+	if (token->type >= REDIR_IN && token->type <= REDIR_DELIMITER)
+	{
+		if (!token->next || token->next->type != WORD)
+			return (-1);
+		if (add_redir_to_cmd(data, cmd, token, token->next) != 0)
+			return (-1);
+		return (2);
+	}
+	else if (token->type == WORD)
+	{
+		if (add_arg_to_cmd(data, cmd, token->value) != 0)
+			return (-1);
+		return (1);
+	}
+	return (1);
+}
+
+static t_cmd	*init_parser_head(t_shell *data, t_token *list, t_cmd **current_cmd)
+{
+	t_cmd *head;
+
+	if (list && list->type == PIPE)
+		return (NULL);
+	head = garbage_calloc(data, sizeof(t_cmd));
+	if (!head)
+		return (NULL);
+	*current_cmd = head;
 	
+	return (head);
 }
 
 t_cmd	*parser(t_shell *data, t_token *token_list)
 {
 	t_cmd	*head_cmd;
 	t_cmd	*current_cmd;
-	t_cmd	*next_cmd;
 	t_token	*current_token;
+	int		advance;
 
-	next_cmd = garbage_calloc(data, sizeof(t_cmd));
-	current_cmd = garbage_calloc(data, sizeof(t_cmd));
-	head_cmd = current_cmd;
-	current_token = token_list;
-	if (current_token && current_token->type == PIPE)
+	head_cmd = init_parser_head(data, token_list, &current_cmd);
+	if (!head_cmd)
 		return (NULL);
+	current_token = token_list;
 	while (current_token != NULL)
 	{
 		if (current_token->type == PIPE)
 		{
-			current_cmd->next = next_cmd;
-			current_cmd = next_cmd;
+			if (handle_pipe(data, &current_cmd, current_token) != 0)
+				return (NULL);
+			current_token = current_token->next;
+			continue;
 		}
-		if (current_token->type == WORD)
-		{
-			current_cmd->args = current_token->value;
-			
-		}
-		if (current_token->type == REDIR_DELIMITER)
-		{
-			
-		}
-		current_token = current_token->next;
+		advance = process_token_type(data, current_cmd, current_token);
+		if (advance == -1)
+			return (NULL);
+		while (advance-- > 0)
+			current_token = current_token->next;
 	}
 	return (head_cmd);
 }

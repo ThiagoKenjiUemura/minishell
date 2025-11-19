@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/19 14:24:13 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:50:07 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	*garbage_calloc(t_shell *data, size_t size);
 int		garbage_add(t_shell *data, void *ptr);
 char	*garbage_strdup(t_shell *data, const char *src);
 void	garbage_free_all(t_shell *data);
+//Parser
 int		count_tokens(char *input);
 int		skip_spaces(char *input, int i);
 t_token	*create_token(t_shell *data, char *value, t_type type);
@@ -100,6 +101,9 @@ int		get_word_len(char *input, int i);
 void	fake_parser(t_shell *data);
 t_token	*lexer(t_shell *data, char *input);
 bool	quote_parser(char *input);
+int		ft_str_arr_len(t_cmd *cmd);
+int		add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value);
+int		add_redir_to_cmd(t_shell *data, t_cmd *cmd, t_token *op_token, t_token *file_token);
 // Builtins
 int		execute(t_shell *data);
 int		is_builtin(char *cmd);
