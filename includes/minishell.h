@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/20 18:32:46 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/20 18:58:38 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int		ft_cd(char **args);
 
 int		ft_echo(char **args);
 int		ft_pwd(void);
-int		ft_export(char **args, t_shell *data, char **envp);
+int		ft_export(char **args, t_shell *data);
 char	*env_get(char **env, const char *key);
 int 	env_set(t_shell *data, char ***env, const char *key, const char *value);
 int 	env_remove(t_shell *data, char ***env, const char *key);
