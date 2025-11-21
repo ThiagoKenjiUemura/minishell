@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/19 17:06:22 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/21 16:05:41 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	add_redir_to_cmd(t_shell *data, t_cmd *cmd, t_token *op_token, t_token *file
 {
 	(void)cmd;
 	t_redir *new_redir;
+
 	new_redir = garbage_calloc(data, sizeof(t_redir));
 	if (!new_redir)
 		return (1);
