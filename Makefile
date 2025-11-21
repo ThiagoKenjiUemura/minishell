@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+         #
+#    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/19 17:03:18 by thiagouemur      ###   ########.fr        #
+#    Updated: 2025/11/20 21:29:41 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,9 +31,11 @@ SRCS = src/main.c \
 	src/envp/env_init.c \
 	src/builtins/builtin.c \
 	src/builtins/builtin_pwd.c \
+	src/builtins/builtin_cd.c \
 	src/builtins/builtin_env.c \
 	src/builtins/builtin_echo.c \
 	src/builtins/builtin_exit.c \
+	src/builtins/builtin_export.c \
 	src/builtins/fake_parse.c \
 	src/garbage.c \
 

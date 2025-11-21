@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/19 16:50:07 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/20 21:29:48 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,13 @@ int		execute(t_shell *data);
 int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args);
-int		ft_env(char **envp);
+
 int		ft_echo(char **args);
 int		ft_pwd(void);
-
+int		ft_export(char **args, t_shell *data);
+char	*env_get(char **env, const char *key);
+int 	env_set(t_shell *data, char ***env, const char *key, const char *value);
+int 	env_remove(t_shell *data, char ***env, const char *key);
+int		ft_env(t_shell *data, char **args);
 
 #endif
