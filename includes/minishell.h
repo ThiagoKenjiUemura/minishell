@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 12:03:56 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:14:32 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_shell
 
 //Main / Setup 
 int		main(int argc, char **argv, char **envp);
-bool	check_argc(int argc);
 void	handle_sigint(int sig_num);
 char	**init_envp(t_shell *data, char **envp);
 void	free_shell(t_shell *data);

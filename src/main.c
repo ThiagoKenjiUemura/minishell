@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 16:06:17 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:14:56 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	*data;
 
 	(void)argv;
-	if (!check_argc(argc))
-		return (1);
+	(void)argc;
 	init_signals();
 	data = ft_calloc(1, sizeof(t_shell));
 	if (!data)

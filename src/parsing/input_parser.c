@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:56:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/11 19:04:26 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:14:03 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_argc(int argc)
-{
-	if (argc != 1)
-	{
-		printf("Minishell does not accept arguments \n");
-		return (false);
-	}
-	return (true);
-}
 
 bool	quote_parser(char *input)
 {
