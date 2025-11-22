@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 11:04:54 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 11:30:14 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ int 	env_set(t_shell *data, char ***env, const char *key, const char *value);
 int 	env_remove(t_shell *data, char ***env, const char *key);
 int		ft_env(t_shell *data, char **args);
 int		is_valid_identifier(char *str);
+int		ft_unset(char **args, t_shell *data);
 
 #endif
