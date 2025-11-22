@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 14:56:00 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:06:17 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,10 @@ static int	prepare_commands(t_shell *data, t_token **tokens, t_cmd **cmd_list)
 {
 	*tokens = lexer(data, data->input);
 	if (!*tokens)
-	{
-		garbage_free_all(data);
 		return (0);
-	}
 	*cmd_list = parser(data, *tokens);
 	if (!*cmd_list)
-	{
-		garbage_free_all(data);
 		return (0);
-	}
 	return (1);
 }
 
@@ -33,7 +27,7 @@ static void	minishell_loop(t_shell *data)
 {
 	t_token	*tokens;
 	t_cmd	*cmd_list;
-
+	
 	while (data->running)
 	{
 		data->input = readline("minishell$ ");
@@ -43,6 +37,7 @@ static void	minishell_loop(t_shell *data)
 			data->running = 0;
 			break;
 		}
+		garbage_add(data, data->input);
 		if (*data->input)
 			add_history(data->input);
 		if (prepare_commands(data, &tokens, &cmd_list))

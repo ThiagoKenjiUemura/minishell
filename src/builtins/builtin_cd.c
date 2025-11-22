@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:29:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 11:29:37 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:22:45 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int	ft_cd(char **args)
 		ft_printf("cd: %s: No such file or directory\n", path);
 		return (1);
 	}
-
 	return (0);
 }
