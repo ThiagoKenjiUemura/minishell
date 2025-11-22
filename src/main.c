@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 15:20:59 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:29:37 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,17 @@ static void	minishell_loop(t_shell *data)
 {
 	t_token	*tokens;
 	t_cmd	*cmd_list;
-	char    *read_line;
 	
 	while (data->running)
 	{
-		read_line = readline("minishell$ ");
-		if (!read_line)
-        {
-            ft_printf("exit\n");
-            data->running = 0;
-            break;
-        }
-		data->input = garbage_strdup(data, read_line);
-        free(read_line);
+		data->input = readline("minishell$ ");
+		if (!data->input)
+		{
+			ft_printf("exit\n");
+			data->running = 0;
+			break;
+		}
+		garbage_add(data, data->input);
 		if (*data->input)
 			add_history(data->input);
 		if (prepare_commands(data, &tokens, &cmd_list))

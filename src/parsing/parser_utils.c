@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/19 17:06:22 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/22 16:03:03 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 	new_args[old_count] = value;
 	new_args[old_count + 1] = NULL;
 	cmd->args = new_args;
-	if (old_args != NULL)
-		free(old_args);
 	return (0);
 }
 

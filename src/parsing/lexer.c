@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:39:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/11 19:03:08 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:53:38 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	get_operator_len(char *input, int i)
 	}
 	if (input[i] == '<')
 	{
-		if (input[i + 1] == ',')
+		if (input[i + 1] == '<')
 			return (2);
 		else
 			return (1);
