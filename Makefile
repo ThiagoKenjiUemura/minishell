@@ -6,14 +6,14 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/20 21:29:41 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/22 09:51:40 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I includes/ -I libft/
+CFLAGS = -Wall -Wextra -Werror -I includes/ -I libft/ -g3
 
 LIBFT_DIR= libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
@@ -36,6 +36,7 @@ SRCS = src/main.c \
 	src/builtins/builtin_echo.c \
 	src/builtins/builtin_exit.c \
 	src/builtins/builtin_export.c \
+	src/builtins/builtin_unset.c \
 	src/builtins/fake_parse.c \
 	src/garbage.c \
 

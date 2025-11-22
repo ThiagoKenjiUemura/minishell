@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:09 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/20 18:59:16 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/21 16:28:02 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,3 @@ int	ft_export(char **args, t_shell *data)
 	}
 	return (0);
 }
-
