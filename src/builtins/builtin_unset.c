@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:13 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 11:06:19 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 11:56:52 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int unset_error(char *arg)
 	return (1);
 }
 
-int	ft_unset(char **args, t_shell *data)
+int	ft_unset(t_shell *data, char **args)
 {
 	int	i;
 	int	status;

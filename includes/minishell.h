@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 11:30:14 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:00:20 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int		get_token_len(char *input, int i);
 int		get_operator_len(char *input, int i);
 int		get_quote_len(char *input, int i);
 int		get_word_len(char *input, int i);
-void	fake_parser(t_shell *data);
+t_cmd	*parser(t_shell *data, t_token *token_list);
 t_token	*lexer(t_shell *data, char *input);
 bool	quote_parser(char *input);
 int		ft_str_arr_len(t_cmd *cmd);
@@ -109,15 +109,14 @@ int		execute(t_shell *data);
 int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args);
-
 int		ft_echo(char **args);
 int		ft_pwd(void);
-int		ft_export(char **args, t_shell *data);
+int		ft_export(t_shell *data, char **args);
 char	*env_get(char **env, const char *key);
 int 	env_set(t_shell *data, char ***env, const char *key, const char *value);
 int 	env_remove(t_shell *data, char ***env, const char *key);
 int		ft_env(t_shell *data, char **args);
 int		is_valid_identifier(char *str);
-int		ft_unset(char **args, t_shell *data);
+int		ft_unset(t_shell *data, char **args);
 
 #endif

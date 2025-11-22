@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:53:38 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 11:34:20 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 11:48:11 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ static t_cmd	*init_parser_head(t_shell *data, t_token *list, t_cmd **current_cmd
 
 t_cmd	*parser(t_shell *data, t_token *token_list)
 {
-	t_cmd	*head_cmd;
+	t_cmd	*cmd_list;
 	t_cmd	*current_cmd;
 	t_token	*current_token;
 	int		advance;
 
-	head_cmd = init_parser_head(data, token_list, &current_cmd);
-	if (!head_cmd)
+	cmd_list = init_parser_head(data, token_list, &current_cmd);
+	if (!cmd_list)
 		return (NULL);
 	current_token = token_list;
 	while (current_token != NULL)
@@ -85,5 +85,5 @@ t_cmd	*parser(t_shell *data, t_token *token_list)
 		while (advance-- > 0)
 			current_token = current_token->next;
 	}
-	return (head_cmd);
+	return (cmd_list);
 }

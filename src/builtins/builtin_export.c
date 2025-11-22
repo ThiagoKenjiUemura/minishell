@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:09 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 11:04:40 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 11:52:02 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	handle_export_without_value(t_shell *data, char *arg)
         env_set(data, &data->envp, arg, "");
     return (0);
 }
-int	ft_export(char **args, t_shell *data)
+int	ft_export(t_shell *data, char **args)
 {
 	int		i;
 	
