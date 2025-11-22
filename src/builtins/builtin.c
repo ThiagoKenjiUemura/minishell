@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 16:09:35 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 11:56:39 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:23:24 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
+
 static int	execute_builtin(t_shell *data)
 {
 	char	*cmd;
@@ -55,11 +56,12 @@ static int	execute_builtin(t_shell *data)
 		return (ft_exit(data, data->name_cmd));
 	return (0);
 }
+
 int	execute(t_shell *data)
 {
-	if(!data->name_cmd)
+	if (!data->name_cmd)
 		return (0);
 	if (data->name_cmd->is_builtin)
-		return(execute_builtin(data));
+		return (execute_builtin(data));
 	return (0);
 }
