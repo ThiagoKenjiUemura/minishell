@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:34:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 15:57:36 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:43:37 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,6 @@ int	garbage_add(t_shell *data, void *ptr)
 	return (0);
 }
 
-char	*garbage_strdup(t_shell *data, const char *src)
-{
-	char	*dup;
-
-	dup = ft_strdup(src);
-	if (!dup)
-		return (NULL);
-	if (garbage_add(data, dup))
-	{
-		free(dup);
-		return (NULL);
-	}
-	return (dup);
-}
 
 void	garbage_free_all(t_shell *data)
 {

@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 16:14:32 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:45:51 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ void	*garbage_calloc(t_shell *data, size_t size);
 int		garbage_add(t_shell *data, void *ptr);
 char	*garbage_strdup(t_shell *data, const char *src);
 void	garbage_free_all(t_shell *data);
+char	*garbage_substr(t_shell *data, char const *s, unsigned int start, size_t len);
+char	*garbage_strjoin(t_shell *data, char const *s1, char const *s2);
 //Parser / Lexer
 int		count_tokens(char *input);
 int		skip_spaces(char *input, int i);

@@ -6,7 +6,7 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/22 15:09:30 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/22 16:47:08 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS = src/main.c \
 	src/builtins/builtin_exit.c \
 	src/builtins/builtin_export.c \
 	src/builtins/builtin_unset.c \
+	src/garbage_utils.c \
 	src/garbage.c \
 
 OBJS = $(SRCS:.c=.o)
