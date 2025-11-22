@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 11:23:29 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 11:40:10 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static	void minishell_loop(t_shell *data)
 {
+	t_token	*tokens;
+	t_cmd	*cmd_list;
+
 	while (data->running)
 	{
 		data->input = readline("minishell$ ");
@@ -24,11 +27,22 @@ static	void minishell_loop(t_shell *data)
 			break;
 		}
 		if (*data->input)
-            add_history(data->input);
-
-        parser(data);
-        execute(data);
-        garbage_free_all(data);
+			add_history(data->input);
+		tokens = lexer(data, data->input);
+		if (!tokens)
+		{
+			garbage_free_all(data);
+			continue;
+		}
+		cmd_list = parser(data, tokens);
+		if (!cmd_list)
+		{
+			garbage_free_all(data);
+			continue;
+		}
+		data->name_cmd = cmd_list;
+		execute(data);
+		garbage_free_all(data);
 	}
 }
 
