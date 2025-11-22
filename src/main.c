@@ -6,13 +6,30 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 11:48:48 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:17:06 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	void minishell_loop(t_shell *data)
+static int	prepare_commands(t_shell *data, t_token **tokens, t_cmd **cmd_list)
+{
+	*tokens = lexer(data, data->input);
+	if (!*tokens)
+	{
+		garbage_free_all(data);
+		return (0);
+	}
+	*cmd_list = parser(data, *tokens);
+	if (!*cmd_list)
+	{
+		garbage_free_all(data);
+		return (0);
+	}
+	return (1);
+}
+
+static void	minishell_loop(t_shell *data)
 {
 	t_token	*tokens;
 	t_cmd	*cmd_list;
@@ -28,20 +45,11 @@ static	void minishell_loop(t_shell *data)
 		}
 		if (*data->input)
 			add_history(data->input);
-		tokens = lexer(data, data->input);
-		if (!tokens)
+		if (prepare_commands(data, &tokens, &cmd_list))
 		{
-			garbage_free_all(data);
-			continue;
+			data->name_cmd = cmd_list;
+			execute(data);
 		}
-		cmd_list = parser(data, tokens);
-		if (!cmd_list)
-		{
-			garbage_free_all(data);
-			continue;
-		}
-		data->name_cmd = cmd_list;
-		execute(data);
 		garbage_free_all(data);
 	}
 }
