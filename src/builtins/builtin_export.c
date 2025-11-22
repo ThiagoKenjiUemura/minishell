@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:09 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 11:52:02 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:35:11 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	handle_export_with_value(t_shell *data, char *arg)
 	int		key_len;
 	char	*key;
 	char	*value;
-	
+
 	equal_sign = ft_strchr(arg, '=');
 	key_len = equal_sign - arg;
 	key = garbage_calloc(data, key_len + 1);
@@ -67,26 +67,27 @@ static int	handle_export_without_value(t_shell *data, char *arg)
 {
 	if (!is_valid_identifier(arg))
 	{
-        ft_printf("export: `%s`: not a valid identifier\n", arg);
-        return (0);
-    }
-    if (!env_get(data->envp, arg))
-        env_set(data, &data->envp, arg, "");
-    return (0);
+		ft_printf("export: `%s`: not a valid identifier\n", arg);
+		return (0);
+	}
+	if (!env_get(data->envp, arg))
+		env_set(data, &data->envp, arg, "");
+	return (0);
 }
+
 int	ft_export(t_shell *data, char **args)
 {
 	int		i;
-	
+
 	i = 1;
 	if (args[1])
 		return (0);
 	while (args[i])
 	{
 		if (ft_strchr(args[i], '='))
-            handle_export_with_value(data, args[i]);
-        else
-            handle_export_without_value(data, args[i]);
+			handle_export_with_value(data, args[i]);
+		else
+			handle_export_without_value(data, args[i]);
 		i++;
 	}
 	return (0);

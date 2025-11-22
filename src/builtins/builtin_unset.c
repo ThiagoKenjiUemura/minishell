@@ -6,13 +6,13 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:13 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 12:23:58 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:25:21 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int unset_error(char *arg)
+static int	unset_error(char *arg)
 {
 	ft_printf("minishell: unset:  `%s': not a valid identifier\n", arg);
 	return (1);
