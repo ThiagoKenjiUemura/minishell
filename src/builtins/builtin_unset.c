@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:13 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 11:03:06 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 11:06:19 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ int	ft_unset(char **args, t_shell *data)
 	while (args[i])
 	{
 		if  (!is_valid_identifier(args[i]))
-		{
 			status = unset_error(args[i]);
-		}
 		else
-			env_remove(data, args[i]);
+			env_remove(data, &data->envp, args[i]);
 		i++;	
 	}
 	return (status);

@@ -6,13 +6,13 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:09 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/21 16:28:02 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 11:04:40 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_valid_identifier(char *str)
+int	is_valid_identifier(char *str)
 {
 	int	i;
 
