@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/22 16:06:07 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:12:33 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 	char	**new_args;
 	int		i;
 
+	i = 0;
 	old_args = cmd->args;
 	old_count = ft_str_arr_len(cmd);
 	new_args = garbage_calloc(data, (old_count + 2) * sizeof(char *));
@@ -45,6 +46,9 @@ int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 	new_args[old_count] = value;
 	new_args[old_count + 1] = NULL;
 	cmd->args = new_args;
+	if (cmd->cmd == NULL)
+		cmd->cmd = new_args[0];
+	cmd->is_builtin = is_builtin(cmd->cmd);
 	return (0);
 }
 
