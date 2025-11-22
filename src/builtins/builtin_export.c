@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:09 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 12:35:11 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 15:11:50 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,11 @@ static int	handle_export_with_value(t_shell *data, char *arg)
 	key_len = equal_sign - arg;
 	key = garbage_calloc(data, key_len + 1);
 	if (!key)
-	{
-		garbage_free_all(data);
-		free(data);
 		return (1);
-	}
 	ft_strlcpy(key, arg, key_len + 1);
 	value = garbage_strdup(data, equal_sign + 1);
 	if (!value)
-	{
-		garbage_free_all(data);
-		free(data);
 		return (1);
-	}
 	if (!is_valid_identifier(key))
 	{
 		ft_printf("export: `%s`: not a valid identifier\n", arg);
