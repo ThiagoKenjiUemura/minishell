@@ -6,14 +6,34 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/18 15:46:15 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:17:06 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	void minishell_loop(t_shell *data)
+static int	prepare_commands(t_shell *data, t_token **tokens, t_cmd **cmd_list)
 {
+	*tokens = lexer(data, data->input);
+	if (!*tokens)
+	{
+		garbage_free_all(data);
+		return (0);
+	}
+	*cmd_list = parser(data, *tokens);
+	if (!*cmd_list)
+	{
+		garbage_free_all(data);
+		return (0);
+	}
+	return (1);
+}
+
+static void	minishell_loop(t_shell *data)
+{
+	t_token	*tokens;
+	t_cmd	*cmd_list;
+
 	while (data->running)
 	{
 		data->input = readline("minishell$ ");
@@ -24,11 +44,13 @@ static	void minishell_loop(t_shell *data)
 			break;
 		}
 		if (*data->input)
-            add_history(data->input);
-
-        fake_parser(data);
-        execute(data);
-        garbage_free_all(data);
+			add_history(data->input);
+		if (prepare_commands(data, &tokens, &cmd_list))
+		{
+			data->name_cmd = cmd_list;
+			execute(data);
+		}
+		garbage_free_all(data);
 	}
 }
 
