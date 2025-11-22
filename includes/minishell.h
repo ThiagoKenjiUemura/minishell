@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 12:00:20 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 12:03:56 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_shell
 	int			running;
 }				t_shell;
 
+//Main / Setup 
 int		main(int argc, char **argv, char **envp);
 bool	check_argc(int argc);
 void	handle_sigint(int sig_num);
@@ -88,7 +89,7 @@ void	*garbage_calloc(t_shell *data, size_t size);
 int		garbage_add(t_shell *data, void *ptr);
 char	*garbage_strdup(t_shell *data, const char *src);
 void	garbage_free_all(t_shell *data);
-//Parser
+//Parser / Lexer
 int		count_tokens(char *input);
 int		skip_spaces(char *input, int i);
 t_token	*create_token(t_shell *data, char *value, t_type type);
