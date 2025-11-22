@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 16:45:51 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/22 17:25:31 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ bool	quote_parser(char *input);
 int		ft_str_arr_len(t_cmd *cmd);
 int		add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value);
 int		add_redir_to_cmd(t_shell *data, t_cmd *cmd, t_token *op_token, t_token *file_token);
+char    *substitute_var_in_string(t_shell *data, char *str);
+int		expand_tokens(t_shell *data, t_token *head);
 // Builtins
 int		execute(t_shell *data);
 int		is_builtin(char *cmd);
