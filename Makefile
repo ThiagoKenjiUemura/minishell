@@ -6,7 +6,7 @@
 #    By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/22 17:22:17 by tkenji-u         ###   ########.fr        #
+#    Updated: 2025/11/25 17:00:55 by tkenji-u         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,9 @@ SRCS = src/main.c \
 	src/parsing/parser.c \
 	src/parsing/parser_utils.c \
 	src/parsing/expander_utils.c \
+	src/parsing/expander_utils2.c \
 	src/parsing/expander.c \
+	src/parsing/quote_removal.c \
 	src/signals/signals.c \
 	src/envp/env_init.c \
 	src/builtins/builtin.c \
@@ -39,8 +41,8 @@ SRCS = src/main.c \
 	src/builtins/builtin_exit.c \
 	src/builtins/builtin_export.c \
 	src/builtins/builtin_unset.c \
-	src/garbage_utils.c \
-	src/garbage.c \
+	src/garbage/garbage_utils.c \
+	src/garbage/garbage.c \
 
 OBJS = $(SRCS:.c=.o)
 

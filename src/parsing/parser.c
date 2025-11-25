@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:53:38 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 11:48:11 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:47:49 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,10 @@ static int	process_token_type(t_shell *data, t_cmd *cmd, t_token *token)
 	return (1);
 }
 
-static t_cmd	*init_parser_head(t_shell *data, t_token *list, t_cmd **current_cmd)
+static t_cmd	*init_parser_head(t_shell *data,
+t_token *list, t_cmd **current_cmd)
 {
-	t_cmd *head;
+	t_cmd	*head;
 
 	if (list && list->type == PIPE)
 		return (NULL);
@@ -55,7 +56,6 @@ static t_cmd	*init_parser_head(t_shell *data, t_token *list, t_cmd **current_cmd
 	if (!head)
 		return (NULL);
 	*current_cmd = head;
-	
 	return (head);
 }
 
@@ -77,7 +77,7 @@ t_cmd	*parser(t_shell *data, t_token *token_list)
 			if (handle_pipe(data, &current_cmd, current_token) != 0)
 				return (NULL);
 			current_token = current_token->next;
-			continue;
+			continue ;
 		}
 		advance = process_token_type(data, current_cmd, current_token);
 		if (advance == -1)

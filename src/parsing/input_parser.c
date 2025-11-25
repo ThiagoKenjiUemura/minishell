@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 16:56:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 16:14:03 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:48:02 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 bool	quote_parser(char *input)
 {
