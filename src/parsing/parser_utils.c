@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/22 16:12:33 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:48:30 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	ft_str_arr_len(t_cmd *cmd)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (cmd == NULL || cmd->args == NULL)
 		return (0);
-	while(cmd->args[i] != NULL)
+	while (cmd->args[i] != NULL)
 		i++;
 	return (i);
 }
@@ -52,11 +52,12 @@ int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 	return (0);
 }
 
-int	add_redir_to_cmd(t_shell *data, t_cmd *cmd, t_token *op_token, t_token *file_token)
+int	add_redir_to_cmd(t_shell *data, t_cmd *cmd,
+t_token *op_token, t_token *file_token)
 {
-	(void)cmd;
-	t_redir *new_redir;
+	t_redir	*new_redir;
 
+	(void)cmd;
 	new_redir = garbage_calloc(data, sizeof(t_redir));
 	if (!new_redir)
 		return (1);

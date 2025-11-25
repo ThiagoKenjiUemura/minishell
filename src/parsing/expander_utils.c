@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander utils.c                                   :+:      :+:    :+:   */
+/*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 17:16:35 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 17:22:54 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/25 16:58:02 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*get_expanded_value(t_shell *data, char *key_start, int key_len)
 	return (garbage_strdup(data, ""));
 }
 
-static char	*handle_substitution(t_shell *data, char *result_str, char **read_cursor_ptr)
+static char	*handle_sub(t_shell *data, char *result_str, char **read_cursor_ptr)
 {
 	int		key_len;
 	char	*expanded_value;
@@ -62,7 +62,8 @@ static char	*handle_substitution(t_shell *data, char *result_str, char **read_cu
 	return (result_str);
 }
 
-static char	*append_prefix_segment(t_shell *data, char *result_str, char *read_cursor, char *next_dollar)
+static char	*apnd_prfx_seg(t_shell *data, char *result_str,
+char *read_cursor, char *next_dollar)
 {
 	char	*temp_prefix;
 	int		prefix_len;
@@ -80,7 +81,7 @@ static char	*append_prefix_segment(t_shell *data, char *result_str, char *read_c
 	return (result_str);
 }
 
-char	*substitute_var_in_string(t_shell *data, char *str)
+char	*sub_var_in_str(t_shell *data, char *str)
 {
 	char	*result_str;
 	char	*read_ptr;
@@ -88,23 +89,16 @@ char	*substitute_var_in_string(t_shell *data, char *str)
 
 	result_str = NULL;
 	read_ptr = str;
-	while ((next_dollar = ft_strchr(read_ptr, '$')) != NULL)
+	next_dollar = ft_strchr(read_ptr, '$');
+	while (next_dollar != NULL)
 	{
-		result_str = append_prefix_segment(data, result_str, read_ptr, next_dollar);
-		if (!result_str && next_dollar > read_ptr) 
+		result_str = apnd_prfx_seg(data, result_str, read_ptr, next_dollar);
+		if (!result_str && next_dollar > read_ptr)
 			return (NULL);
 		read_ptr = next_dollar + 1;
-		result_str = handle_substitution(data, result_str, &read_ptr);
-		if (!result_str) 
-			return (NULL);
-	}
-	if (*read_ptr)
-	{
-		result_str = garbage_strjoin(data, result_str, read_ptr);
+		result_str = handle_sub(data, result_str, &read_ptr);
 		if (!result_str)
 			return (NULL);
 	}
-	if (!result_str)
-		return (garbage_strdup(data, ""));
-	return (result_str);
+	return (finalize_and_return(data, result_str, read_ptr));
 }
