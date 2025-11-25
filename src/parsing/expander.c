@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 15:00:11 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/25 16:40:38 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/25 17:05:50 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	handle_expansion_logic(t_shell *data, t_token *token)
 		return (0);
 	if (ft_strchr(token->value, '$'))
 	{
-		new_value = substitute_var_in_string(data, token->value);
+		new_value = sub_var_in_str(data, token->value);
 		if (!new_value)
 			return (-1);
 		token->value = new_value;

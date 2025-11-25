@@ -6,7 +6,7 @@
 #    By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/25 16:57:03 by tkenji-u         ###   ########.fr        #
+#    Updated: 2025/11/25 17:00:55 by tkenji-u         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,8 @@ SRCS = src/main.c \
 	src/builtins/builtin_exit.c \
 	src/builtins/builtin_export.c \
 	src/builtins/builtin_unset.c \
-	src/garbage_utils.c \
-	src/garbage.c \
+	src/garbage/garbage_utils.c \
+	src/garbage/garbage.c \
 
 OBJS = $(SRCS:.c=.o)
 
