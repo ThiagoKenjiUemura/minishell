@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_is_numeric.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 17:45:44 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/17 20:40:02 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/25 20:21:53 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	ft_str_is_numeric(const char *s)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	if (!s || *s == '\0')
 		return (0);
 	if (s[i] == '-' || s[i] == '+')
@@ -30,5 +31,5 @@ int	ft_str_is_numeric(const char *s)
 		}
 		i++;
 	}
-	return 1;
+	return (1);
 }

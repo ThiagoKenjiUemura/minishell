@@ -6,32 +6,28 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 16:41:24 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 16:54:06 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/25 23:03:11 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*garbage_substr(t_shell *data, char const *s, unsigned int start, size_t len)
+char	*garbage_substr(t_shell *data, char const *s,
+			unsigned int start, size_t len)
 {
 	size_t	slen;
 	char	*sub;
 
 	if (!s)
 		return (NULL);
-
 	slen = ft_strlen(s);
-
 	if (start >= slen)
 		return (garbage_strdup(data, ""));
-
 	if (len > slen - start)
 		len = slen - start;
-
 	sub = garbage_calloc(data, len + 1);
 	if (!sub)
 		return (NULL);
-
 	ft_strlcpy(sub, s + start, len + 1);
 	return (sub);
 }
@@ -44,17 +40,13 @@ char	*garbage_strjoin(t_shell *data, char const *s1, char const *s2)
 
 	if (!s1 || !s2)
 		return (NULL);
-
 	s1_len = ft_strlen(s1);
 	s2_len = ft_strlen(s2);
-
 	str3 = garbage_calloc(data, (s1_len + s2_len + 1));
 	if (!str3)
 		return (NULL);
-
 	ft_memcpy(str3, s1, s1_len);
 	ft_memcpy(str3 + s1_len, s2, s2_len);
-
 	return (str3);
 }
 

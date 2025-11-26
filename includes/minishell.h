@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/25 17:05:21 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/25 23:15:32 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,11 @@ void	*garbage_calloc(t_shell *data, size_t size);
 int		garbage_add(t_shell *data, void *ptr);
 char	*garbage_strdup(t_shell *data, const char *src);
 void	garbage_free_all(t_shell *data);
-char	*garbage_substr(t_shell *data, char const *s, unsigned int start, size_t len);
-char	*garbage_strjoin(t_shell *data, char const *s1, char const *s2);
+char	*garbage_substr(t_shell *data, char const *s,
+			unsigned int start, size_t len);
+char	*garbage_strjoin(t_shell *data, char const *s1,
+			char const *s2);
+char	*garbage_itoa(t_shell *data, int n);
 //Parser / Lexer
 int		count_tokens(char *input);
 int		skip_spaces(char *input, int i);
@@ -104,12 +107,16 @@ t_cmd	*parser(t_shell *data, t_token *token_list);
 t_token	*lexer(t_shell *data, char *input);
 bool	quote_parser(char *input);
 int		ft_str_arr_len(t_cmd *cmd);
-int		add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value);
-int		add_redir_to_cmd(t_shell *data, t_cmd *cmd, t_token *op_token, t_token *file_token);
-char    *sub_var_in_str(t_shell *data, char *str);
+char	*create_temp_key(const char *s, size_t len);
+int		add_arg_to_cmd(t_shell *data, t_cmd *cmd,
+			char *value);
+int		add_redir_to_cmd(t_shell *data, t_cmd *cmd,
+			t_token *op_token, t_token *file_token);
+char	*sub_var_in_str(t_shell *data, char *str);
 int		expand_tokens(t_shell *data, t_token *head);
 char	*rmv_quotes_str(t_shell *data, char *str);
 char	*finalize_and_return(t_shell *data, char *result_str, char *read_ptr);
+int		handle_heredocs(t_shell *data, t_cmd *cmd_list);
 // Builtins
 int		execute(t_shell *data);
 int		is_builtin(char *cmd);
@@ -119,8 +126,8 @@ int		ft_echo(char **args);
 int		ft_pwd(void);
 int		ft_export(t_shell *data, char **args);
 char	*env_get(char **env, const char *key);
-int 	env_set(t_shell *data, char ***env, const char *key, const char *value);
-int 	env_remove(t_shell *data, char ***env, const char *key);
+int		env_set(t_shell *data, char ***env, const char *key, const char *value);
+int		env_remove(t_shell *data, char ***env, const char *key);
 int		ft_env(t_shell *data, char **args);
 int		is_valid_identifier(char *str);
 int		ft_unset(t_shell *data, char **args);

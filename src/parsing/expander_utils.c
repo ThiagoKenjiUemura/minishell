@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 17:16:35 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/25 16:58:02 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/25 23:10:54 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,26 @@ static int	get_var_key_len(char *str_at_key)
 	return (i);
 }
 
-static char	*get_expanded_value(t_shell *data, char *key_start, int key_len)
+static char *get_expanded_value(t_shell *data, char *key_start, int key_len)
 {
 	char	*key;
 	char	*value;
+	char	*result; 
 
 	if (*key_start == '?')
-		return (ft_itoa(data->last_exit_status));
-	key = ft_substr(key_start, 0, key_len);
+		return (garbage_itoa(data, data->last_exit_status));
+	key = create_temp_key(key_start, key_len); 
 	if (!key)
 		return (NULL);
 	value = env_get(data->envp, key);
+	free(key);
 	if (value)
-		return (garbage_strdup(data, value));
-	return (garbage_strdup(data, ""));
+		result = garbage_strdup(data, value);
+	else
+		result = garbage_strdup(data, "");
+	if (!result)
+		return (NULL); 
+	return (result);
 }
 
 static char	*handle_sub(t_shell *data, char *result_str, char **read_cursor_ptr)
