@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 19:47:04 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 06:34:19 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/26 06:52:52 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	process_heredoc_file(t_shell *data, t_redir *redir)
 	if (fd < 0)
 		return (-1);
 
-	if (read_and_write_heredoc(redir->filename_or_delimiter, fd) != 0)
+	if (read_and_write_heredoc(redir->filename, fd) != 0)
 	{
 		close(fd);
 		return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/25 16:48:30 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/26 06:52:33 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ t_token *op_token, t_token *file_token)
 	if (!new_redir)
 		return (1);
 	new_redir->type = op_token->type;
-	new_redir->filename_or_delimiter = file_token->value;
+	new_redir->filename = file_token->value;
 	return (0);
 }

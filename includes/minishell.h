@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 06:35:02 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/26 06:51:55 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_token
 typedef struct s_redir
 {
 	t_type			type;
-	char			*filename_or_delimiter;
+	char			*filename;
 	char			*heredoc_path;
 	struct s_redir	*next;
 }					t_redir;
@@ -84,9 +84,15 @@ typedef struct s_shell
 int		main(int argc, char **argv, char **envp);
 void	handle_sigint(int sig_num);
 char	**init_envp(char **envp);
-int		execute_external(t_shell *data, t_cmd *cmd);
 void	free_envp(char **envp);
 void	free_shell(t_shell *data);
+
+//Execute
+char *find_in_path(const char *cmd, char **envp);
+int apply_redirections(t_cmd *cmd);
+int execute_external(t_shell *data, t_cmd *cmd);
+int execute_pipeline(t_shell *data, t_cmd *cmd_list);
+int execute(t_shell *data);
 //Garbage
 void	*garbage_calloc(t_shell *data, size_t size);
 int		garbage_add(t_shell *data, void *ptr);
