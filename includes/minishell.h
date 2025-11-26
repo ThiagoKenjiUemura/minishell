@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/25 23:15:32 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/26 00:26:34 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ typedef struct s_shell
 //Main / Setup 
 int		main(int argc, char **argv, char **envp);
 void	handle_sigint(int sig_num);
-char	**init_envp(t_shell *data, char **envp);
+char	**init_envp(char **envp);
+void	free_envp(char **envp);
 void	free_shell(t_shell *data);
 //Garbage
 void	*garbage_calloc(t_shell *data, size_t size);
@@ -126,10 +127,10 @@ int		ft_echo(char **args);
 int		ft_pwd(void);
 int		ft_export(t_shell *data, char **args);
 char	*env_get(char **env, const char *key);
-int		env_set(t_shell *data, char ***env, const char *key, const char *value);
-int		env_remove(t_shell *data, char ***env, const char *key);
+int		env_set(char ***env, const char *key, const char *value);
+int		env_remove(char ***env, const char *key);
 int		ft_env(t_shell *data, char **args);
-int		is_valid_identifier(char *str);
 int		ft_unset(t_shell *data, char **args);
+char	*ft_strdup_full(const char *key, const char *value);
 
 #endif

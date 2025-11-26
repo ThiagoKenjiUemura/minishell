@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 00:06:41 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/26 00:49:08 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
 	data->garbage = NULL;
 	data->running = 1;
 	data->name_cmd = NULL;
-	data->envp = init_envp(data, envp);
+	data->envp = init_envp(envp);
 	if (!data->envp)
 	{
 		garbage_free_all(data);

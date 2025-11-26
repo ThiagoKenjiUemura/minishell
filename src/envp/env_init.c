@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:43:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 16:02:01 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 00:17:45 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,25 @@ void	free_shell(t_shell *data)
 	if (!data)
 		return ;
 	garbage_free_all(data);
+	free_envp(data->envp);
 	free(data);
 }
 
-char	**init_envp(t_shell *data, char **envp)
+void	free_envp(char **envp)
+{
+	int	i = 0;
+
+	if (!envp)
+		return;
+	while (envp[i])
+	{
+		free(envp[i]);
+		i++;
+	}
+	free(envp);
+}
+
+char	**init_envp(char **envp)
 {
 	int		i;
 	char	**copy;
@@ -28,15 +43,20 @@ char	**init_envp(t_shell *data, char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	copy = garbage_calloc(data, sizeof(char *) * (i + 1));
+	copy = malloc(sizeof(char *) * (i + 1));
 	if (!copy)
 		return (NULL);
 	i = 0;
 	while (envp[i])
 	{
-		copy[i] = garbage_strdup(data, envp[i]);
+		copy[i] = ft_strdup(envp[i]);
 		if (!copy[i])
+		{
+			while (i-- > 0)
+				free(copy[i]);
+			free(copy);
 			return (NULL);
+		}
 		i++;
 	}
 	copy[i] = NULL;
