@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+         #
+#    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/25 22:57:07 by tkenji-u         ###   ########.fr        #
+#    Updated: 2025/11/26 06:23:09 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS = src/main.c \
 	src/builtins/builtin_unset.c \
 	src/garbage/garbage_utils.c \
 	src/garbage/garbage_utils2.c \
+	src/execute/execute.c \
 	src/garbage/garbage.c \
 
 OBJS = $(SRCS:.c=.o)
