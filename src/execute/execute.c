@@ -3,42 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/26 06:50:04 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 13:03:50 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// encontra o executável no PATH
-char *find_in_path(const char *cmd, char **envp)
+char    *ft_strjoin3(char *s1, char *s2, char *s3)
 {
-    char *path_env = env_get(envp, "PATH");
-    if (!path_env)
-        return NULL;
+    int     len;
+    int     i;
+    char    *res;
+    char    *s;
 
-    char **paths = ft_split(path_env, ':');
-    for (int i = 0; paths[i]; i++)
+    len = 0;
+    s = s1;
+    while (s && *s++)
+        len++;
+    s = s2;
+    while (s && *s++)
+        len++;
+    s = s3;
+    while (s && *s++)
+        len++;
+    res = malloc(len + 1);
+    if (!res)
+        return (NULL);
+    i = 0;
+    s = s1;
+    while (s && *s)
+        res[i++] = *s++;
+    s = s2;
+    while (s && *s)
+        res[i++] = *s++;
+    s = s3;
+    while (s && *s)
+        res[i++] = *s++;
+    res[i] = '\0';
+    return (res);
+}
+
+char    *find_in_path(const char *cmd, char **envp)
+{
+    int     i;
+    int     j;
+    char    *full;
+    char    *path_env;
+    char    **paths;
+
+    path_env = env_get(envp, "PATH");
+    if (!path_env)
+        return (NULL);
+    paths = ft_split(path_env, ':');
+    if (!paths)
+        return (NULL);
+    i = 0;
+    while (paths[i])
     {
-        char *full = ft_strjoin3(paths[i], "/", cmd);
+        full = ft_strjoin3(paths[i], "/", (char *)cmd);
         if (!access(full, X_OK))
         {
-            // libera o restante
-            for (int j = 0; paths[j]; j++)
-                free(paths[j]);
+            j = 0;
+            while (paths[j])
+                free(paths[j++]);
             free(paths);
-            return full;
+            return (full);
         }
         free(full);
+        i++;
     }
-    for (int j = 0; paths[j]; j++)
-        free(paths[j]);
+    j = 0;
+    while (paths[j])
+        free(paths[j++]);
     free(paths);
-    return NULL;
+    return (NULL);
 }
+
 
 // aplica redirecionamentos (<, >, >>)
 int apply_redirections(t_cmd *cmd)

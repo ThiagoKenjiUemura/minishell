@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:15:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/26 00:21:50 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 12:54:30 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,16 +130,16 @@ char *ft_strdup_full(const char *key, const char *value)
 	if (!key || !value)
 		return (NULL);
 
-	key_len = strlen(key);
-	value_len = strlen(value);
+	key_len = ft_strlen(key);
+	value_len = ft_strlen(value);
 
 	full = malloc(key_len + value_len + 2); // +1 para '=' e +1 para '\0'
 	if (!full)
 		return (NULL);
 
-	memcpy(full, key, key_len);
+	ft_memcpy(full, key, key_len);
 	full[key_len] = '=';
-	memcpy(full + key_len + 1, value, value_len);
+	ft_memcpy(full + key_len + 1, value, value_len);
 	full[key_len + value_len + 1] = '\0';
 
 	return (full);
