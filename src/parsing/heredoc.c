@@ -6,11 +6,24 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 19:47:04 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/25 20:38:41 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/26 06:34:19 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char *generate_hd_filename(t_shell *data)
+{
+    static int  count = 0;
+    char        *num;
+    char        *tmp;
+    char        *path;
+
+    num = garbage_itoa(data, count++);
+    tmp = garbage_strjoin(data, "/tmp/minishell_hd_", num);
+    path = garbage_strjoin(data, tmp, "");
+    return (path);
+}
 
 static int	read_and_write_heredoc(char *delimiter, int fd)
 {
@@ -20,7 +33,7 @@ static int	read_and_write_heredoc(char *delimiter, int fd)
 	{
 		line = readline("heredoc> ");
 		if (!line)
-			break ;
+			return (0);
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
@@ -36,43 +49,44 @@ static int	read_and_write_heredoc(char *delimiter, int fd)
 static int	process_heredoc_file(t_shell *data, t_redir *redir)
 {
 	int		fd;
-	char	*delimiter;
 
-	(void)data;
-	delimiter = redir->filename_or_delimiter;
-	fd = open("/tmp/hd_temp", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	redir->heredoc_path = generate_hd_filename(data);
+	if (!redir->heredoc_path)
+		return (-1);
+
+	fd = open(redir->heredoc_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 		return (-1);
-	if (read_and_write_heredoc(delimiter, fd) != 0)
+
+	if (read_and_write_heredoc(redir->filename_or_delimiter, fd) != 0)
 	{
 		close(fd);
 		return (-1);
 	}
+
 	close(fd);
-	redir->type = REDIR_IN;
-	redir->filename_or_delimiter = "/tmp/hd_temp";
 	return (0);
 }
 
 int	handle_heredocs(t_shell *data, t_cmd *cmd_list)
 {
-	t_cmd	*current_cmd;
-	t_redir	*current_redir;
+	t_cmd	*cmd;
+	t_redir	*redir;
 
-	current_cmd = cmd_list;
-	while (current_cmd)
+	cmd = cmd_list;
+	while (cmd)
 	{
-		current_redir = current_cmd ->redirs;
-		while (current_redir)
+		redir = cmd->redirs;
+		while (redir)
 		{
-			if (current_redir->type == REDIR_DELIMITER)
+			if (redir->type == REDIR_DELIMITER)
 			{
-				if (process_heredoc_file(data, current_redir) != 0)
+				if (process_heredoc_file(data, redir) != 0)
 					return (-1);
 			}
-			current_redir = current_redir->next;
+			redir = redir->next;
 		}
-		current_cmd = current_cmd->next;
+		cmd = cmd->next;
 	}
 	return (0);
 }
