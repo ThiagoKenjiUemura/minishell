@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 06:08:44 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 06:10:25 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ char	*finalize_and_return(t_shell *data, char *result_str, char *read_ptr);
 int		handle_heredocs(t_shell *data, t_cmd *cmd_list);
 // Builtins
 int		execute(t_shell *data);
+int		execute_external(t_shell *data, t_cmd *cmd);
 int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args);
