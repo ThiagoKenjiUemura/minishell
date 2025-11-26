@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 19:47:04 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 06:52:52 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 17:09:46 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,38 @@ static char *generate_hd_filename(t_shell *data)
 {
     static int  count = 0;
     char        *num;
-    char        *tmp;
     char        *path;
 
     num = garbage_itoa(data, count++);
-    tmp = garbage_strjoin(data, "/tmp/minishell_hd_", num);
-    path = garbage_strjoin(data, tmp, "");
+    path = garbage_strjoin(data, "/tmp/minishell_hd_", num);
     return (path);
 }
 
-static int	read_and_write_heredoc(char *delimiter, int fd)
+static int  read_and_write_heredoc(char *delimiter, int fd)
 {
-	char	*line;
+    char    *line;
 
-	while (1)
-	{
-		line = readline("heredoc> ");
-		if (!line)
-			return (0);
-		if (ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write(fd, line, ft_strlen(line));
-		write(fd, "\n", 1);
-		free(line);
-	}
-	return (0);
+    while (1)
+    {
+        line = readline("heredoc> ");
+        if (!line)
+            return (0);
+
+        /* Se quiser expansão de variáveis aqui */
+        /* line = expand_heredoc_line(data, line, delimiter); */
+
+        if (ft_strcmp(line, delimiter) == 0)
+        {
+            free(line);
+            break ;
+        }
+
+        write(fd, line, ft_strlen(line));
+        write(fd, "\n", 1);
+
+        free(line);
+    }
+    return (0);
 }
 
 static int	process_heredoc_file(t_shell *data, t_redir *redir)
@@ -61,9 +65,9 @@ static int	process_heredoc_file(t_shell *data, t_redir *redir)
 	if (read_and_write_heredoc(redir->filename, fd) != 0)
 	{
 		close(fd);
+		unlink(redir->heredoc_path);
 		return (-1);
 	}
-
 	close(fd);
 	return (0);
 }

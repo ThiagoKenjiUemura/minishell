@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/26 13:03:50 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/26 19:27:27 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ char    *find_in_path(const char *cmd, char **envp)
     return (NULL);
 }
 
-
-// aplica redirecionamentos (<, >, >>)
 int apply_redirections(t_cmd *cmd)
 {
     t_redir *r = cmd->redirs;
@@ -91,7 +89,7 @@ int apply_redirections(t_cmd *cmd)
 
     while (r)
     {
-        if (r->type == 0) // <
+        if (r->type == 0)
         {
             fd = open(r->filename, O_RDONLY);
             if (fd < 0)
@@ -102,7 +100,7 @@ int apply_redirections(t_cmd *cmd)
             dup2(fd, STDIN_FILENO);
             close(fd);
         }
-        else if (r->type == 1) // >
+        else if (r->type == 1)
         {
             fd = open(r->filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
             if (fd < 0)
@@ -113,7 +111,7 @@ int apply_redirections(t_cmd *cmd)
             dup2(fd, STDOUT_FILENO);
             close(fd);
         }
-        else if (r->type == 2) // >>
+        else if (r->type == 2)
         {
             fd = open(r->filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
             if (fd < 0)
@@ -129,11 +127,10 @@ int apply_redirections(t_cmd *cmd)
     return 0;
 }
 
-// executa um comando externo (ou via PATH)
-int execute_external(t_shell *data, t_cmd *cmd)
+int	execute_external(t_shell *data, t_cmd *cmd)
 {
-    pid_t pid;
-    int status;
+	pid_t	pid;
+	int		status;
 
     pid = fork();
     if (pid < 0)
@@ -142,22 +139,26 @@ int execute_external(t_shell *data, t_cmd *cmd)
         return 1;
     }
 
-    if (pid == 0) // filho
+  if (pid == 0)
     {
-        if (apply_redirections(cmd))
-            exit(1);
-
         if (cmd->input_fd != STDIN_FILENO)
         {
             dup2(cmd->input_fd, STDIN_FILENO);
             close(cmd->input_fd);
         }
+
+        // Saída do PIPE
         if (cmd->output_fd != STDOUT_FILENO)
         {
             dup2(cmd->output_fd, STDOUT_FILENO);
             close(cmd->output_fd);
         }
 
+        // Agora aplica redirecionamentos (redirecionamento vence PIPE)
+        if (apply_redirections(cmd))
+            exit(1);
+
+        // Execve
         if (cmd->path)
             execve(cmd->path, cmd->args, data->envp);
         else
@@ -173,11 +174,8 @@ int execute_external(t_shell *data, t_cmd *cmd)
         perror(cmd->args[0]);
         exit(127);
     }
-
     waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-        return WEXITSTATUS(status);
-    return 1;
+    return WIFEXITED(status) ? WEXITSTATUS(status) : 1;
 }
 
 // executa pipeline de comandos
@@ -198,7 +196,7 @@ int execute_pipeline(t_shell *data, t_cmd *cmd_list)
 
         if (cmd->is_builtin)
         {
-            status = execute_builtin(data);
+            status = execute_builtin(data, cmd);
             data->last_exit_status = status;
         }
         else
