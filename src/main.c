@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 16:14:56 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/25 23:01:33 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ static int	prepare_commands(t_shell *data, t_token **tokens, t_cmd **cmd_list)
 	*tokens = lexer(data, data->input);
 	if (!*tokens)
 		return (0);
+	if (expand_tokens(data, *tokens) != 0)
+	{
+		printf("--- ERRO: Falha na Expansão! ---\n");
+		return (0);
+	}
 	*cmd_list = parser(data, *tokens);
-	if (!*cmd_list)
+	if (handle_heredocs(data, *cmd_list) != 0)
 		return (0);
 	return (1);
 }
@@ -27,7 +32,7 @@ static void	minishell_loop(t_shell *data)
 {
 	t_token	*tokens;
 	t_cmd	*cmd_list;
-	
+
 	while (data->running)
 	{
 		data->input = readline("minishell$ ");
@@ -35,7 +40,7 @@ static void	minishell_loop(t_shell *data)
 		{
 			ft_printf("exit\n");
 			data->running = 0;
-			break;
+			break ;
 		}
 		garbage_add(data, data->input);
 		if (*data->input)
@@ -49,7 +54,7 @@ static void	minishell_loop(t_shell *data)
 	}
 }
 
-static	void init_signals(void)
+static	void	init_signals(void)
 {
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
