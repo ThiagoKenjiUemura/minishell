@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/15 17:04:57 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/26 00:59:34 by tkenji-u         ###   ########.fr       */
+/*   Created: 2025/11/26 01:31:25 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/11/26 02:29:57 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	exec_single_cmd(t_cmd *cmd, t_shell *data)
 {
-	size_t			i;
-	unsigned char	*c1;
-	unsigned char	*c2;
+	pid_t	pid;
+	int		status;
 
-	c1 = (unsigned char *)s1;
-	c2 = (unsigned char *)s2;
-	i = 0;
-	if (n == 0)
+	pid = fork();
+	if (pid < 0)
+		return (perror("fork"), 1);
+	if (pid == 0)
 	{
-		return (0);
+		run_child(cmd, data, STDIN_FILENO, STDOUT_FILENO);
+		exit(0);
 	}
-	while (i < n)
-	{
-		if (c1[i] != c2[i] || c1[i] == '\0' || c2[i] == '\0')
-		{
-			return (c1[i] - c2[i]);
-		}
-		i++;
-	}
-	return (0);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (1);
 }

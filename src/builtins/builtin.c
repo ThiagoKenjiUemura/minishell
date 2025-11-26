@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 16:09:35 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/25 23:56:52 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 02:11:21 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,42 +33,24 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-static int	execute_builtin(t_shell *data)
+int	run_builtin(t_shell *data, t_cmd *cmd)
 {
-	char	*cmd;
-
-	cmd = data->name_cmd->cmd;
-	if (!cmd)
+	if (!cmd || !cmd->cmd)
 		return (0);
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (ft_cd(data->name_cmd->args));
-	if (ft_strcmp(cmd, "env") == 0)
-		return (ft_env(data, data->name_cmd->args));
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (ft_echo(data->name_cmd->args));
-	if (ft_strcmp(cmd, "pwd") == 0)
+	if (!ft_strcmp(cmd->cmd, "cd"))
+		return (ft_cd(cmd->args));
+	if (!ft_strcmp(cmd->cmd, "env"))
+		return (ft_env(data, cmd->args));
+	if (!ft_strcmp(cmd->cmd, "echo"))
+		return (ft_echo(cmd->args));
+	if (!ft_strcmp(cmd->cmd, "pwd"))
 		return (ft_pwd());
-	if (ft_strcmp(cmd, "export") == 0)
-		return (ft_export(data, data->name_cmd->args));
-	if (ft_strcmp(cmd, "unset") == 0)
-		return (ft_unset(data, data->name_cmd->args));
-	if (ft_strcmp(cmd, "exit") == 0)
-		return (ft_exit(data, data->name_cmd));
+	if (!ft_strcmp(cmd->cmd, "export"))
+		return (ft_export(data, cmd->args));
+	if (!ft_strcmp(cmd->cmd, "unset"))
+		return (ft_unset(data, cmd->args));
+	if (!ft_strcmp(cmd->cmd, "exit"))
+		return (ft_exit(data, cmd));
 	return (0);
 }
 
-int	execute(t_shell *data)
-{
-	int	status;
-
-	status = 0;
-	if (!data->name_cmd)
-		return (0);
-	if (data->name_cmd->is_builtin)
-	{
-		status = execute_builtin(data);
-		data->last_exit_status = status;
-		return status;
-	}
-	return (0);
-}

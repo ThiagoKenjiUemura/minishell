@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 17:16:35 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/25 23:10:54 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/26 01:17:25 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ char	*sub_var_in_str(t_shell *data, char *str)
 	char	*read_ptr;
 	char	*next_dollar;
 
-	result_str = NULL;
+	result_str = garbage_strdup(data, "");
+	if (!result_str)
+		return (NULL);
 	read_ptr = str;
 	next_dollar = ft_strchr(read_ptr, '$');
 	while (next_dollar != NULL)
@@ -105,6 +107,7 @@ char	*sub_var_in_str(t_shell *data, char *str)
 		result_str = handle_sub(data, result_str, &read_ptr);
 		if (!result_str)
 			return (NULL);
+		next_dollar = ft_strchr(read_ptr, '$');
 	}
 	return (finalize_and_return(data, result_str, read_ptr));
 }

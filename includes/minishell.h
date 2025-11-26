@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 00:26:34 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 02:27:13 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,27 @@ typedef enum e_token_types
 	REDIR_IN,
 	REDIR_OUT,
 	REDIR_APPEND,
-	REDIR_DELIMITER,
-}	t_type;
+	REDIR_DELIMITER
+}				t_type;
 
 typedef struct s_garbage
 {
 	void				*ptr;
 	struct s_garbage	*next;
-}						t_garbage;
+}					t_garbage;
 
 typedef struct s_token
 {
 	char			*value;
 	t_type			type;
 	struct s_token	*next;
-}	t_token;
+}					t_token;
 
 typedef struct s_redir
 {
 	t_type			type;
 	char			*filename_or_delimiter;
+	char			*heredoc_path;
 	struct s_redir	*next;
 }					t_redir;
 
@@ -76,15 +77,16 @@ typedef struct s_shell
 	t_garbage	*garbage;
 	t_cmd		*name_cmd;
 	int			running;
-}				t_shell;
+}					t_shell;
 
-//Main / Setup 
+/* main / setup */
 int		main(int argc, char **argv, char **envp);
 void	handle_sigint(int sig_num);
 char	**init_envp(char **envp);
 void	free_envp(char **envp);
 void	free_shell(t_shell *data);
-//Garbage
+
+/* garbage helpers */
 void	*garbage_calloc(t_shell *data, size_t size);
 int		garbage_add(t_shell *data, void *ptr);
 char	*garbage_strdup(t_shell *data, const char *src);
@@ -94,7 +96,8 @@ char	*garbage_substr(t_shell *data, char const *s,
 char	*garbage_strjoin(t_shell *data, char const *s1,
 			char const *s2);
 char	*garbage_itoa(t_shell *data, int n);
-//Parser / Lexer
+
+/* lexer / parser / tokens */
 int		count_tokens(char *input);
 int		skip_spaces(char *input, int i);
 t_token	*create_token(t_shell *data, char *value, t_type type);
@@ -104,33 +107,49 @@ int		get_token_len(char *input, int i);
 int		get_operator_len(char *input, int i);
 int		get_quote_len(char *input, int i);
 int		get_word_len(char *input, int i);
-t_cmd	*parser(t_shell *data, t_token *token_list);
 t_token	*lexer(t_shell *data, char *input);
+t_cmd	*parser(t_shell *data, t_token *token_list);
 bool	quote_parser(char *input);
 int		ft_str_arr_len(t_cmd *cmd);
-char	*create_temp_key(const char *s, size_t len);
-int		add_arg_to_cmd(t_shell *data, t_cmd *cmd,
-			char *value);
+int		add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value);
 int		add_redir_to_cmd(t_shell *data, t_cmd *cmd,
 			t_token *op_token, t_token *file_token);
+
+/* expansion / quotes / heredoc */
+char	*create_temp_key(const char *s, size_t len);
 char	*sub_var_in_str(t_shell *data, char *str);
 int		expand_tokens(t_shell *data, t_token *head);
 char	*rmv_quotes_str(t_shell *data, char *str);
 char	*finalize_and_return(t_shell *data, char *result_str, char *read_ptr);
 int		handle_heredocs(t_shell *data, t_cmd *cmd_list);
-// Builtins
+
+/* executor / pipeline */
 int		execute(t_shell *data);
+int		execute_pipeline(t_shell *data);
+int		exec_single_cmd(t_cmd *cmd, t_shell *data);
+int		run_builtin(t_shell *data, t_cmd *cmd);
+int		wait_children(pid_t *pids, int count, t_shell *data);
+void	run_child(t_cmd *cmd, t_shell *data, int in_fd, int out_fd);
+
+/* redirections */
+int		apply_redirections(t_cmd *cmd);
+int		open_infile(t_redir *r);
+int		open_outfile(t_redir *r);
+
+/* builtins */
 int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args);
 int		ft_echo(char **args);
 int		ft_pwd(void);
 int		ft_export(t_shell *data, char **args);
-char	*env_get(char **env, const char *key);
-int		env_set(char ***env, const char *key, const char *value);
-int		env_remove(char ***env, const char *key);
 int		ft_env(t_shell *data, char **args);
 int		ft_unset(t_shell *data, char **args);
 char	*ft_strdup_full(const char *key, const char *value);
+
+/* env helpers */
+char	*env_get(char **env, const char *key);
+int		env_set(char ***env, const char *key, const char *value);
+int		env_remove(char ***env, const char *key);
 
 #endif

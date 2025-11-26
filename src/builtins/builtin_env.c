@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:15:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/26 00:21:50 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 02:11:44 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,22 @@
 char	*env_get(char **env, const char *key)
 {
 	int		i;
-	int		len;
+	size_t	len;
 
 	len = ft_strlen(key);
 	i = 0;
-
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], key, len) && env[i][len] == '=')
-			return (env[i] + len + 1);
+		if (!ft_strncmp(env[i], key, len))
+		{
+			if(env[i][len] == '=')
+				return (env[i] + len + 1);
+		
+		}
 		i++;
 	}
 	return (NULL);
 }
-
 
 int	env_set(char ***env, const char *key, const char *value)
 {

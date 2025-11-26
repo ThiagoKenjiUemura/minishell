@@ -6,7 +6,7 @@
 #    By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/25 22:57:07 by tkenji-u         ###   ########.fr        #
+#    Updated: 2025/11/26 01:55:49 by tkenji-u         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,10 @@ SRCS = src/main.c \
 	src/parsing/expander.c \
 	src/parsing/quote_removal.c \
 	src/parsing/heredoc.c \
+	src/executor/exec_cmd.c \
+	src/executor/executor.c \
+	src/executor/pipeline.c \
+	src/executor/redirections.c \
 	src/signals/signals.c \
 	src/envp/env_init.c \
 	src/builtins/builtin.c \
