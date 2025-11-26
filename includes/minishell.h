@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 06:05:44 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 06:08:44 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args);
 int		ft_echo(char **args);
+int		execute_builtin(t_shell *data);
 int		ft_pwd(void);
 int		ft_export(t_shell *data, char **args);
 char	*env_get(char **env, const char *key);
