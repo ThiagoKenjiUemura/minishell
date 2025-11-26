@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:15:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 12:34:27 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 00:21:50 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,110 +14,133 @@
 
 char	*env_get(char **env, const char *key)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		len;
 
-	i = 0;
 	len = ft_strlen(key);
+	i = 0;
+
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], key, len) == 0 && env[i][len] == '=')
+		if (!ft_strncmp(env[i], key, len) && env[i][len] == '=')
 			return (env[i] + len + 1);
 		i++;
 	}
 	return (NULL);
 }
 
-char	*env_build_var(t_shell *data, const char *key, const char *value)
-{
-	size_t	total;
-	char	*var;
 
-	total = ft_strlen(key) + ft_strlen(value) + 2;
-	var = garbage_calloc(data, total);
-	if (!var)
-		return (NULL);
-	ft_strlcpy(var, key, total);
-	ft_strlcat(var, "=", total);
-	ft_strlcat(var, value, total);
-	return (var);
-}
-
-int	env_set(t_shell *data, char ***env, const char *key, const char *value)
+int	env_set(char ***env, const char *key, const char *value)
 {
 	int		i;
 	int		len;
 	char	*new_var;
 	char	**new_env;
 
-	i = 0;
 	len = ft_strlen(key);
-	new_var = env_build_var(data, key, value);
+	new_var = ft_strdup_full(key, value);
 	if (!new_var)
 		return (1);
+
+	i = 0;
 	while ((*env)[i])
 	{
 		if (!ft_strncmp((*env)[i], key, len) && (*env)[i][len] == '=')
 		{
+			free((*env)[i]);
 			(*env)[i] = new_var;
 			return (0);
 		}
 		i++;
 	}
-	new_env = garbage_calloc(data, sizeof(char *) * (i + 2));
+	new_env = malloc(sizeof(char *) * (i + 2));
 	if (!new_env)
+	{
+		free(new_var);
 		return (1);
-	i = -1;
-	while ((*env)[++i])
-		new_env[i] = (*env)[i];
+	}
+
+	for (int j = 0; j < i; j++)
+		new_env[j] = (*env)[j];
+
 	new_env[i] = new_var;
 	new_env[i + 1] = NULL;
+
+	free(*env);
 	*env = new_env;
 	return (0);
 }
-
-int	env_remove(t_shell *data, char ***env, const char *key)
+int	env_remove(char ***env, const char *key)
 {
-	int		i;
-	int		j;
-	int		len;
-	int		count;
+	int		i, j, len, idx;
 	char	**new_env;
 
-	i = 0;
-	j = 0;
 	len = ft_strlen(key);
-	count = 0;
-	while ((*env)[count])
-		count++;
-	new_env = garbage_calloc(data, sizeof(char *) * count);
-	if (!new_env)
-		return (1);
+	idx = -1;
+	i = 0;
 	while ((*env)[i])
 	{
-		if (!(ft_strncmp((*env)[i], key, len) == 0 && (*env)[i][len] == '='))
+		if (!ft_strncmp((*env)[i], key, len) && (*env)[i][len] == '=')
 		{
-			new_env[j] = (*env)[i];
-			j++;
+			idx = i;
+			break;
 		}
 		i++;
 	}
+	if (idx == -1)
+		return (0);
+	new_env = malloc(sizeof(char *) * i);
+	if (!new_env)
+		return (1);
+	j = 0;
+	for (int k = 0; (*env)[k]; k++)
+	{
+		if (k != idx)
+			new_env[j++] = (*env)[k];
+		else
+			free((*env)[k]);
+	}
 	new_env[j] = NULL;
+	free(*env);
 	*env = new_env;
 	return (0);
 }
 
 int	ft_env(t_shell *data, char **args)
 {
-	int	i;
+	int	i = 0;
 
-	i = 0;
-	if (args[1] != NULL)
+	if (args[1])
 		return (0);
+
 	while (data->envp[i])
 	{
 		ft_printf("%s\n", data->envp[i]);
 		i++;
 	}
 	return (0);
+}
+
+char *ft_strdup_full(const char *key, const char *value)
+{
+	char	*full;
+	size_t	key_len;
+	size_t	value_len;
+
+	if (!key || !value)
+		return (NULL);
+
+	key_len = strlen(key);
+	value_len = strlen(value);
+
+	full = malloc(key_len + value_len + 2); // +1 para '=' e +1 para '\0'
+	if (!full)
+		return (NULL);
+
+	memcpy(full, key, key_len);
+	full[key_len] = '=';
+	memcpy(full + key_len + 1, value, value_len);
+	full[key_len + value_len + 1] = '\0';
+
+	return (full);
 }
