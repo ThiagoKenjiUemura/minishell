@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 16:09:35 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/25 23:56:52 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 05:58:27 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,4 @@ static int	execute_builtin(t_shell *data)
 	return (0);
 }
 
-int	execute(t_shell *data)
-{
-	int	status;
 
-	status = 0;
-	if (!data->name_cmd)
-		return (0);
-	if (data->name_cmd->is_builtin)
-	{
-		status = execute_builtin(data);
-		data->last_exit_status = status;
-		return status;
-	}
-	return (0);
-}

@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 00:26:34 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/26 06:05:44 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_cmd
 {
 	char			*cmd;
 	char			**args;
+	char			*path;
 	t_redir			*redirs;
 	int				is_builtin;
 	int				input_fd;
@@ -82,6 +83,7 @@ typedef struct s_shell
 int		main(int argc, char **argv, char **envp);
 void	handle_sigint(int sig_num);
 char	**init_envp(char **envp);
+int		execute_external(t_shell *data, t_cmd *cmd);
 void	free_envp(char **envp);
 void	free_shell(t_shell *data);
 //Garbage
