@@ -6,12 +6,11 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:43:08 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 10:54:31 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:15:19 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static char	*free_paths_and_return(char **paths, char *return_val)
 {
@@ -54,4 +53,3 @@ char	*find_in_path(const char *cmd, char **envp)
 	}
 	return (free_paths_and_return(paths, NULL));
 }
-
