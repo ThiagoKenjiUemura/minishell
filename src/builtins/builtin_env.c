@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:15:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/26 12:54:30 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/27 08:20:14 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	env_set(char ***env, const char *key, const char *value)
 	new_var = ft_strdup_full(key, value);
 	if (!new_var)
 		return (1);
-
 	i = 0;
 	while ((*env)[i])
 	{
@@ -108,11 +107,11 @@ int	env_remove(char ***env, const char *key)
 
 int	ft_env(t_shell *data, char **args)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	if (args[1])
 		return (0);
-
 	while (data->envp[i])
 	{
 		ft_printf("%s\n", data->envp[i]);
@@ -121,7 +120,7 @@ int	ft_env(t_shell *data, char **args)
 	return (0);
 }
 
-char *ft_strdup_full(const char *key, const char *value)
+char	*ft_strdup_full(const char *key, const char *value)
 {
 	char	*full;
 	size_t	key_len;
@@ -129,18 +128,14 @@ char *ft_strdup_full(const char *key, const char *value)
 
 	if (!key || !value)
 		return (NULL);
-
 	key_len = ft_strlen(key);
 	value_len = ft_strlen(value);
-
-	full = malloc(key_len + value_len + 2); // +1 para '=' e +1 para '\0'
+	full = malloc(key_len + value_len + 2);
 	if (!full)
 		return (NULL);
-
 	ft_memcpy(full, key, key_len);
 	full[key_len] = '=';
 	ft_memcpy(full + key_len + 1, value, value_len);
 	full[key_len + value_len + 1] = '\0';
-
 	return (full);
 }

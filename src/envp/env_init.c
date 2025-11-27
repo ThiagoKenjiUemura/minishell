@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:43:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/26 00:17:45 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 08:26:39 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ void	free_shell(t_shell *data)
 
 void	free_envp(char **envp)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	if (!envp)
-		return;
+		return ;
 	while (envp[i])
 	{
 		free(envp[i]);

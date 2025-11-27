@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 17:34:10 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 08:27:53 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void	free_envp(char **envp);
 void	free_shell(t_shell *data);
 
 //Execute
-char *find_in_path(const char *cmd, char **envp);
-int apply_redirections(t_cmd *cmd);
-int execute_external(t_shell *data, t_cmd *cmd);
-int execute_pipeline(t_shell *data, t_cmd *cmd_list);
-int execute(t_shell *data);
+char	*find_in_path(const char *cmd, char **envp);
+int		apply_redirections(t_cmd *cmd);
+int		execute_external(t_shell *data, t_cmd *cmd);
+int		execute_pipeline(t_shell *data, t_cmd *cmd_list);
+int		execute(t_shell *data);
 //Garbage
 void	*garbage_calloc(t_shell *data, size_t size);
 int		garbage_add(t_shell *data, void *ptr);

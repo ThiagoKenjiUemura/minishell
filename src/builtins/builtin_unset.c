@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:13 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/26 00:12:02 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 08:25:44 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	ft_unset(t_shell *data, char **args)
 {
-	int	i = 1;
+	int	i;
 
+	i = 1;
 	while (args[i])
 	{
 		env_remove(&data->envp, args[i]);
