@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 16:09:35 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 08:24:27 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:01:47 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	execute_builtin(t_shell *data, t_cmd *cmd)
 		return (0);
 	name = cmd->cmd;
 	if (ft_strcmp(name, "cd") == 0)
-		return (ft_cd(cmd->args));
+		return (ft_cd(data, cmd->args));
 	if (ft_strcmp(name, "env") == 0)
 		return (ft_env(data, cmd->args));
 	if (ft_strcmp(name, "echo") == 0)
