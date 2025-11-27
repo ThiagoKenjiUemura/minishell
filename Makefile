@@ -6,7 +6,7 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/27 11:29:26 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/27 11:31:57 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,10 +48,10 @@ SRCS = src/main.c \
 	src/execute/execute.c \
 	src/execute/execute_external.c \
 	src/execute/path.c \
-	src/redirection/redirection.c \
-	src/redirection/redirection_utils.c \
-	src/redirection/redirection_check.c \
-	src/redirection/redirection_builtin_exec.c \
+	src/execute/redirection/redirection.c \
+	src/execute/redirection/redirection_utils.c \
+	src/execute/redirection/redirection_check.c \
+	src/execute/redirection/redirection_builtin_exec.c \
 
 OBJS = $(SRCS:.c=.o)
 
