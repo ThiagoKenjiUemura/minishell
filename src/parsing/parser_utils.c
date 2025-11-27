@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/27 08:58:37 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:06:05 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,28 @@ int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 	return (0);
 }
 
-int add_redir_to_cmd(t_shell *data, t_cmd *cmd,
+int	add_redir_to_cmd(t_shell *data, t_cmd *cmd,
 t_token *op_token, t_token *file_token)
 {
-    t_redir *new_redir;
-    t_redir *current;
+	t_redir	*new_redir;
+	t_redir	*current;
 
-    new_redir = garbage_calloc(data, sizeof(t_redir));
-    if (!new_redir)
-        return (1);
-    new_redir->type = op_token->type;
-    new_redir->filename = file_token->value;
-    new_redir->next = NULL;
-    if (!cmd->redirs)
-    {
-        cmd->redirs = new_redir;
-    }
-    else
-    {
-        current = cmd->redirs;
-        while (current->next)
-            current = current->next;
-        current->next = new_redir;
-    }
-    return (0);
+	new_redir = garbage_calloc(data, sizeof(t_redir));
+	if (!new_redir)
+		return (1);
+	new_redir->type = op_token->type;
+	new_redir->filename = file_token->value;
+	new_redir->next = NULL;
+	if (!cmd->redirs)
+	{
+		cmd->redirs = new_redir;
+	}
+	else
+	{
+		current = cmd->redirs;
+		while (current->next)
+			current = current->next;
+		current->next = new_redir;
+	}
+	return (0);
 }

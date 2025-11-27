@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 15:00:11 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 06:25:09 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:05:04 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 static int	handle_expansion_logic(t_shell *data, t_token *token)
 {
-	char *new_value;
+	char	*new_value;
 
 	if (!token || !token->value)
 		return (-1);
 	if (token->value[0] == '\'')
 		return (0);
-
 	if (ft_strchr(token->value, '$'))
 	{
 		new_value = sub_var_in_str(data, token->value);
@@ -37,7 +36,6 @@ int	expand_tokens(t_shell *data, t_token *head)
 
 	if (!data || !head)
 		return (-1);
-
 	current = head;
 	while (current)
 	{

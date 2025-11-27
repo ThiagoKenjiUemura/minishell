@@ -3,32 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 17:16:35 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 06:29:18 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:16:11 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int get_var_key_len(char *str)
+static int	get_var_key_len(char *str)
 {
+	int	i;
+
+	i = 1;
 	if (*str == '?')
 		return (1);
 	if (!(*str == '_' || ft_isalpha(*str)))
 		return (0);
-	int i = 1;
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
 	return (i);
 }
 
-static char *get_expanded_value(t_shell *data, char *key_start, int key_len)
+static char	*get_expanded_value(t_shell *data, char *key_start, int key_len)
 {
-	char *key;
-	char *value;
-	char *result;
+	char	*key;
+	char	*value;
+	char	*result;
 
 	if (*key_start == '?')
 		return (garbage_itoa(data, data->last_exit_status));
@@ -44,34 +46,39 @@ static char *get_expanded_value(t_shell *data, char *key_start, int key_len)
 	return (result);
 }
 
-static char *apnd_prfx_seg(t_shell *data, char *result, char *start, char *end)
+static char	*apnd_prfx_seg(t_shell *data, char *result, char *start, char *end)
 {
-	char *prefix;
-	int len = end - start;
+	char	*prefix;
+	int		len;
+
+	len = end - start;
 	if (len <= 0)
-		return result;
+		return (result);
 	prefix = garbage_substr(data, start, 0, len);
 	if (!prefix)
-		return NULL;
+		return (NULL);
 	result = garbage_strjoin(data, result, prefix);
-	return result;
+	return (result);
 }
 
-static char *handle_dollar(t_shell *data, char *result, char **read_ptr)
+static char	*handle_dollar(t_shell *data, char *result, char **read_ptr)
 {
-	int key_len = get_var_key_len(*read_ptr);
+	int		key_len;
+	char	*expanded;
+
+	key_len = get_var_key_len(*read_ptr);
 	if (key_len == 0)
 	{
 		result = garbage_strjoin(data, result, "$");
 		(*read_ptr)++;
-		return result;
+		return (result);
 	}
-	char *expanded = get_expanded_value(data, *read_ptr, key_len);
+	expanded = get_expanded_value(data, *read_ptr, key_len);
 	if (!expanded)
-		return NULL;
+		return (NULL);
 	result = garbage_strjoin(data, result, expanded);
 	*read_ptr += key_len;
-	return result;
+	return (result);
 }
 
 char	*sub_var_in_str(t_shell *data, char *str)
@@ -94,7 +101,6 @@ char	*sub_var_in_str(t_shell *data, char *str)
 		result_str = handle_dollar(data, result_str, &read_ptr);
 		if (!result_str)
 			return (NULL);
-
 		next_dollar = ft_strchr(read_ptr, '$');
 	}
 	return (finalize_and_return(data, result_str, read_ptr));
