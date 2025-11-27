@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 16:41:24 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/25 23:03:11 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:47:56 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,27 @@ char	*garbage_strdup(t_shell *data, const char *src)
 		return (NULL);
 	}
 	return (dup);
+}
+
+char	*garbage_itoa(t_shell *data, int n)
+{
+	unsigned int	number;
+	int				sign;
+	size_t			number_len;
+	char			*number_char;
+
+	sign = 0;
+	if (n < 0)
+	{
+		number = (unsigned int)-n;
+		sign = 1;
+	}
+	else
+		number = (unsigned int)n;
+	number_len = ft_number_len(number);
+	number_char = garbage_calloc(data, (number_len + sign + 1) * sizeof(char));
+	if (!number_char)
+		return (NULL);
+	ft_num_char(number_char, sign, number, number_len);
+	return (number_char);
 }

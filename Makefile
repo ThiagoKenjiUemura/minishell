@@ -6,7 +6,7 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/27 11:31:57 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/27 12:00:57 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,8 +42,8 @@ SRCS = src/main.c \
 	src/builtins/builtin_exit.c \
 	src/builtins/builtin_export.c \
 	src/builtins/builtin_unset.c \
+	src/builtins/builtin_utils.c \
 	src/garbage/garbage_utils.c \
-	src/garbage/garbage_utils2.c \
 	src/garbage/garbage.c \
 	src/execute/execute.c \
 	src/execute/execute_external.c \

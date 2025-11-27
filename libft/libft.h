@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:27:59 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 10:26:13 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:58:37 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
 char			**ft_split(char const *s, char c);
-char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 void			ft_putchar_fd(char c, int fd);
@@ -77,5 +76,7 @@ char			*get_next_line(int fd);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_str_is_numeric(const char *s);
 char			*ft_strjoin3(char *s1, char *s2, char *s3);
+size_t			ft_number_len(unsigned int number);
+void			*ft_num_char(char *s, int sign, unsigned int num, size_t len);
 
 #endif
