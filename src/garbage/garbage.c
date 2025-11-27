@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:34:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/25 23:03:37 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/27 15:20:26 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,19 @@ int	garbage_add(t_shell *data, void *ptr)
 
 void	garbage_free_all(t_shell *data)
 {
-	t_garbage	*tmp;
+	t_garbage *tmp;
 
 	if (!data)
 		return ;
-	while (data->garbage)
+	while (data->garbage != NULL)
 	{
 		tmp = data->garbage;
 		data->garbage = data->garbage->next;
-		free(tmp->ptr);
+		if (tmp->ptr != NULL)
+		{
+			free(tmp->ptr);
+			tmp->ptr = NULL;
+		}
 		free(tmp);
 	}
 	data->garbage = NULL;
