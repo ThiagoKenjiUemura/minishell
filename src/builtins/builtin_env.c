@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:15:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 08:32:29 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:39:26 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ char	*env_get(char **env, const char *key)
 
 	len = ft_strlen(key);
 	i = 0;
-
 	while (env[i])
 	{
 		if (!ft_strncmp(env[i], key, len) && env[i][len] == '=')
@@ -29,91 +28,26 @@ char	*env_get(char **env, const char *key)
 	return (NULL);
 }
 
-
 int	env_set(char ***env, const char *key, const char *value)
 {
-	int		i;
-	int		len;
 	char	*new_var;
-	char	**new_env;
 
-	len = ft_strlen(key);
 	new_var = ft_strdup_full(key, value);
 	if (!new_var)
 		return (1);
-	i = 0;
-	while ((*env)[i])
-	{
-		if (!ft_strncmp((*env)[i], key, len) && (*env)[i][len] == '=')
-		{
-			free((*env)[i]);
-			(*env)[i] = new_var;
-			return (0);
-		}
-		i++;
-	}
-	new_env = malloc(sizeof(char *) * (i + 2));
-	if (!new_env)
-	{
-		free(new_var);
-		return (1);
-	}
-
-	for (int j = 0; j < i; j++)
-		new_env[j] = (*env)[j];
-
-	new_env[i] = new_var;
-	new_env[i + 1] = NULL;
-
-	free(*env);
-	*env = new_env;
-	return (0);
+	if (replace_env_var(*env, key, new_var))
+		return (0);
+	return (add_env_var(env, new_var));
 }
 
 int	env_remove(char ***env, const char *key)
 {
-	int		i;
-	int		j;
-	int		len;
-	int		idx;
-	char	**new_env;
+	int	idx;
 
-	if (!env || !*env || !key)
-		return (0);
-	len = ft_strlen(key);
-	idx = -1;
-	i = 0;
-	while ((*env)[i])
-	{
-		if (!ft_strncmp((*env)[i], key, len) && (*env)[i][len] == '=')
-		{
-			idx = i;
-			break ;
-		}
-		i++;
-	}
+	idx = find_env_index(*env, key);
 	if (idx == -1)
 		return (0);
-	new_env = malloc(sizeof(char *) * i);
-	if (!new_env)
-		return (1);
-	j = 0;
-	i = 0;
-	while ((*env)[i])
-	{
-		if (i != idx)
-		{
-			new_env[j] = (*env)[i];
-			j++;
-		}
-		else
-			free((*env)[i]);
-		i++;
-	}
-	new_env[j] = NULL;
-	free(*env);
-	*env = new_env;
-	return (0);
+	return (remove_env_at_index(env, idx));
 }
 
 int	ft_env(t_shell *data, char **args)

@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 11:25:28 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:43:48 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,10 @@ char	*env_get(char **env, const char *key);
 int		env_set(char ***env, const char *key, const char *value);
 int		env_remove(char ***env, const char *key);
 int		ft_env(t_shell *data, char **args);
+int		replace_env_var(char **env, const char *key, char *new_var);
+int		add_env_var(char ***env, char *new_var);
 int		ft_unset(t_shell *data, char **args);
+int		find_env_index(char **env, const char *key);
 char	*ft_strdup_full(const char *key, const char *value);
+int		remove_env_at_index(char ***env, int idx);
 #endif
