@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 17:01:24 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/27 17:59:48 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -138,7 +139,7 @@ int		apply_delimiter(t_cmd *cmd, t_redir *r);
 int		is_builtin(char *cmd);
 int		execute_builtin(t_shell *data, t_cmd *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
-int		ft_cd(char **args);
+int		ft_cd(t_shell *data, char **args);
 int		ft_echo(char **args);
 int		ft_pwd(void);
 int		ft_unset(t_shell *data, char **args);

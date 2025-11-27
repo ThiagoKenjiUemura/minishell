@@ -6,16 +6,17 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:29:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/22 12:22:45 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:00:47 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_cd(char **args)
+int	ft_cd(t_shell *data, char **args)
 {
 	char	*path;
 
+	(void)data;
 	if (!args[1])
 	{
 		path = getenv("HOME");
@@ -29,7 +30,7 @@ int	ft_cd(char **args)
 		path = args[1];
 	if (chdir(path) != 0)
 	{
-		ft_printf("cd: %s: No such file or directory\n", path);
+		perror("cd");
 		return (1);
 	}
 	return (0);
