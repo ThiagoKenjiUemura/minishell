@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:39:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 14:24:45 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:32:48 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,6 @@ int	get_operator_len(char *input, int i)
 	return (0);
 }
 
-int	get_quote_len(char *input, int i)
-{
-	int		start_index;
-	char	quote_type;
-
-	start_index = i;
-	quote_type = input[i];
-	i++;
-	while (input[i] != '\0' && input[i] != quote_type)
-		i++;
-	if (input[i] != quote_type)
-		i++;
-	return (i - start_index);
-}
-
 int	get_word_len(char *input, int i)
 {
 	int	start_index;
@@ -60,12 +45,13 @@ int	get_word_len(char *input, int i)
 	return (i - start_index);
 }
 
-static int	process_one_token(t_shell *data, t_token **head, char *input, int i)
+int process_one_token(t_shell *data, t_token **head, char *input, int i)
 {
 	int		len;
 	t_type	type;
 	char	*value;
 	t_token	*new_node;
+	t_token	*last;
 
 	new_node = NULL;
 	len = get_token_len(input, i);
@@ -78,6 +64,26 @@ static int	process_one_token(t_shell *data, t_token **head, char *input, int i)
 		free(value);
 		return (-1);
 	}
+	/* Se existe token anterior, pega-o */
+	last = NULL;
+	if (head && *head)
+	{
+		last = *head;
+		while (last->next)
+			last = last->next;
+	}
+	/* Se último token e este são WORDs e NÃO houve espaço entre eles -> concatena */
+	if (last && last->type == WORD && type == WORD && i > 0 && input[i - 1] != ' ')
+	{
+		/* concatena ao valor do token anterior usando garbage (evita leaks) */
+		char *joined = garbage_strjoin(data, last->value, value);
+		if (!joined)
+			return (-1);
+		last->value = joined;
+		/* cleanup: value já foi "adicionado" ao garbage por garbage_add, não precisa free */
+		return (i + len);
+	}
+	/* Caso normal: criar novo token */
 	new_node = create_token(data, value, type);
 	if (!new_node)
 		return (-1);
