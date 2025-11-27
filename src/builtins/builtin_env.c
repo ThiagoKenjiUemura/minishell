@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:15:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 08:20:14 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 08:32:29 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,17 @@ int	env_set(char ***env, const char *key, const char *value)
 	*env = new_env;
 	return (0);
 }
+
 int	env_remove(char ***env, const char *key)
 {
-	int		i, j, len, idx;
+	int		i;
+	int		j;
+	int		len;
+	int		idx;
 	char	**new_env;
 
+	if (!env || !*env || !key)
+		return (0);
 	len = ft_strlen(key);
 	idx = -1;
 	i = 0;
@@ -82,7 +88,7 @@ int	env_remove(char ***env, const char *key)
 		if (!ft_strncmp((*env)[i], key, len) && (*env)[i][len] == '=')
 		{
 			idx = i;
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -92,12 +98,17 @@ int	env_remove(char ***env, const char *key)
 	if (!new_env)
 		return (1);
 	j = 0;
-	for (int k = 0; (*env)[k]; k++)
+	i = 0;
+	while ((*env)[i])
 	{
-		if (k != idx)
-			new_env[j++] = (*env)[k];
+		if (i != idx)
+		{
+			new_env[j] = (*env)[i];
+			j++;
+		}
 		else
-			free((*env)[k]);
+			free((*env)[i]);
+		i++;
 	}
 	new_env[j] = NULL;
 	free(*env);

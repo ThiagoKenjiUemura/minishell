@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 08:15:28 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:01:34 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static int execute_builtin_with_redirs(t_cmd *cmd, t_shell *data)
     saved_stdout = dup(STDOUT_FILENO);
     if (saved_stdin < 0 || saved_stdout < 0)
         return 1;
-
     if (apply_redirections(cmd))
     {
         dup2(saved_stdin, STDIN_FILENO);
@@ -61,19 +60,21 @@ static int execute_builtin_with_redirs(t_cmd *cmd, t_shell *data)
         close(saved_stdout);
         return 1;
     }
-
     if (cmd->input_fd != STDIN_FILENO)
+    {
         dup2(cmd->input_fd, STDIN_FILENO);
+        close(cmd->input_fd);
+    }
     if (cmd->output_fd != STDOUT_FILENO)
+    {
         dup2(cmd->output_fd, STDOUT_FILENO);
-
+        close(cmd->output_fd);
+    }
     ret = execute_builtin(data, cmd);
-
     dup2(saved_stdin, STDIN_FILENO);
     dup2(saved_stdout, STDOUT_FILENO);
     close(saved_stdin);
     close(saved_stdout);
-
     return ret;
 }
 
@@ -109,7 +110,7 @@ char *find_in_path(const char *cmd, char **envp)
     return NULL;
 }
 
-/* Aplica todos os redirecionamentos de um comando */
+
 int apply_redirections(t_cmd *cmd)
 {
     t_redir *r = cmd->redirs;
@@ -172,20 +173,19 @@ int execute_external(t_shell *data, t_cmd *cmd)
 
     if (pid == 0)
     {
-        if (apply_redirections(cmd)) exit(1);
+        if (apply_redirections(cmd)) 
+			exit(1);
 
         if (cmd->input_fd != STDIN_FILENO)
         {
             dup2(cmd->input_fd, STDIN_FILENO);
             close(cmd->input_fd);
         }
-
-        if (!has_output_redirection(cmd) && cmd->output_fd != STDOUT_FILENO)
-        {
-            dup2(cmd->output_fd, STDOUT_FILENO);
-            close(cmd->output_fd);
-        }
-
+        if (cmd->output_fd != STDOUT_FILENO)
+		{
+			dup2(cmd->output_fd, STDOUT_FILENO);
+			close(cmd->output_fd);
+		}
         if (cmd->path)
             execve(cmd->path, cmd->args, data->envp);
         else
