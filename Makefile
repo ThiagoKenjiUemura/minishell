@@ -3,21 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
+#    By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/27 12:00:57 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/27 15:42:53 by thiagouemur      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I includes/ -I libft/ -g3
+BREW_RL := $(shell brew --prefix readline 2>/dev/null)
+
+CFLAGS = -Wall -Wextra -Werror -I includes/ -I libft/ -g3 \
+		 $(if $(BREW_RL),-I$(BREW_RL)/include,)
 
 LIBFT_DIR= libft
 LIBFT_A = $(LIBFT_DIR)/libft.a
-LDFLAGS = -L$(LIBFT_DIR)
+LDFLAGS = -L$(LIBFT_DIR) $(if $(BREW_RL),-L$(BREW_RL)/lib,)
 LDLIBS = -lft -lreadline
 
 SRCS = src/main.c \

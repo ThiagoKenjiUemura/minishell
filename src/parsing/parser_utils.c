@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/27 14:46:41 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 16:25:59 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,42 @@ int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 	return (0);
 }
 
-int	add_redir_to_cmd(t_shell *data, t_cmd *cmd,
-t_token *op_token, t_token *file_token)
+static char *clean_token_value(t_shell *data, char *s)
 {
-	t_redir	*new_redir;
-	t_redir	*current;
+	int len;
 
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	if ((s[0] == '\'' && s[len - 1] == '\'')
+		|| (s[0] == '"' && s[len - 1] == '"'))
+		return (garbage_substr(data, s, 1, len - 2));
+	return (garbage_strdup(data, s));
+}
+
+int add_redir_to_cmd(t_shell *data, t_cmd *cmd, t_token *op_token, t_token *file_token)
+{
+	t_redir *new_redir;
+
+	(void)op_token;
+	if (!cmd || !file_token)
+		return (1);
 	new_redir = garbage_calloc(data, sizeof(t_redir));
 	if (!new_redir)
 		return (1);
 	new_redir->type = op_token->type;
-	new_redir->filename = file_token->value;
+	new_redir->filename = clean_token_value(data, file_token->value);
+	new_redir->heredoc_path = NULL;
 	new_redir->next = NULL;
+	/* add to cmd->redirs list */
 	if (!cmd->redirs)
-	{
 		cmd->redirs = new_redir;
-	}
 	else
 	{
-		current = cmd->redirs;
-		while (current->next)
-			current = current->next;
-		current->next = new_redir;
+		t_redir *tmp = cmd->redirs;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new_redir;
 	}
 	return (0);
 }

@@ -3,51 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   quote_removal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 15:25:51 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/25 16:37:41 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:35:29 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	get_clean_len(char *str)
+/*
+** Remove quotes exactly like Bash:
+** - Single quotes: everything inside is literal.
+** - Double quotes: everything inside is literal, except that expansion
+**   happens later (this function only removes the quotes).
+** - Multiple quoted/unquoted segments are concatenated.
+*/
+
+char    *rmv_quotes_str(t_shell *data, char *str)
 {
-	size_t	len;
+    char    *res;
+    int     i = 0;
+    int     j = 0;
+    char    quote = 0;
 
-	len = 0;
-	while (*str)
-	{
-		if (*str != '\'' && *str != '\"')
-			len++;
-		str++;
-	}
-	return (len);
-}
+    if (!str)
+        return (NULL);
 
-char	*rmv_quotes_str(t_shell *data, char *str)
-{
-	size_t	final_lenght;
-	char	*new_str;
-	char	*dest_ptr;
-	char	*original_str;
+    /* allocate the maximum possible size (length without quotes unknown yet) */
+    res = garbage_calloc(data, ft_strlen(str) + 1);
+    if (!res)
+        return (NULL);
 
-	original_str = str;
-	final_lenght = get_clean_len(original_str);
-	new_str = garbage_calloc(data, final_lenght + 1);
-	if (!new_str)
-		return (NULL);
-	dest_ptr = new_str;
-	str = original_str;
-	while (*str)
-	{
-		if (*str != '\'' && *str != '\"')
-		{
-			*dest_ptr = *str;
-			dest_ptr++;
-		}
-		str++;
-	}
-	return (new_str);
+    while (str[i])
+    {
+        if (!quote && (str[i] == '\'' || str[i] == '\"'))
+        {
+            /* start a quoted block */
+            quote = str[i];
+        }
+        else if (quote && str[i] == quote)
+        {
+            /* close the quoted block */
+            quote = 0;
+        }
+        else
+        {
+            /* regular character OR inside quotes */
+            res[j++] = str[i];
+        }
+        i++;
+    }
+    return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:53:38 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 14:42:53 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 17:32:30 by thiagouemur      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,18 @@ t_cmd	*parser(t_shell *data, t_token *token_list)
 	cmd_list = init_parser_head(data, token_list, &current_cmd);
 	if (!cmd_list)
 		return (NULL);
+
 	current_token = token_list;
+
 	while (current_token != NULL)
 	{
 		if (is_assignment_token(current_token->value))
 		{
 			set_variable_in_env(data, current_token->value);
-				return (NULL);
 			current_token = current_token->next;
 			continue ;
 		}
+
 		if (current_token->type == PIPE)
 		{
 			if (handle_pipe(data, &current_cmd, current_token) != 0)
@@ -86,10 +88,12 @@ t_cmd	*parser(t_shell *data, t_token *token_list)
 			current_token = current_token->next;
 			continue ;
 		}
+
 		advance = process_token_type(data, current_cmd, current_token);
 		if (advance == -1)
 			return (NULL);
-		while (advance-- > 0)
+
+		while (advance-- > 0 && current_token)
 			current_token = current_token->next;
 	}
 	return (cmd_list);
