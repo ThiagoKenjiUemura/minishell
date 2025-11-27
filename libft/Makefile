@@ -6,7 +6,7 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/14 11:46:06 by liferrei          #+#    #+#              #
-#    Updated: 2025/11/17 17:46:27 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/27 10:26:25 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRC = \
     ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
     ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
     ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_strcmp.c \
-	ft_str_is_numeric.c
+	ft_str_is_numeric.c ft_strjoin3.c
 
 OBJ = $(SRC:.c=.o)
 

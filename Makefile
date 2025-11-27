@@ -6,7 +6,7 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/26 16:25:28 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/27 10:52:30 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,10 @@ SRCS = src/main.c \
 	src/garbage/garbage_utils.c \
 	src/garbage/garbage_utils2.c \
 	src/garbage/garbage.c \
-	src/execute/execute.c
+	src/execute/execute.c \
+	src/execute/execute_external.c \
+	src/execute/path.c \
+	src/execute/redirection.c \
 
 OBJS = $(SRCS:.c=.o)
 

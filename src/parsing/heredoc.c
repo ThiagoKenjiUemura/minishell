@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 19:47:04 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 09:11:35 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:17:26 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*generate_hd_filename(t_shell *data)
 	return (path);
 }
 
-static int	read_and_write_heredoc(t_shell *data, char *delimiter, int fd)
+static int	read_and_write_heredoc(char *delimiter, int fd)
 {
 	char	*line;
 
@@ -33,7 +33,7 @@ static int	read_and_write_heredoc(t_shell *data, char *delimiter, int fd)
 		line = readline("heredoc> ");
 		if (!line)
 			return (0);
-		line = expand_heredoc_line(data, line, delimiter);
+		//line = expand_heredoc_line(data, line, delimiter);
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
@@ -56,7 +56,7 @@ static	int	process_heredoc_file(t_shell *data, t_redir *redir)
 	fd = open(redir->heredoc_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 		return (-1);
-	if (read_and_write_heredoc(data, redir->filename, fd) != 0)
+	if (read_and_write_heredoc(redir->filename, fd) != 0)
 	{
 		close(fd);
 		unlink(redir->heredoc_path);

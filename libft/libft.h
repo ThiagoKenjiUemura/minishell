@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 12:27:59 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/25 20:20:54 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:26:13 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 char			*get_next_line(int fd);
 int				ft_strcmp(const char *s1, const char *s2);
 int				ft_str_is_numeric(const char *s);
+char			*ft_strjoin3(char *s1, char *s2, char *s3);
 
 #endif

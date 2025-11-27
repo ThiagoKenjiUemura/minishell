@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 08:27:53 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 10:53:10 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,6 @@ void	handle_sigint(int sig_num);
 char	**init_envp(char **envp);
 void	free_envp(char **envp);
 void	free_shell(t_shell *data);
-
-//Execute
-char	*find_in_path(const char *cmd, char **envp);
-int		apply_redirections(t_cmd *cmd);
-int		execute_external(t_shell *data, t_cmd *cmd);
-int		execute_pipeline(t_shell *data, t_cmd *cmd_list);
-int		execute(t_shell *data);
 //Garbage
 void	*garbage_calloc(t_shell *data, size_t size);
 int		garbage_add(t_shell *data, void *ptr);
@@ -127,9 +120,15 @@ int		expand_tokens(t_shell *data, t_token *head);
 char	*rmv_quotes_str(t_shell *data, char *str);
 char	*finalize_and_return(t_shell *data, char *result_str, char *read_ptr);
 int		handle_heredocs(t_shell *data, t_cmd *cmd_list);
-// Builtins
+//Execute
 int		execute(t_shell *data);
 int		execute_external(t_shell *data, t_cmd *cmd);
+char	*find_in_path(const char *cmd, char **envp);
+//Redirection
+int		has_output_redirection(t_cmd *cmd);
+int		execute_builtin_with_redirs(t_cmd *cmd, t_shell *data);
+int		apply_redirections(t_cmd *cmd);
+// Builtins
 int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
 int		ft_cd(char **args);
@@ -143,5 +142,4 @@ int		env_remove(char ***env, const char *key);
 int		ft_env(t_shell *data, char **args);
 int		ft_unset(t_shell *data, char **args);
 char	*ft_strdup_full(const char *key, const char *value);
-
 #endif
