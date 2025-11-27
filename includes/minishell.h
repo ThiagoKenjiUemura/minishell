@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 12:29:08 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:47:12 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,12 @@ int		get_token_len(char *input, int i);
 int		get_quote_len(char *input, int i);
 int		get_operator_len(char *input, int i);
 int		get_word_len(char *input, int i);
+int		is_assignment_token(char *token_value);
+int		set_variable_in_env(t_shell *data, char *assignment);
 t_type	get_token_type(char *input, int i);
 // Token
 int		expand_tokens(t_shell *data, t_token *head);
+int		add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value);
 char	*rmv_quotes_str(t_shell *data, char *str);
 char	*sub_var_in_str(t_shell *data, char *str);
 t_token	*create_token(t_shell *data, char *value, t_type type);

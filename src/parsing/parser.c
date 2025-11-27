@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:53:38 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/25 16:47:49 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:42:53 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ t_cmd	*parser(t_shell *data, t_token *token_list)
 	current_token = token_list;
 	while (current_token != NULL)
 	{
+		if (is_assignment_token(current_token->value))
+		{
+			set_variable_in_env(data, current_token->value);
+				return (NULL);
+			current_token = current_token->next;
+			continue ;
+		}
 		if (current_token->type == PIPE)
 		{
 			if (handle_pipe(data, &current_cmd, current_token) != 0)

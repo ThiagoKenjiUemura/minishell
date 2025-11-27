@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/27 09:06:05 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:46:41 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,46 @@ t_token *op_token, t_token *file_token)
 		current->next = new_redir;
 	}
 	return (0);
+}
+
+int	is_assignment_token(char *token_value)
+{
+	char	*eq;
+
+	if (!token_value)
+		return (0);
+	eq = ft_strchr(token_value, '=');
+	if (!eq)
+		return (0);
+	if (eq == token_value)
+		return (0);
+	return (1);
+}
+
+
+int	set_variable_in_env(t_shell *data, char *assignment)
+{
+	char	*key;
+	char	*value;
+	char	*eq_pos;
+	int		ret;
+
+	if (!assignment || !data)
+		return (1);
+	eq_pos = ft_strchr(assignment, '=');
+	if (!eq_pos)
+		return (1);
+	key = ft_substr(assignment, 0, eq_pos - assignment);
+	if (!key)
+		return (1);
+	value = ft_strdup(eq_pos + 1);
+	if (!value)
+	{
+		free(key);
+		return (1);
+	}
+	ret = env_set(&data->envp, key, value);
+	free(key);
+	free(value);
+	return ret;
 }

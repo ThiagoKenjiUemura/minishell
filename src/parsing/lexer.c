@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:39:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/22 15:53:38 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:24:45 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	get_quote_len(char *input, int i)
 	i++;
 	while (input[i] != '\0' && input[i] != quote_type)
 		i++;
-	if (input[i] == quote_type)
+	if (input[i] != quote_type)
 		i++;
 	return (i - start_index);
 }
@@ -67,6 +67,7 @@ static int	process_one_token(t_shell *data, t_token **head, char *input, int i)
 	char	*value;
 	t_token	*new_node;
 
+	new_node = NULL;
 	len = get_token_len(input, i);
 	type = get_token_type(input, i);
 	value = ft_substr(input, i, len);

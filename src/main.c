@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/26 00:07:03 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 14:20:45 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	prepare_commands(t_shell *data, t_token **tokens, t_cmd **cmd_list)
 		return (0);
 	}
 	*cmd_list = parser(data, *tokens);
-	if (handle_heredocs(data, *cmd_list) != 0)
+	if (!*cmd_list || handle_heredocs(data, *cmd_list) != 0)
 		return (0);
 	return (1);
 }
@@ -33,6 +33,8 @@ static void	minishell_loop(t_shell *data)
 	t_token	*tokens;
 	t_cmd	*cmd_list;
 
+	tokens = NULL;
+	cmd_list = NULL;
 	while (data->running)
 	{
 		data->input = readline("minishell$ ");
