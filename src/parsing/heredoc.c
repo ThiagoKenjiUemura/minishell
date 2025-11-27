@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 19:47:04 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 10:17:26 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:30:08 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static int	read_and_write_heredoc(char *delimiter, int fd)
 		line = readline("heredoc> ");
 		if (!line)
 			return (0);
-		//line = expand_heredoc_line(data, line, delimiter);
 		if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);

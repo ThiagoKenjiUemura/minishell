@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 10:53:10 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:25:28 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,12 @@ int		execute_external(t_shell *data, t_cmd *cmd);
 char	*find_in_path(const char *cmd, char **envp);
 //Redirection
 int		has_output_redirection(t_cmd *cmd);
-int		execute_builtin_with_redirs(t_cmd *cmd, t_shell *data);
 int		apply_redirections(t_cmd *cmd);
+int		execute_builtin_with_redirs(t_cmd *cmd, t_shell *data);
+int		apply_infile(t_cmd *cmd, t_redir *r);
+int		apply_outfile(t_cmd *cmd, t_redir *r);
+int		apply_append(t_cmd *cmd, t_redir *r);
+int		apply_delimiter(t_cmd *cmd, t_redir *r);
 // Builtins
 int		is_builtin(char *cmd);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
