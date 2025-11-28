@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:07 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/28 18:14:44 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 18:17:00 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int ft_exit_pipe(t_shell *data, t_cmd *cmd)
 {
     int code;
 
+    (void)data;
 	code = 0;
     if (cmd->args && cmd->args[1])
         code = ft_atoi(cmd->args[1]) % 256;
     else
         code = 0;
-	garbage_free_all(data);
     if (cmd->cmd)
         free(cmd->cmd);
     if (cmd->args)
