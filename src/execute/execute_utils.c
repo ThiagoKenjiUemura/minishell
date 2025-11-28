@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   execute_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/03 19:31:07 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/28 15:44:31 by liferrei         ###   ########.fr       */
+/*   Created: 2025/11/28 14:32:51 by liferrei          #+#    #+#             */
+/*   Updated: 2025/11/28 15:40:38 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_sigint(int sig_num)
+void disable_echoctl(void)
 {
-	(void)sig_num;
-	write(1, "\n", 1);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
+	struct termios t;
+	tcgetattr(STDIN_FILENO, &t);
+	t.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &t);
 }
-void sigquit_handler(int sig)
+
+void enable_echoctl(int sig)
 {
-	enable_echoctl(sig);
+	struct termios t;
+	tcgetattr(STDIN_FILENO, &t);
+	t.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &t);
+	if (sig == SIGQUIT)
+		write(1, "\\^Quit (core dumped)\n", 21);
 }

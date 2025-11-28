@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:36:24 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 10:48:20 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:42:46 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ static void	handle_execve(t_shell *data, t_cmd *cmd)
 
 static void	execute_child_process(t_shell *data, t_cmd *cmd)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (apply_redirections(cmd))
 		exit(1);
 	handle_fds(cmd);
 	handle_execve(data, cmd);
 	perror(cmd->args[0]);
+	free_shell(data);
 	exit(127);
 }
 
@@ -59,10 +62,12 @@ int	execute_external(t_shell *data, t_cmd *cmd)
 	pid_t	pid;
 	int		status;
 
+	disable_echoctl();
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
+		enable_echoctl(0);
 		return (1);
 	}
 	if (pid == 0)
@@ -70,6 +75,7 @@ int	execute_external(t_shell *data, t_cmd *cmd)
 		execute_child_process(data, cmd);
 	}
 	waitpid(pid, &status, 0);
+	enable_echoctl(0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);

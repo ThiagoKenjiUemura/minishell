@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 10:47:14 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 16:12:54 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,48 @@ static int	execute_pipeline(t_shell *data, t_cmd *cmd_list)
 	int		status;
 	int		fd_in;
 	int		fd_pipe[2];
+	int		in_pipeline;
+	
 
 	cmd = cmd_list;
 	fd_in = STDIN_FILENO;
 	status = 0;
-	while (cmd)
-	{
-		setup_cmd_fds(cmd, &fd_in, fd_pipe);
-		if (cmd->is_builtin)
-			status = execute_builtin_with_redirs(cmd, data);
+    while (cmd)
+    {
+        setup_cmd_fds(cmd, &fd_in, fd_pipe);
+
+        if (cmd->is_builtin)
+        {
+            in_pipeline = (cmd->next != NULL || fd_in != STDIN_FILENO);
+            if (in_pipeline)
+            {
+                pid_t pid = fork();
+                if (pid < 0)
+                    perror("fork");
+                else if (pid == 0)
+                {
+                    int ret = execute_builtin_with_redirs(cmd, data, 1);
+                    exit(ret);
+                }
+                else
+                {
+                    waitpid(pid, &status, 0);
+                    data->last_exit_status = WEXITSTATUS(status);
+				}
+			}
+			else
+			{
+				data->last_exit_status = execute_builtin_with_redirs(cmd, data, 0);
+			}
+		}
 		else
-			status = execute_external(data, cmd);
-		data->last_exit_status = status;
+		{
+			data->last_exit_status = execute_external(data, cmd);
+		}
 		cleanup_fds(cmd, &fd_in, fd_pipe);
 		cmd = cmd->next;
 	}
-	return (status);
+	return data->last_exit_status;
 }
 
 /*Main execution function */

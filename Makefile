@@ -6,7 +6,7 @@
 #    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/28 08:34:56 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/28 14:41:43 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRCS = src/main.c \
 	src/garbage/garbage.c \
 	src/execute/execute.c \
 	src/execute/execute_external.c \
+	src/execute/execute_utils.c \
 	src/execute/path.c \
 	src/execute/redirection/redirection.c \
 	src/execute/redirection/redirection_utils.c \
