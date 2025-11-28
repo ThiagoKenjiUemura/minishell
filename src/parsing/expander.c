@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 15:00:11 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 11:24:30 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:27:13 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,17 @@ int expand_tokens(t_shell *data, t_token *head)
     {
         if (current->type == WORD)
         {
-            printf("DEBUG: token original -> [%s]\n", current->value);
-
-            // valida aspas
-            if (!quote_parser(current->value))
+            if (!quote_parser(current->value) ||
+                invalid_nested_same_quotes(current->value))
             {
                 write(2, "minishell: syntax error\n", 25);
                 return (-1);
             }
 
-            // remove aspas e expande
             char *tmp = rmv_quotes_and_expand(data, current->value);
             if (!tmp)
                 return (-1);
-
-            printf("DEBUG: token expandido -> [%s]\n", tmp);
-
+              printf("DEBUG: token expandido -> [%s] (len=%zu)\n", tmp, ft_strlen(tmp));
             current->value = tmp;
         }
         current = current->next;
