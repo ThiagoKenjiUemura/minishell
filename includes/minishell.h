@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 14:40:55 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:44:51 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,14 @@ char	*garbage_strjoin(t_shell *data, char const *s1,
 char	*garbage_itoa(t_shell *data, int n);
 // Lexer
 t_token	*lexer(t_shell *data, char *input);
+int		get_operator_len(char *input, int i);
+int		skip_quoted_word(char *input, int i, char quote);
+int		get_word_len(char *input, int i);
+t_token	*get_last_token_local(t_token *head);
+int		concat_tokens_no_space(t_shell *data, t_token *last, char *value, int next_i);
 int		skip_spaces(char *input, int i);
 int		get_token_len(char *input, int i);
 int		get_quote_len(char *input, int i);
-int		get_operator_len(char *input, int i);
-int		get_word_len(char *input, int i);
 int		is_assignment_token(char *token_value);
 int		set_variable_in_env(t_shell *data, char *assignment);
 t_type	get_token_type(char *input, int i);
@@ -122,9 +125,15 @@ bool	invalid_nested_same_quotes(const char *str);
 bool	invalid_nested_same_quotes(const char *str);
 //Heredoc
 int		handle_heredocs(t_shell *data, t_cmd *cmd_list);
+int		process_heredoc_file(t_shell *data, t_redir *redir);
 bool	quote_parser(const char *input);
 char	*create_temp_key(const char *s, size_t len);
 char	*finalize_and_return(t_shell *data, char *result_str, char *read_ptr);
+char	*generate_hd_filename(t_shell *data);
+int		should_expand_delimiter(char *delim);
+char	*clean_delimiter(t_shell *data, char *delim);
+void	write_line(t_shell *data, int fd, char *line, int expand);
+int		read_and_write_heredoc(t_shell *data, int fd, char *delimiter, int expand);
 //Execute
 int		execute(t_shell *data);
 int		execute_external(t_shell *data, t_cmd *cmd);
