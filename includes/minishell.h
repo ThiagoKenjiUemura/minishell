@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 15:44:51 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:53:15 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@
 # include <signal.h>
 # include <sys/stat.h>
 # include <errno.h>
+#include <termios.h>
 # include <sys/wait.h>
+
+# ifndef ECHOCTL
+#  define ECHOCTL 0001000
+# endif
 
 typedef enum e_token_types
 {
@@ -141,15 +146,17 @@ char	*find_in_path(const char *cmd, char **envp);
 //Redirection
 int		has_output_redirection(t_cmd *cmd);
 int		apply_redirections(t_cmd *cmd);
-int		execute_builtin_with_redirs(t_cmd *cmd, t_shell *data);
+int		execute_builtin_with_redirs(t_cmd *cmd, t_shell *data, int in_child);
 int		apply_infile(t_cmd *cmd, t_redir *r);
 int		apply_outfile(t_cmd *cmd, t_redir *r);
 int		apply_append(t_cmd *cmd, t_redir *r);
 int		apply_delimiter(t_cmd *cmd, t_redir *r);
+void	execute_child_process(t_shell *data, t_cmd *cmd);
 // Builtins
 int		is_builtin(char *cmd);
-int		execute_builtin(t_shell *data, t_cmd *cmd);
+int		execute_builtin(t_shell *data, t_cmd *cmd, int in_child);
 int		ft_exit(t_shell *shell, t_cmd *cmd);
+int		ft_exit_pipe(t_shell *data, t_cmd *cmd);
 int		ft_cd(t_shell *data, char **args);
 int		ft_echo(char **args);
 int		ft_pwd(void);
@@ -167,4 +174,9 @@ char	*env_get(char **env, const char *key);
 // Memory Leak
 void	free_envp(char **envp);
 void	free_shell(t_shell *data);
+void	free_args(char **args);
+void	free_redirs(t_redir *r);
+void	disable_echoctl(void);
+void	enable_echoctl(int sig);
+void	sigquit_handler(int sig);
 #endif

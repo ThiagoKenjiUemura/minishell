@@ -6,11 +6,12 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 14:20:45 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:58:14 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 static int	prepare_commands(t_shell *data, t_token **tokens, t_cmd **cmd_list)
 {
@@ -19,7 +20,7 @@ static int	prepare_commands(t_shell *data, t_token **tokens, t_cmd **cmd_list)
 		return (0);
 	if (expand_tokens(data, *tokens) != 0)
 	{
-		printf("--- ERRO: Falha na Expansão! ---\n");
+		ft_printf("--- ERRO: Falha na Expansão! ---\n");
 		return (0);
 	}
 	*cmd_list = parser(data, *tokens);
@@ -59,12 +60,13 @@ static void	minishell_loop(t_shell *data)
 static	void	init_signals(void)
 {
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, sigquit_handler);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*data;
+	int		exit_code;
 
 	(void)argv;
 	(void)argc;
@@ -83,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	}
 	minishell_loop(data);
+	exit_code= data->last_exit_status;
 	free_shell(data);
-	return (data->last_exit_status);
+	return (exit_code);
 }

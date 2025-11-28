@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:07 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/18 10:09:11 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 18:14:44 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,50 @@ int	ft_exit(t_shell *shell, t_cmd *cmd)
 	shell->last_exit_status = ft_atoi(cmd->args[1]);
 	shell->running = 0;
 	return (shell->last_exit_status);
+}
+int ft_exit_pipe(t_shell *data, t_cmd *cmd)
+{
+    int code;
+
+	code = 0;
+    if (cmd->args && cmd->args[1])
+        code = ft_atoi(cmd->args[1]) % 256;
+    else
+        code = 0;
+	garbage_free_all(data);
+    if (cmd->cmd)
+        free(cmd->cmd);
+    if (cmd->args)
+        free_args(cmd->args);
+    if (cmd->redirs)
+        free_redirs(cmd->redirs);
+    exit(code);
+}
+void free_redirs(t_redir *r)
+{
+    t_redir *tmp;
+
+    while (r)
+    {
+        tmp = r;
+        r = r->next;
+        if (tmp->filename)
+            free(tmp->filename);
+        free(tmp);
+    }
+}
+void free_args(char **args)
+{
+    int i;
+
+    if (!args)
+        return;
+
+    i = 0;
+    while (args[i])
+    {
+        free(args[i]);
+        i++;
+    }
+    free(args);
 }

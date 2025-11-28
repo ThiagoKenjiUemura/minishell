@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+         #
+#    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/28 15:51:42 by tkenji-u         ###   ########.fr        #
+#    Updated: 2025/11/28 17:53:51 by liferrei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SRCS = src/main.c \
 	src/execute/execute.c \
 	src/execute/execute_external.c \
 	src/execute/path.c \
+	src/execute/execute_utils.c \
 	src/execute/redirection/redirection.c \
 	src/execute/redirection/redirection_utils.c \
 	src/execute/redirection/redirection_check.c \

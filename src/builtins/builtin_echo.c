@@ -6,34 +6,48 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:14:57 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 08:22:24 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:56:33 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int is_n_flag(char *arg)
+{
+    int i;
+
+    if (!arg || arg[0] != '-')
+        return (0);
+    i = 1;
+    while (arg[i])
+    {
+        if (arg[i] != 'n')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 int	ft_echo(char **args)
 {
-	int		i;
-	int		newline;
+	int	i;
+	int	newline;
 
 	i = 1;
 	newline = 1;
-	if (!args)
-		return (0);
-	if (args[1] && ft_strcmp(args[1], "-n") == 0)
+	while (args[i] && is_n_flag(args[i]))
 	{
 		newline = 0;
-		i = 2;
+		i++;
 	}
 	while (args[i])
 	{
-		write(STDOUT_FILENO, args[i], ft_strlen(args[i]));
+		write(1, args[i], ft_strlen(args[i]));
 		if (args[i + 1])
-			write(STDOUT_FILENO, " ", 1);
+			write(1, " ", 1);
 		i++;
 	}
 	if (newline)
-		write(STDOUT_FILENO, "\n", 1);
+		write(1, "\n", 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 10:47:14 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:49:41 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,61 @@ static void	cleanup_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2])
 		*fd_in = fd_pipe[0];
 	}
 }
-
-static int	execute_pipeline(t_shell *data, t_cmd *cmd_list)
+static int execute_pipeline(t_shell *data, t_cmd *cmd_list)
 {
-	t_cmd	*cmd;
-	int		status;
-	int		fd_in;
-	int		fd_pipe[2];
+    t_cmd *cmd = cmd_list;
+    int status = 0;
+    int fd_in = STDIN_FILENO;
+    int fd_pipe[2];
+    pid_t pid;
 
-	cmd = cmd_list;
-	fd_in = STDIN_FILENO;
-	status = 0;
-	while (cmd)
-	{
-		setup_cmd_fds(cmd, &fd_in, fd_pipe);
-		if (cmd->is_builtin)
-			status = execute_builtin_with_redirs(cmd, data);
-		else
-			status = execute_external(data, cmd);
-		data->last_exit_status = status;
-		cleanup_fds(cmd, &fd_in, fd_pipe);
-		cmd = cmd->next;
-	}
-	return (status);
+    while (cmd)
+    {
+        setup_cmd_fds(cmd, &fd_in, fd_pipe);
+
+        int has_next = (cmd->next != NULL);
+
+        if (cmd->is_builtin && !has_next)
+        {
+            status = execute_builtin_with_redirs(cmd, data, 0);
+            data->last_exit_status = status;
+        }
+        else
+        {
+            // PIPE / BUILTIN EM PIPE → EXECUTA NO FILHO
+            pid = fork();
+            if (pid < 0)
+            {
+                perror("fork");
+            }
+            else if (pid == 0)
+            {
+                // FILHO
+                if (cmd->is_builtin)
+                {
+                    int ret = execute_builtin_with_redirs(cmd, data, 1);
+                    exit(ret);
+                }
+                else
+                {
+                    execute_child_process(data, cmd);
+                }
+            }
+            else
+            {
+                // PAI
+                waitpid(pid, &status, 0);
+                if (WIFEXITED(status))
+                    data->last_exit_status = WEXITSTATUS(status);
+            }
+        }
+
+        cleanup_fds(cmd, &fd_in, fd_pipe);
+        cmd = cmd->next;
+    }
+    return data->last_exit_status;
 }
+
 
 /*Main execution function */
 int	execute(t_shell *data)
