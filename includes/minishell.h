@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 17:59:48 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 11:15:28 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ t_type	get_token_type(char *input, int i);
 // Token
 int		expand_tokens(t_shell *data, t_token *head);
 int		add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value);
-char	*rmv_quotes_str(t_shell *data, char *str);
+char	*rmv_quotes_and_expand(t_shell *data, char *str);
 char	*sub_var_in_str(t_shell *data, char *str);
 t_token	*create_token(t_shell *data, char *value, t_type type);
 int		count_tokens(char *input);
@@ -118,9 +118,10 @@ t_cmd	*parser(t_shell *data, t_token *token_list);
 int		add_redir_to_cmd(t_shell *data, t_cmd *cmd,
 			t_token *op_token, t_token *file_token);
 int		ft_str_arr_len(t_cmd *cmd);
+bool	invalid_nested_same_quotes(const char *str);
 //Heredoc
 int		handle_heredocs(t_shell *data, t_cmd *cmd_list);
-bool	quote_parser(char *input);
+bool	quote_parser(const char *input);
 char	*create_temp_key(const char *s, size_t len);
 char	*finalize_and_return(t_shell *data, char *result_str, char *read_ptr);
 //Execute

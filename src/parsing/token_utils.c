@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 15:54:03 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 17:16:15 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/28 11:09:59 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,28 @@ int get_token_len(char *input, int i)
 
 int get_quote_len(char *s, int i)
 {
-    char    quote = s[i];
-    int     start = i;
+    char quote = s[i];
+    int start = i;
 
-    i++; // pula a aspa inicial
-
+    i++;
     while (s[i] && s[i] != quote)
+    {
+        // detecta quote igual dentro do mesmo quote
+        if (s[i] == quote)
+        {
+            write(2, "minishell: syntax error\n", 25);
+            return -1;
+        }
         i++;
+    }
 
     if (s[i] == quote)
-        i++; // inclui a aspa final no token
+        i++;
+    else
+    {
+        write(2, "minishell: syntax error\n", 25);
+        return -1;
+    }
 
-    return (i - start);
+    return i - start;
 }

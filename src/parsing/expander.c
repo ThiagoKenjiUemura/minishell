@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 15:00:11 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 09:05:04 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/11/28 11:24:30 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	handle_expansion_logic(t_shell *data, t_token *token)
+int	handle_expansion_logic(t_shell *data, t_token *token)
 {
 	char	*new_value;
 
@@ -30,24 +30,37 @@ static int	handle_expansion_logic(t_shell *data, t_token *token)
 	return (0);
 }
 
-int	expand_tokens(t_shell *data, t_token *head)
+int expand_tokens(t_shell *data, t_token *head)
 {
-	t_token	*current;
+    t_token *current;
 
-	if (!data || !head)
-		return (-1);
-	current = head;
-	while (current)
-	{
-		if (current->type == WORD)
-		{
-			if (handle_expansion_logic(data, current) != 0)
-				return (-1);
-			current->value = rmv_quotes_str(data, current->value);
-			if (!current->value)
-				return (-1);
-		}
-		current = current->next;
-	}
-	return (0);
+    if (!data || !head)
+        return (-1);
+
+    current = head;
+    while (current)
+    {
+        if (current->type == WORD)
+        {
+            printf("DEBUG: token original -> [%s]\n", current->value);
+
+            // valida aspas
+            if (!quote_parser(current->value))
+            {
+                write(2, "minishell: syntax error\n", 25);
+                return (-1);
+            }
+
+            // remove aspas e expande
+            char *tmp = rmv_quotes_and_expand(data, current->value);
+            if (!tmp)
+                return (-1);
+
+            printf("DEBUG: token expandido -> [%s]\n", tmp);
+
+            current->value = tmp;
+        }
+        current = current->next;
+    }
+    return 0;
 }
