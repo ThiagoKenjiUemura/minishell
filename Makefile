@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+         #
+#    By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/24 13:27:50 by thiagouemur       #+#    #+#              #
-#    Updated: 2025/11/28 08:34:56 by liferrei         ###   ########.fr        #
+#    Updated: 2025/11/28 15:51:42 by tkenji-u         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,17 @@ SRCS = src/main.c \
 	src/parsing/input_parser.c \
 	src/parsing/count_token.c \
 	src/parsing/lexer.c \
+	src/parsing/lexer_utils.c \
 	src/parsing/token_utils.c \
 	src/parsing/parser.c \
 	src/parsing/parser_utils.c \
+	src/parsing/parser_utils2.c \
 	src/parsing/expander_utils.c \
 	src/parsing/expander_utils2.c \
 	src/parsing/expander.c \
 	src/parsing/quote_removal.c \
 	src/parsing/heredoc.c \
+	src/parsing/heredoc_utils.c \
 	src/signals/signals.c \
 	src/envp/env_init.c \
 	src/builtins/builtin.c \
