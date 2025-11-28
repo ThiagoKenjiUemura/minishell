@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/28 11:05:19 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:40:31 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,57 @@ int	ft_str_arr_len(t_cmd *cmd)
 	return (i);
 }
 
-int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
+int add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 {
-	int		old_count;
-	char	**old_args;
-	char	**new_args;
-	int		i;
+    int old_count;
+    char **old_args;
+    char **new_args;
+    int i;
 
-	i = 0;
-	old_args = cmd->args;
-	old_count = ft_str_arr_len(cmd);
-	new_args = garbage_calloc(data, (old_count + 2) * sizeof(char *));
-	if (!new_args)
-		return (1);
-	i = 0;
-	while (i < old_count)
-	{
-		new_args[i] = old_args[i];
-		i++;
-	}
-	new_args[old_count] = value;
-	new_args[old_count + 1] = NULL;
-	cmd->args = new_args;
-	if (cmd->cmd == NULL)
-		cmd->cmd = new_args[0];
-	cmd->is_builtin = is_builtin(cmd->cmd);
-	return (0);
+    if (!cmd || !value || !data)
+        return (1);
+
+    old_args = cmd->args;
+    old_count = 0;
+    if (old_args)
+    {
+        while (old_args[old_count])
+            old_count++;
+    }
+
+    /* usa garbage_calloc para não ter que free depois */
+    new_args = garbage_calloc(data, (old_count + 2) * sizeof(char *));
+    if (!new_args)
+        return (1);
+
+    /* copia os ponteiros antigos (sem duplicar) */
+    i = 0;
+    while (i < old_count)
+    {
+        new_args[i] = old_args[i];
+        i++;
+    }
+
+    /* adiciona o novo argumento (valor já vem de garbage ou de strdup) */
+    new_args[old_count] = value;
+    new_args[old_count + 1] = NULL;
+
+    cmd->args = new_args;
+
+    /* define comando se ainda não definido */
+    if (cmd->cmd == NULL)
+        cmd->cmd = new_args[0];
+
+    cmd->is_builtin = is_builtin(cmd->cmd);
+
+    /* debug temporário */
+    if (value)
+        printf("DEBUG:add_arg -> added arg: [%s] (len=%zu)\n",
+               value, ft_strlen(value));
+    else
+        printf("DEBUG:add_arg -> added arg: [NULL]\n");
+
+    return (0);
 }
 
 static char *clean_token_value(t_shell *data, char *s)
