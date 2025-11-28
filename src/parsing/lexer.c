@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thiagouemura <thiagouemura@student.42.f    +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 12:39:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/27 17:32:48 by thiagouemur      ###   ########.fr       */
+/*   Updated: 2025/11/28 11:18:18 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,24 @@ int	get_operator_len(char *input, int i)
 	return (0);
 }
 
-int	get_word_len(char *input, int i)
+int get_word_len(char *input, int i)
 {
-	int	start_index;
+    int start = i;
 
-	start_index = i;
-	while (input[i] != '\0' && input[i] != '>' && input[i] != '|'
-		&& input[i] != '<' && input[i] != ' '
-		&& input[i] != '\'' && input[i] != '\"')
-		i++;
-	return (i - start_index);
+    while (input[i] && input[i] != ' ' && input[i] != '|' && input[i] != '<' && input[i] != '>')
+    {
+        if (input[i] == '\'' || input[i] == '"')
+        {
+            char quote = input[i++];
+            while (input[i] && input[i] != quote)
+                i++;
+            if (input[i] == quote)
+                i++;
+        }
+        else
+            i++;
+    }
+    return i - start;
 }
 
 int process_one_token(t_shell *data, t_token **head, char *input, int i)
@@ -55,6 +63,8 @@ int process_one_token(t_shell *data, t_token **head, char *input, int i)
 
 	new_node = NULL;
 	len = get_token_len(input, i);
+	if (len == -1)
+    	return -1;
 	type = get_token_type(input, i);
 	value = ft_substr(input, i, len);
 	if (!value)
