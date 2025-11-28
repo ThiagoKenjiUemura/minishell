@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 15:25:51 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 16:00:22 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/28 17:22:24 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 static char	*safe_join(t_shell *data, char *a, char *b)
 {
+	char	*tmp;
+
 	if (!a && !b)
 		return (garbage_strdup(data, ""));
 	if (!a)
 		a = garbage_strdup(data, "");
 	if (!b)
 		b = "";
-	return (garbage_strjoin(data, a, b));
+	tmp = garbage_strjoin(data, a, b);
+	return (tmp);
 }
 
 static char	*process_single_quotes(t_shell *data, char *str, int *i)
