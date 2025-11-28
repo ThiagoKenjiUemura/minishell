@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/28 14:40:31 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:51:24 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,137 +24,50 @@ int	ft_str_arr_len(t_cmd *cmd)
 	return (i);
 }
 
-int add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
+static int	count_old_args(char **old_args)
 {
-    int old_count;
-    char **old_args;
-    char **new_args;
-    int i;
+	int	i;
 
-    if (!cmd || !value || !data)
-        return (1);
-
-    old_args = cmd->args;
-    old_count = 0;
-    if (old_args)
-    {
-        while (old_args[old_count])
-            old_count++;
-    }
-
-    /* usa garbage_calloc para não ter que free depois */
-    new_args = garbage_calloc(data, (old_count + 2) * sizeof(char *));
-    if (!new_args)
-        return (1);
-
-    /* copia os ponteiros antigos (sem duplicar) */
-    i = 0;
-    while (i < old_count)
-    {
-        new_args[i] = old_args[i];
-        i++;
-    }
-
-    /* adiciona o novo argumento (valor já vem de garbage ou de strdup) */
-    new_args[old_count] = value;
-    new_args[old_count + 1] = NULL;
-
-    cmd->args = new_args;
-
-    /* define comando se ainda não definido */
-    if (cmd->cmd == NULL)
-        cmd->cmd = new_args[0];
-
-    cmd->is_builtin = is_builtin(cmd->cmd);
-
-    /* debug temporário */
-    if (value)
-        printf("DEBUG:add_arg -> added arg: [%s] (len=%zu)\n",
-               value, ft_strlen(value));
-    else
-        printf("DEBUG:add_arg -> added arg: [NULL]\n");
-
-    return (0);
+	i = 0;
+	if (!old_args)
+		return (0);
+	while (old_args[i])
+		i++;
+	return (i);
 }
 
-static char *clean_token_value(t_shell *data, char *s)
+static int	copy_old_args(char **new_args, char **old_args, int old_count)
 {
-	int len;
+	int	i;
 
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s);
-	if ((s[0] == '\'' && s[len - 1] == '\'')
-		|| (s[0] == '"' && s[len - 1] == '"'))
-		return (garbage_substr(data, s, 1, len - 2));
-	return (garbage_strdup(data, s));
-}
-
-int add_redir_to_cmd(t_shell *data, t_cmd *cmd, t_token *op_token, t_token *file_token)
-{
-	t_redir *new_redir;
-
-	(void)op_token;
-	if (!cmd || !file_token)
-		return (1);
-	new_redir = garbage_calloc(data, sizeof(t_redir));
-	if (!new_redir)
-		return (1);
-	new_redir->type = op_token->type;
-	new_redir->filename = clean_token_value(data, file_token->value);
-	new_redir->heredoc_path = NULL;
-	new_redir->next = NULL;
-	/* add to cmd->redirs list */
-	if (!cmd->redirs)
-		cmd->redirs = new_redir;
-	else
+	i = 0;
+	while (i < old_count)
 	{
-		t_redir *tmp = cmd->redirs;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new_redir;
+		new_args[i] = old_args[i];
+		i++;
 	}
 	return (0);
 }
 
-int	is_assignment_token(char *token_value)
+int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 {
-	char	*eq;
+	int		old_count;
+	char	**old_args;
+	char	**new_args;
 
-	if (!token_value)
-		return (0);
-	eq = ft_strchr(token_value, '=');
-	if (!eq)
-		return (0);
-	if (eq == token_value)
-		return (0);
-	return (1);
-}
-
-
-int	set_variable_in_env(t_shell *data, char *assignment)
-{
-	char	*key;
-	char	*value;
-	char	*eq_pos;
-	int		ret;
-
-	if (!assignment || !data)
+	if (!cmd || !value || !data)
 		return (1);
-	eq_pos = ft_strchr(assignment, '=');
-	if (!eq_pos)
+	old_args = cmd->args;
+	old_count = count_old_args(old_args);
+	new_args = garbage_calloc(data, (old_count + 2) * sizeof(char *));
+	if (!new_args)
 		return (1);
-	key = ft_substr(assignment, 0, eq_pos - assignment);
-	if (!key)
-		return (1);
-	value = ft_strdup(eq_pos + 1);
-	if (!value)
-	{
-		free(key);
-		return (1);
-	}
-	ret = env_set(&data->envp, key, value);
-	free(key);
-	free(value);
-	return ret;
+	copy_old_args(new_args, old_args, old_count);
+	new_args[old_count] = value;
+	new_args[old_count + 1] = NULL;
+	cmd->args = new_args;
+	if (!cmd->cmd)
+		cmd->cmd = new_args[0];
+	cmd->is_builtin = is_builtin(cmd->cmd);
+	return (0);
 }

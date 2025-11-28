@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:53:38 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 14:43:04 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:56:42 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,39 +59,48 @@ t_token *list, t_cmd **current_cmd)
 	return (head);
 }
 
+static int	handle_assignment_or_pipe(t_shell *data, t_cmd **current_cmd,
+				t_token **current_token)
+{
+	if (is_assignment_token((*current_token)->value)
+		&& (*current_cmd)->args == NULL)
+	{
+		set_variable_in_env(data, (*current_token)->value);
+		*current_token = (*current_token)->next;
+		return (1);
+	}
+	if ((*current_token)->type == PIPE)
+	{
+		if (handle_pipe(data, current_cmd, *current_token) != 0)
+			return (-1);
+		*current_token = (*current_token)->next;
+		return (1);
+	}
+	return (0);
+}
+
 t_cmd	*parser(t_shell *data, t_token *token_list)
 {
 	t_cmd	*cmd_list;
 	t_cmd	*current_cmd;
 	t_token	*current_token;
+	int		ret;
 	int		advance;
 
 	cmd_list = init_parser_head(data, token_list, &current_cmd);
 	if (!cmd_list)
 		return (NULL);
-
 	current_token = token_list;
-
-	while (current_token != NULL)
+	while (current_token)
 	{
-		if (is_assignment_token(current_token->value) && current_cmd->args == NULL)
-		{
-    		set_variable_in_env(data, current_token->value);
-    		current_token = current_token->next;
-    		continue;
-		}
-		if (current_token->type == PIPE)
-		{
-			if (handle_pipe(data, &current_cmd, current_token) != 0)
-				return (NULL);
-			current_token = current_token->next;
+		ret = handle_assignment_or_pipe(data, &current_cmd, &current_token);
+		if (ret == -1)
+			return (NULL);
+		if (ret == 1)
 			continue ;
-		}
-
 		advance = process_token_type(data, current_cmd, current_token);
 		if (advance == -1)
 			return (NULL);
-
 		while (advance-- > 0 && current_token)
 			current_token = current_token->next;
 	}

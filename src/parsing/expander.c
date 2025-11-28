@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 15:00:11 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 14:27:13 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/11/28 15:31:50 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,46 @@ int	handle_expansion_logic(t_shell *data, t_token *token)
 	return (0);
 }
 
-int expand_tokens(t_shell *data, t_token *head)
+static int	is_invalid_word(char *value)
 {
-    t_token *current;
+	if (!quote_parser(value))
+		return (1);
+	if (invalid_nested_same_quotes(value))
+		return (1);
+	return (0);
+}
 
-    if (!data || !head)
-        return (-1);
+static int	process_word(t_shell *data, t_token *token)
+{
+	char	*tmp;
 
-    current = head;
-    while (current)
-    {
-        if (current->type == WORD)
-        {
-            if (!quote_parser(current->value) ||
-                invalid_nested_same_quotes(current->value))
-            {
-                write(2, "minishell: syntax error\n", 25);
-                return (-1);
-            }
+	if (is_invalid_word(token->value))
+	{
+		write(2, "minishell: syntax error\n", 25);
+		return (-1);
+	}
+	tmp = rmv_quotes_and_expand(data, token->value);
+	if (!tmp)
+		return (-1);
+	token->value = tmp;
+	return (0);
+}
 
-            char *tmp = rmv_quotes_and_expand(data, current->value);
-            if (!tmp)
-                return (-1);
-              printf("DEBUG: token expandido -> [%s] (len=%zu)\n", tmp, ft_strlen(tmp));
-            current->value = tmp;
-        }
-        current = current->next;
-    }
-    return 0;
+int	expand_tokens(t_shell *data, t_token *head)
+{
+	t_token	*current;
+
+	if (!data || !head)
+		return (-1);
+	current = head;
+	while (current)
+	{
+		if (current->type == WORD)
+		{
+			if (process_word(data, current) < 0)
+				return (-1);
+		}
+		current = current->next;
+	}
+	return (0);
 }
