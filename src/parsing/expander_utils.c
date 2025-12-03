@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 17:16:35 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 16:09:08 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:44:36 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,20 @@ static int	get_var_key_len(char *str)
 {
 	int	i;
 
-	i = 1;
+	if (!str || !*str)
+		return (0);
 	if (*str == '?')
 		return (1);
-	if (!(*str == '_' || ft_isalpha(*str)))
-		return (0);
-	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-		i++;
-	return (i);
+	if (ft_isdigit(*str))
+		return (1);
+	if (*str == '_' || ft_isalpha(*str))
+	{
+		i = 0;
+		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+			i++;
+		return (i);
+	}
+	return (0);
 }
 
 static char	*get_expanded_value(t_shell *data, char *key_start, int key_len)
@@ -34,6 +40,8 @@ static char	*get_expanded_value(t_shell *data, char *key_start, int key_len)
 
 	if (*key_start == '?')
 		return (garbage_itoa(data, data->last_exit_status));
+	if (ft_isdigit(*key_start))
+		return (garbage_strdup(data, ""));
 	key = create_temp_key(key_start, key_len);
 	if (!key)
 		return (NULL);
@@ -69,7 +77,6 @@ static char	*handle_dollar(t_shell *data, char *result, char **read_ptr)
 	key_len = get_var_key_len(*read_ptr);
 	if (key_len == 0)
 	{
-		result = garbage_strjoin(data, result, "$");
 		(*read_ptr)++;
 		return (result);
 	}
