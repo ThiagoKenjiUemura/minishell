@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 16:47:09 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/11/28 15:51:24 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:48:49 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,22 @@ int	add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value)
 	if (!cmd->cmd)
 		cmd->cmd = new_args[0];
 	cmd->is_builtin = is_builtin(cmd->cmd);
+	return (0);
+}
+
+int	handle_pipe(t_shell *data, t_cmd **current_cmd, t_token *token)
+{
+	t_cmd	*next_cmd;
+
+	if (!token->next || token->next->type == PIPE)
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+		return (-1);
+	}
+	next_cmd = garbage_calloc(data, sizeof(t_cmd));
+	if (!next_cmd)
+		return (-1);
+	(*current_cmd)->next = next_cmd;
+	*current_cmd = next_cmd;
 	return (0);
 }
