@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/03 10:52:56 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:52:37 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static	void	init_signals(void)
 void    init_child_signals(void)
 {
     signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, child_sigquit_handler);
+    signal(SIGQUIT, SIG_DFL);
 }
 void    child_sigquit_handler(int sig)
 {

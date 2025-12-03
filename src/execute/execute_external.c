@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:36:24 by liferrei          #+#    #+#             */
-/*   Updated: 2025/12/03 11:58:57 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:40:06 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	execute_child_process(t_shell *data, t_cmd *cmd)
 		exit(1);
 	handle_fds(cmd);
 	handle_execve(data, cmd);
-	perror(cmd->args[0]);
+	if (ft_strchr(cmd->args[0], '/'))
+		perror(cmd->args[0]);
+	else
+		ft_printf("%s: command not found\n", cmd->args[0]);
 	free_shell(data);
 	exit(127);
 }
