@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/03 14:52:55 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 16:20:33 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ static int	prepare_commands(t_shell *data, t_token **tokens, t_cmd **cmd_list)
 	if (!*tokens)
 		return (0);
 	if (expand_tokens(data, *tokens) != 0)
-	{
-		ft_printf("--- ERRO: Falha na Expansão! ---\n");
 		return (0);
-	}
 	*cmd_list = parser(data, *tokens);
 	if (!*cmd_list || handle_heredocs(data, *cmd_list) != 0)
 		return (0);
