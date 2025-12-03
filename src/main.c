@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 17:58:14 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:52:56 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,18 @@ static void	minishell_loop(t_shell *data)
 static	void	init_signals(void)
 {
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, sigquit_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void    init_child_signals(void)
+{
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, child_sigquit_handler);
+}
+void    child_sigquit_handler(int sig)
+{
+    (void)sig;
+    write(2, "Quit (core dumped)\n", 19);
 }
 
 int	main(int argc, char **argv, char **envp)

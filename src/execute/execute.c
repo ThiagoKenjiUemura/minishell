@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/28 17:49:41 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 09:44:18 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,13 @@ static int execute_pipeline(t_shell *data, t_cmd *cmd_list)
             {
                 // PAI
                 waitpid(pid, &status, 0);
-                if (WIFEXITED(status))
-                    data->last_exit_status = WEXITSTATUS(status);
+				if (g_last_signal != 0)
+				{
+					data->last_exit_status = g_last_signal;
+					g_last_signal = 0;
+				}
+				else if (WIFEXITED(status))
+					data->last_exit_status = WEXITSTATUS(status);
             }
         }
 
@@ -100,5 +105,10 @@ int	execute(t_shell *data)
 	if (!data->name_cmd)
 		return (0);
 	result = execute_pipeline(data, data->name_cmd);
+	if (g_last_signal != 0)
+	{
+	data->last_exit_status = g_last_signal;
+	g_last_signal = 0;
+	}
 	return (result);
 }

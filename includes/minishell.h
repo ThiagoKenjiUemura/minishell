@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 17:53:15 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:53:25 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # ifndef ECHOCTL
 #  define ECHOCTL 0001000
 # endif
+
+extern int g_last_signal;
 
 typedef enum e_token_types
 {
@@ -143,6 +145,8 @@ int		read_and_write_heredoc(t_shell *data, int fd, char *delimiter, int expand);
 int		execute(t_shell *data);
 int		execute_external(t_shell *data, t_cmd *cmd);
 char	*find_in_path(const char *cmd, char **envp);
+void	init_child_signals(void);
+void    child_sigquit_handler(int sig);
 //Redirection
 int		has_output_redirection(t_cmd *cmd);
 int		apply_redirections(t_cmd *cmd);
@@ -176,7 +180,6 @@ void	free_envp(char **envp);
 void	free_shell(t_shell *data);
 void	free_args(char **args);
 void	free_redirs(t_redir *r);
-void	disable_echoctl(void);
-void	enable_echoctl(int sig);
-void	sigquit_handler(int sig);
+
+
 #endif

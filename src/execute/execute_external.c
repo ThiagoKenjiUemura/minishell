@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:36:24 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/28 17:53:01 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 10:49:12 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,19 @@ int	execute_external(t_shell *data, t_cmd *cmd)
 	pid_t	pid;
 	int		status;
 
-	disable_echoctl();
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork");
-		enable_echoctl(0);
 		return (1);
 	}
 	if (pid == 0)
 	{
+		init_child_signals();
 		execute_child_process(data, cmd);
+		exit(127);       //add depois
 	}
 	waitpid(pid, &status, 0);
-	enable_echoctl(0);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	return (1);
