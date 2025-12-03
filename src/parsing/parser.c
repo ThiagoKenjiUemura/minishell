@@ -6,25 +6,11 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:53:38 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 15:56:42 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:49:52 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-static int	handle_pipe(t_shell *data, t_cmd **current_cmd, t_token *token)
-{
-	t_cmd	*next_cmd;
-
-	if (!token->next || token->next->type == PIPE)
-		return (1);
-	next_cmd = garbage_calloc(data, sizeof(t_cmd));
-	if (!next_cmd)
-		return (1);
-	(*current_cmd)->next = next_cmd;
-	*current_cmd = next_cmd;
-	return (0);
-}
 
 static int	process_token_type(t_shell *data, t_cmd *cmd, t_token *token)
 {
@@ -51,7 +37,10 @@ t_token *list, t_cmd **current_cmd)
 	t_cmd	*head;
 
 	if (list && list->type == PIPE)
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
 		return (NULL);
+	}
 	head = garbage_calloc(data, sizeof(t_cmd));
 	if (!head)
 		return (NULL);
@@ -79,18 +68,12 @@ static int	handle_assignment_or_pipe(t_shell *data, t_cmd **current_cmd,
 	return (0);
 }
 
-t_cmd	*parser(t_shell *data, t_token *token_list)
+static t_cmd	*parse_tokens_loop(t_shell *data,
+	t_token *current_token, t_cmd *current_cmd)
 {
-	t_cmd	*cmd_list;
-	t_cmd	*current_cmd;
-	t_token	*current_token;
-	int		ret;
-	int		advance;
+	int	ret;
+	int	advance;
 
-	cmd_list = init_parser_head(data, token_list, &current_cmd);
-	if (!cmd_list)
-		return (NULL);
-	current_token = token_list;
 	while (current_token)
 	{
 		ret = handle_assignment_or_pipe(data, &current_cmd, &current_token);
@@ -100,9 +83,25 @@ t_cmd	*parser(t_shell *data, t_token *token_list)
 			continue ;
 		advance = process_token_type(data, current_cmd, current_token);
 		if (advance == -1)
+		{
+			ft_putstr_fd("mminishell: syntax error near unexpected token\n", 2);
 			return (NULL);
+		}
 		while (advance-- > 0 && current_token)
 			current_token = current_token->next;
 	}
+	return (current_cmd);
+}
+
+t_cmd	*parser(t_shell *data, t_token *token_list)
+{
+	t_cmd	*cmd_list;
+	t_cmd	*current_cmd;
+
+	cmd_list = init_parser_head(data, token_list, &current_cmd);
+	if (!cmd_list)
+		return (NULL);
+	if (!parse_tokens_loop(data, token_list, current_cmd))
+		return (NULL);
 	return (cmd_list);
 }

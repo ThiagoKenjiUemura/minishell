@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/03 10:53:25 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:49:12 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		add_redir_to_cmd(t_shell *data, t_cmd *cmd,
 			t_token *op_token, t_token *file_token);
 int		ft_str_arr_len(t_cmd *cmd);
 bool	invalid_nested_same_quotes(const char *str);
-bool	invalid_nested_same_quotes(const char *str);
+int		handle_pipe(t_shell *data, t_cmd **current_cmd, t_token *token);
 //Heredoc
 int		handle_heredocs(t_shell *data, t_cmd *cmd_list);
 int		process_heredoc_file(t_shell *data, t_redir *redir);
