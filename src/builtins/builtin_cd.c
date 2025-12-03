@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:29:58 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 16:00:47 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:04:02 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,40 @@
 int	ft_cd(t_shell *data, char **args)
 {
 	char	*path;
+	char	*home;
+	char	*temp;
 
 	(void)data;
+
+	home = getenv("HOME");
 	if (!args[1])
 	{
-		path = getenv("HOME");
-		if (!path)
+		if (!home)
 		{
 			ft_printf("cd: HOME not set\n");
 			return (1);
 		}
+		path = home;
 	}
 	else
+	{
 		path = args[1];
+		if (path[0] == '~')
+		{
+			if (!home)
+			{
+				ft_printf("cd: HOME not set\n");
+				return (1);
+			}
+			if (path[1] == '\0')
+				path = home;
+			else
+			{
+				temp = ft_strjoin(home, path + 1);
+				path = temp;
+			}
+		}
+	}
 	if (chdir(path) != 0)
 	{
 		perror("cd");
@@ -35,3 +56,4 @@ int	ft_cd(t_shell *data, char **args)
 	}
 	return (0);
 }
+

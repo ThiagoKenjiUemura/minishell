@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:48:42 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/05 19:53:39 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 13:14:46 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,27 @@ static int	count_words(char const *s, char c)
 	return (count);
 }
 
-static char	*get_next_word(char const **s, char c)
+static int is_delim(char ch, char c)
 {
-	char const	*start;
-	size_t		len;
-	char		*word;
+    return (ch == c || ch == '\n' || ch == '\t' || ch == '\r' || ch == '\v' || ch == '\f');
+}
 
-	while (**s == c)
-		(*s)++;
-	start = *s;
-	while (**s && **s != c)
-		(*s)++;
-	len = *s - start;
-	word = ft_substr(start, 0, len);
-	return (word);
+static char *get_next_word(char const **s, char c)
+{
+    const char  *start;
+    size_t      len;
+
+    while (is_delim(**s, c))
+        (*s)++;
+
+    start = *s;
+
+    while (**s && !is_delim(**s, c))
+        (*s)++;
+
+    len = *s - start;
+
+    return ft_substr(start, 0, len);
 }
 
 char	**ft_split(char const *s, char c)

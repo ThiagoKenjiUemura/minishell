@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:36:24 by liferrei          #+#    #+#             */
-/*   Updated: 2025/12/03 10:49:12 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 11:58:57 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,17 @@ static void	handle_fds(t_cmd *cmd)
 
 static void	handle_execve(t_shell *data, t_cmd *cmd)
 {
-	char	*exec_path;
-
-	if (cmd->path)
-		execve(cmd->path, cmd->args, data->envp);
-	else
+	if (ft_strchr(cmd->args[0], '/'))
 	{
-		exec_path = find_in_path(cmd->args[0], data->envp);
-		if (exec_path)
-		{
-			execve(exec_path, cmd->args, data->envp);
-			free(exec_path);
-		}
+		execve(cmd->args[0], cmd->args, data->envp);
+		return;
+	}
+	char	*exec_path = find_in_path(cmd->args[0], data->envp);
+	if (exec_path)
+	{
+		execve(exec_path, cmd->args, data->envp);
+		free(exec_path);
+		return;
 	}
 }
 void	execute_child_process(t_shell *data, t_cmd *cmd)
