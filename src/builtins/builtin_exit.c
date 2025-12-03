@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:30:07 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/28 18:17:00 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 14:52:36 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	ft_exit(t_shell *shell, t_cmd *cmd)
 {
+
 	ft_printf("exit\n");
 	if (!cmd->args[1])
 	{

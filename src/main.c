@@ -6,7 +6,7 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/28 15:59:13 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/03 13:52:37 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 14:52:55 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,14 @@ int	main(int argc, char **argv, char **envp)
 	}
 	minishell_loop(data);
 	exit_code= data->last_exit_status;
+	int fd;
+
+	fd = 3;
+	while (fd < 1024)
+	{
+		close(fd);
+		fd++;
+	}
 	free_shell(data);
 	return (exit_code);
 }
