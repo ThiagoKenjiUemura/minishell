@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 11:06:52 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/04 11:08:23 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:42:40 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		main(int argc, char **argv, char **envp);
 void	init_signals(void);
 void	init_child_signals(void);
 void	child_sigquit_handler(int sig);
+void	handle_heredoc_sigint(int sig_num);
 void	handle_sigint(int sig_num);
 // Garbage
 char	*garbage_substr(t_shell *data, char const *s,
@@ -140,6 +141,7 @@ char	*generate_hd_filename(t_shell *data);
 int		should_expand_delimiter(char *delim);
 char	*clean_delimiter(t_shell *data, char *delim);
 void	write_line(t_shell *data, int fd, char *line, int expand);
+int		finish_heredoc(int stdin_backup, int return_value);
 int		read_and_write_heredoc(t_shell *data, int fd,
 			char *delimiter, int expand);
 int		process_heredoc_file(t_shell *data, t_redir *redir);

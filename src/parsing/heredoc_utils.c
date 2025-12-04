@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 19:47:04 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 16:09:37 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:42:20 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,9 @@ void	write_line(t_shell *data, int fd, char *line, int expand)
 	write(fd, "\n", 1);
 }
 
-int	read_and_write_heredoc(t_shell *data, int fd,
-	char *delimiter, int expand)
+int	finish_heredoc(int stdin_backup, int return_value)
 {
-	char	*line;
-
-	while (1)
-	{
-		line = readline("heredoc> ");
-		if (!line)
-			return (0);
-		if (ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break ;
-		}
-		write_line(data, fd, line, expand);
-		free(line);
-	}
-	return (0);
+	dup2(stdin_backup, STDIN_FILENO);
+	close(stdin_backup);
+	return (return_value);
 }

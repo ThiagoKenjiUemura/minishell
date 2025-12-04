@@ -6,11 +6,38 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 15:33:03 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 15:34:45 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:42:06 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	read_and_write_heredoc(t_shell *data, int fd, char *delim, int expand)
+{
+	char	*line;
+	int		bkp;
+
+	bkp = dup(STDIN_FILENO);
+	signal(SIGINT, handle_heredoc_sigint);
+	while (1)
+	{
+		line = readline("heredoc> ");
+		if (!line && g_last_signal == 130)
+			return (finish_heredoc(bkp, 1));
+		if (!line)
+			break ;
+		if (ft_strcmp(line, delim) == 0)
+		{
+			free(line);
+			break ;
+		}
+		write_line(data, fd, line, expand);
+		free(line);
+	}
+	finish_heredoc(bkp, 0);
+	init_signals();
+	return (0);
+}
 
 int	process_heredoc_file(t_shell *data, t_redir *redir)
 {
