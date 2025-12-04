@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   execute.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
-/*   Updated: 2025/12/03 09:44:18 by liferrei         ###   ########.fr       */
-/*                                                                            */
+/* */
+/* :::      ::::::::   */
+/* execute.c                                          :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
+/* Updated: 2025/12/03 09:44:18 by liferrei         ###   ########.fr       */
+/* */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -35,66 +35,88 @@ static void	cleanup_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2])
 		*fd_in = fd_pipe[0];
 	}
 }
-static int execute_pipeline(t_shell *data, t_cmd *cmd_list)
+
+static void	wait_for_children(t_shell *data, pid_t last_pid)
 {
-    t_cmd *cmd = cmd_list;
-    int status = 0;
-    int fd_in = STDIN_FILENO;
-    int fd_pipe[2];
-    pid_t pid;
+	pid_t	wpid;
+	int		status;
 
-    while (cmd)
-    {
-        setup_cmd_fds(cmd, &fd_in, fd_pipe);
-
-        int has_next = (cmd->next != NULL);
-
-        if (cmd->is_builtin && !has_next)
-        {
-            status = execute_builtin_with_redirs(cmd, data, 0);
-            data->last_exit_status = status;
-        }
-        else
-        {
-            // PIPE / BUILTIN EM PIPE → EXECUTA NO FILHO
-            pid = fork();
-            if (pid < 0)
-            {
-                perror("fork");
-            }
-            else if (pid == 0)
-            {
-                // FILHO
-                if (cmd->is_builtin)
-                {
-                    int ret = execute_builtin_with_redirs(cmd, data, 1);
-                    exit(ret);
-                }
-                else
-                {
-                    execute_child_process(data, cmd);
-                }
-            }
-            else
-            {
-                // PAI
-                waitpid(pid, &status, 0);
-				if (g_last_signal != 0)
-				{
-					data->last_exit_status = g_last_signal;
-					g_last_signal = 0;
-				}
-				else if (WIFEXITED(status))
-					data->last_exit_status = WEXITSTATUS(status);
-            }
-        }
-
-        cleanup_fds(cmd, &fd_in, fd_pipe);
-        cmd = cmd->next;
-    }
-    return data->last_exit_status;
+	if (last_pid == -1)
+	{
+		// Se o ultimo comando rodou no pai, apenas esperamos os filhos restantes
+		// para evitar zumbis, mas nao atualizamos o last_exit_status.
+		while (waitpid(-1, &status, 0) > 0)
+			;
+		return ;
+	}
+	while (1)
+	{
+		wpid = waitpid(-1, &status, 0);
+		if (wpid <= 0)
+			break ;
+		if (wpid == last_pid)
+		{
+			if (g_last_signal != 0)
+			{
+				data->last_exit_status = g_last_signal;
+				g_last_signal = 0;
+			}
+			else if (WIFEXITED(status))
+				data->last_exit_status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				data->last_exit_status = 128 + WTERMSIG(status);
+		}
+	}
 }
 
+static int	execute_pipeline(t_shell *data, t_cmd *cmd_list)
+{
+	t_cmd	*cmd;
+	int		fd_in;
+	int		fd_pipe[2];
+	pid_t	pid;
+	pid_t	last_pid;
+	int		has_next;
+
+	cmd = cmd_list;
+	fd_in = STDIN_FILENO;
+	last_pid = -1;
+	while (cmd)
+	{
+		setup_cmd_fds(cmd, &fd_in, fd_pipe);
+		has_next = (cmd->next != NULL);
+		if (cmd->is_builtin && !has_next)
+		{
+			data->last_exit_status = execute_builtin_with_redirs(cmd, data, 0);
+			last_pid = -1; // [FIX] Ultimo cmd foi no pai, nao esperar PID dele para status
+		}
+		else
+		{
+			pid = fork();
+			if (pid < 0)
+				perror("fork");
+			else if (pid == 0)
+			{
+				if (cmd->next)
+					close(fd_pipe[0]);
+				if (cmd->is_builtin)
+				{
+					int ret = execute_builtin_with_redirs(cmd, data, 1);
+					free_shell(data);
+					exit(ret);
+				}
+				else
+					execute_child_process(data, cmd);
+			}
+			else
+				last_pid = pid;
+		}
+		cleanup_fds(cmd, &fd_in, fd_pipe);
+		cmd = cmd->next;
+	}
+	wait_for_children(data, last_pid);
+	return (data->last_exit_status);
+}
 
 /*Main execution function */
 int	execute(t_shell *data)
@@ -107,8 +129,8 @@ int	execute(t_shell *data)
 	result = execute_pipeline(data, data->name_cmd);
 	if (g_last_signal != 0)
 	{
-	data->last_exit_status = g_last_signal;
-	g_last_signal = 0;
+		data->last_exit_status = g_last_signal;
+		g_last_signal = 0;
 	}
 	return (result);
 }

@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   input_parser.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/28 16:56:16 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 15:39:02 by tkenji-u         ###   ########.fr       */
-/*                                                                            */
+/* */
+/* :::      ::::::::   */
+/* input_parser.c                                     :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2025/10/28 16:56:16 by tkenji-u          #+#    #+#             */
+/* Updated: 2025/11/28 15:39:02 by tkenji-u         ###   ########.fr       */
+/* */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -30,40 +30,13 @@ bool	quote_parser(const char *s)
 	return (quote == 0);
 }
 
-static void	skip_until_char(const char *s, int *i, char c)
-{
-	(*i)++;
-	while (s[*i] && s[*i] != c)
-		(*i)++;
-	if (s[*i] == c)
-		(*i)++;
-}
-
+/* [FIX] A validacao anterior (invalid_nested_same_quotes) estava incorreta.
+   Ela impedia casos validos como "texto1""texto2". No Bash, aspas adjacentes
+   sao permitidas e apenas concatenam as strings.
+   Removemos a logica que contava grupos de aspas e retornamos false (valido),
+   pois quote_parser ja garante que nao ha aspas abertas. */
 bool	invalid_nested_same_quotes(const char *s)
 {
-	int	i;
-	int	double_groups;
-	int	single_groups;
-
-	i = 0;
-	double_groups = 0;
-	single_groups = 0;
-	while (s[i])
-	{
-		if (s[i] == '"')
-		{
-			double_groups++;
-			skip_until_char(s, &i, '"');
-		}
-		else if (s[i] == '\'')
-		{
-			single_groups++;
-			skip_until_char(s, &i, '\'');
-		}
-		else
-			i++;
-	}
-	if (double_groups > 1 || single_groups > 1)
-		return (true);
+	(void)s;
 	return (false);
 }

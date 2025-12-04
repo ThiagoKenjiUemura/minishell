@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/03 18:49:12 by tkenji-u         ###   ########.fr       */
-/*                                                                            */
+/* */
+/* :::      ::::::::   */
+/* minishell.h                                        :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2025/10/27 13:06:27 by tkenji-u          #+#    #+#             */
+/* Updated: 2025/12/03 18:49:12 by tkenji-u         ###   ########.fr       */
+/* */
 /* ************************************************************************** */
 
 
@@ -116,7 +116,7 @@ int		is_assignment_token(char *token_value);
 int		set_variable_in_env(t_shell *data, char *assignment);
 t_type	get_token_type(char *input, int i);
 // Token
-int		expand_tokens(t_shell *data, t_token *head);
+int		expand_tokens(t_shell *data, t_token **head);
 int add_arg_to_cmd(t_shell *data, t_cmd *cmd, char *value);
 char	*rmv_quotes_and_expand(t_shell *data, char *str);
 char	*sub_var_in_str(t_shell *data, char *str);

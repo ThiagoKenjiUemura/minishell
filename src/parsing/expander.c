@@ -1,34 +1,16 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 15:00:11 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 15:31:50 by tkenji-u         ###   ########.fr       */
-/*                                                                            */
+/* */
+/* :::      ::::::::   */
+/* expander.c                                         :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2025/11/22 15:00:11 by tkenji-u          #+#    #+#             */
+/* Updated: 2025/11/28 15:31:50 by tkenji-u         ###   ########.fr       */
+/* */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	handle_expansion_logic(t_shell *data, t_token *token)
-{
-	char	*new_value;
-
-	if (!token || !token->value)
-		return (-1);
-	if (token->value[0] == '\'')
-		return (0);
-	if (ft_strchr(token->value, '$'))
-	{
-		new_value = sub_var_in_str(data, token->value);
-		if (!new_value)
-			return (-1);
-		token->value = new_value;
-	}
-	return (0);
-}
 
 static int	is_invalid_word(char *value)
 {
@@ -55,21 +37,49 @@ static int	process_word(t_shell *data, t_token *token)
 	return (0);
 }
 
-int	expand_tokens(t_shell *data, t_token *head)
+static int	has_quotes(char *s)
 {
-	t_token	*current;
+	while (s && *s)
+	{
+		if (*s == '\'' || *s == '"')
+			return (1);
+		s++;
+	}
+	return (0);
+}
+
+int	expand_tokens(t_shell *data, t_token **head)
+{
+	t_token	*curr;
+	t_token	*prev;
+	t_token	*next;
+	char	*orig_val;
 
 	if (!data || !head)
 		return (-1);
-	current = head;
-	while (current)
+	curr = *head;
+	prev = NULL;
+	while (curr)
 	{
-		if (current->type == WORD)
+		next = curr->next;
+		if (curr->type == WORD)
 		{
-			if (process_word(data, current) < 0)
+			orig_val = curr->value;
+			if (process_word(data, curr) < 0)
 				return (-1);
+			// Se o token ficou vazio e nao tinha aspas, remove da lista
+			if (curr->value[0] == '\0' && !has_quotes(orig_val))
+			{
+				if (prev)
+					prev->next = next;
+				else
+					*head = next;
+				curr = next;
+				continue ;
+			}
 		}
-		current = current->next;
+		prev = curr;
+		curr = next;
 	}
 	return (0);
 }

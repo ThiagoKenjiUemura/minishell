@@ -1,21 +1,22 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtin_exit.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/05 12:30:07 by liferrei          #+#    #+#             */
-/*   Updated: 2025/12/03 14:52:36 by liferrei         ###   ########.fr       */
-/*                                                                            */
+/* */
+/* :::      ::::::::   */
+/* builtin_exit.c                                     :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2025/11/05 12:30:07 by liferrei          #+#    #+#             */
+/* Updated: 2025/12/03 14:52:36 by liferrei         ###   ########.fr       */
+/* */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	ft_exit(t_shell *shell, t_cmd *cmd)
 {
+	// "exit" impresso no stdout ao sair é o comportamento padrao do bash interativo
+	ft_putendl_fd("exit", 1); 
 
-	ft_printf("exit\n");
 	if (!cmd->args[1])
 	{
 		shell->running = 0;
@@ -23,17 +24,17 @@ int	ft_exit(t_shell *shell, t_cmd *cmd)
 	}
 	if (cmd->args[1][0] == '\0' || !ft_str_is_numeric(cmd->args[1]))
 	{
-		if (cmd->args[1][0] == '\0')
-			ft_printf("exit: : numeric argument required\n");
-		else
-			ft_printf("exit: %s: numeric argument required\n", cmd->args[1]);
+		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd(cmd->args[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		
 		shell->running = 0;
 		shell->last_exit_status = 2;
 		return (2);
 	}
 	if (cmd->args[2])
 	{
-		ft_printf("exit: too many arguments\n");
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		shell->last_exit_status = 1;
 		return (1);
 	}
@@ -41,49 +42,61 @@ int	ft_exit(t_shell *shell, t_cmd *cmd)
 	shell->running = 0;
 	return (shell->last_exit_status);
 }
-int ft_exit_pipe(t_shell *data, t_cmd *cmd)
-{
-    int code;
 
-    (void)data;
+int	ft_exit_pipe(t_shell *data, t_cmd *cmd)
+{
+	int	code;
+
 	code = 0;
-    if (cmd->args && cmd->args[1])
-        code = ft_atoi(cmd->args[1]) % 256;
-    else
-        code = 0;
-    if (cmd->cmd)
-        free(cmd->cmd);
-    if (cmd->args)
-        free_args(cmd->args);
-    if (cmd->redirs)
-        free_redirs(cmd->redirs);
-    exit(code);
+	if (cmd->args && cmd->args[1])
+	{
+		if (!ft_str_is_numeric(cmd->args[1]))
+		{
+			// Erro no pipe tambem deve ir para stderr se necessário, 
+			// mas geralmente bash nao imprime "exit" dentro do pipe.
+			// O erro numerico porem, deve aparecer.
+			ft_putstr_fd("minishell: exit: ", 2);
+			ft_putstr_fd(cmd->args[1], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
+			code = 2;
+		}
+		else if (cmd->args[2])
+		{
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+			code = 1;
+		}
+		else
+			code = ft_atoi(cmd->args[1]) % 256;
+	}
+	free_shell(data);
+	exit(code);
 }
-void free_redirs(t_redir *r)
-{
-    t_redir *tmp;
 
-    while (r)
-    {
-        tmp = r;
-        r = r->next;
-        if (tmp->filename)
-            free(tmp->filename);
-        free(tmp);
-    }
+void	free_redirs(t_redir *r)
+{
+	t_redir	*tmp;
+
+	while (r)
+	{
+		tmp = r;
+		r = r->next;
+		if (tmp->filename)
+			free(tmp->filename);
+		free(tmp);
+	}
 }
-void free_args(char **args)
+
+void	free_args(char **args)
 {
-    int i;
+	int	i;
 
-    if (!args)
-        return;
-
-    i = 0;
-    while (args[i])
-    {
-        free(args[i]);
-        i++;
-    }
-    free(args);
+	if (!args)
+		return ;
+	i = 0;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
 }

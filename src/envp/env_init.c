@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vinpache <vinpache@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 11:43:33 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 15:18:47 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/03 20:55:34 by vinpache         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ void	free_shell(t_shell *data)
 		return ;
 	garbage_free_all(data);
 	if (data->envp != NULL)
-    {
-        free_envp(data->envp);
-        data->envp = NULL;
-    }
+	{
+		free_envp(data->envp);
+		data->envp = NULL;
+	}
 	free(data);
 	data = NULL;
 }
 
-void free_envp(char **envp)
+void	free_envp(char **envp)
 {
 	int	i;
 

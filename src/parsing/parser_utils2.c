@@ -1,27 +1,24 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser_utils2.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/28 15:49:21 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/11/28 15:54:18 by tkenji-u         ###   ########.fr       */
-/*                                                                            */
+/* */
+/* :::      ::::::::   */
+/* parser_utils2.c                                    :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2025/11/28 15:49:21 by tkenji-u          #+#    #+#             */
+/* Updated: 2025/11/28 15:54:18 by tkenji-u         ###   ########.fr       */
+/* */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* [FIX] A funcao expand_tokens ja removeu as aspas e tratou a concatenacao.
+   O parser recebe o token limpo. Tentar remover aspas aqui novamente estragaria
+   nomes de arquivos validos ou seria redundante. Apenas duplicamos a string. */
 static char	*clean_token_value(t_shell *data, char *s)
 {
-	int	len;
-
 	if (!s)
 		return (NULL);
-	len = ft_strlen(s);
-	if ((s[0] == '\'' && s[len - 1] == '\'')
-		|| (s[0] == '"' && s[len - 1] == '"'))
-		return (garbage_substr(data, s, 1, len - 2));
 	return (garbage_strdup(data, s));
 }
 
