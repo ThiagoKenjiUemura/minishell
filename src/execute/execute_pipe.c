@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 13:59:08 by liferrei          #+#    #+#             */
-/*   Updated: 2025/12/04 18:40:54 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:47:42 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,11 @@ static pid_t	spawn_child(t_shell *data, t_cmd *cmd, int *fd_pipe)
 	else if (pid == 0)
 	{
 		if (cmd->next)
+		{
 			close(fd_pipe[0]);
+			if (cmd->output_fd != fd_pipe[1])
+				close(fd_pipe[1]);
+		}
 		if (cmd->is_builtin)
 		{
 			ret = execute_builtin_with_redirs(cmd, data, 1);
@@ -43,7 +47,7 @@ static pid_t	spawn_child(t_shell *data, t_cmd *cmd, int *fd_pipe)
 }
 
 static pid_t	exec_command(t_shell *data, t_cmd *cmd,
-			int *fd_pipe, int is_pipe)
+	int *fd_pipe, int is_pipe)
 {
 	if (cmd->is_builtin && !cmd->next && !is_pipe)
 		return (handle_single_builtin(data, cmd));
@@ -51,7 +55,7 @@ static pid_t	exec_command(t_shell *data, t_cmd *cmd,
 }
 
 static pid_t	handle_pipe_step(t_shell *data, t_cmd *cmd,
-			int *fd_in, int is_pipe)
+	int *fd_in, int is_pipe)
 {
 	int		fd_pipe[2];
 	pid_t	pid;
