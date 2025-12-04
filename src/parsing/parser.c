@@ -6,7 +6,7 @@
 /*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 15:53:38 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/03 18:49:52 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/04 12:41:59 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static t_cmd	*parse_tokens_loop(t_shell *data,
 		advance = process_token_type(data, current_cmd, current_token);
 		if (advance == -1)
 		{
-			ft_putstr_fd("mminishell: syntax error near unexpected token\n", 2);
+			ft_putstr_fd("minishell: syntax error near unexpected token\n", 2);
 			return (NULL);
 		}
 		while (advance-- > 0 && current_token)
