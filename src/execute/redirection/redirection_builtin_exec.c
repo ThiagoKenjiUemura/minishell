@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_builtin_exec.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 10:43:20 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/04 14:06:50 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:30:57 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,13 @@ static void	restore_std_fds(int sin, int sout)
 int	setup_builtin_redirs(t_cmd *cmd)
 {
 	if (apply_redirections(cmd))
+	{
+		if (cmd->input_fd != STDIN_FILENO)
+			close(cmd->input_fd);
+		if (cmd->output_fd != STDOUT_FILENO)
+			close(cmd->output_fd);
 		return (1);
+	}
 	if (cmd->input_fd != STDIN_FILENO)
 	{
 		dup2(cmd->input_fd, STDIN_FILENO);

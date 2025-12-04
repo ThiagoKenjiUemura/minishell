@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_child.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 13:53:45 by liferrei          #+#    #+#             */
-/*   Updated: 2025/12/04 14:06:50 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/04 18:30:28 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ static void	child_handle_redirs(t_shell *data, t_cmd *cmd)
 {
 	if (apply_redirections(cmd))
 	{
+		if (cmd->input_fd != STDIN_FILENO)
+			close(cmd->input_fd);
+		if (cmd->output_fd != STDOUT_FILENO)
+			close(cmd->output_fd);
 		free_shell(data);
 		exit(1);
 	}
