@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* expander.c                                         :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/11/22 15:00:11 by tkenji-u          #+#    #+#             */
-/* Updated: 2025/11/28 15:31:50 by tkenji-u         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 10:07:55 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/12/04 10:10:08 by tkenji-u         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -48,12 +48,35 @@ static int	has_quotes(char *s)
 	return (0);
 }
 
+static int	handle_word_expansion(t_shell *data, t_token **curr,
+		t_token **prev, t_token **head)
+{
+	char	*orig_val;
+	t_token	*next;
+
+	next = (*curr)->next;
+	orig_val = (*curr)->value;
+	if (process_word(data, *curr) < 0)
+		return (-1);
+	if ((*curr)->value[0] == '\0' && !has_quotes(orig_val))
+	{
+		if (*prev)
+			(*prev)->next = next;
+		else
+			*head = next;
+		*curr = next;
+		return (1);
+	}
+	*prev = *curr;
+	*curr = next;
+	return (0);
+}
+
 int	expand_tokens(t_shell *data, t_token **head)
 {
 	t_token	*curr;
 	t_token	*prev;
-	t_token	*next;
-	char	*orig_val;
+	int		status;
 
 	if (!data || !head)
 		return (-1);
@@ -61,25 +84,19 @@ int	expand_tokens(t_shell *data, t_token **head)
 	prev = NULL;
 	while (curr)
 	{
-		next = curr->next;
 		if (curr->type == WORD)
 		{
-			orig_val = curr->value;
-			if (process_word(data, curr) < 0)
+			status = handle_word_expansion(data, &curr, &prev, head);
+			if (status == -1)
 				return (-1);
-			// Se o token ficou vazio e nao tinha aspas, remove da lista
-			if (curr->value[0] == '\0' && !has_quotes(orig_val))
-			{
-				if (prev)
-					prev->next = next;
-				else
-					*head = next;
-				curr = next;
+			if (status == 1)
 				continue ;
-			}
 		}
-		prev = curr;
-		curr = next;
+		else
+		{
+			prev = curr;
+			curr = curr->next;
+		}
 	}
 	return (0);
 }

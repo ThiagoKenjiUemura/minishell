@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 10:43:08 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/27 11:15:19 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:48:54 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static char	*free_paths_and_return(char **paths, char *return_val)
 	return (return_val);
 }
 
-/* Search for executable in PATH */
 char	*find_in_path(const char *cmd, char **envp)
 {
 	char	*full;

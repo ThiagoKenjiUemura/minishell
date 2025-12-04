@@ -1,18 +1,17 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* execute.c                                          :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/11/26 05:58:34 by liferrei          #+#    #+#             */
-/* Updated: 2025/12/03 09:44:18 by liferrei         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 10:47:28 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/12/04 10:51:36 by tkenji-u         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Prepares the file descriptors for the current command. */
 static void	setup_cmd_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2])
 {
 	if (cmd->next)
@@ -24,7 +23,6 @@ static void	setup_cmd_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2])
 		cmd->output_fd = STDOUT_FILENO;
 }
 
-/* Close unnecessary file descriptors. */
 static void	cleanup_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2])
 {
 	if (*fd_in != STDIN_FILENO)
@@ -43,8 +41,6 @@ static void	wait_for_children(t_shell *data, pid_t last_pid)
 
 	if (last_pid == -1)
 	{
-		// Se o ultimo comando rodou no pai, apenas esperamos os filhos restantes
-		// para evitar zumbis, mas nao atualizamos o last_exit_status.
 		while (waitpid(-1, &status, 0) > 0)
 			;
 		return ;
@@ -88,7 +84,7 @@ static int	execute_pipeline(t_shell *data, t_cmd *cmd_list)
 		if (cmd->is_builtin && !has_next)
 		{
 			data->last_exit_status = execute_builtin_with_redirs(cmd, data, 0);
-			last_pid = -1; // [FIX] Ultimo cmd foi no pai, nao esperar PID dele para status
+			last_pid = -1;
 		}
 		else
 		{
@@ -118,7 +114,6 @@ static int	execute_pipeline(t_shell *data, t_cmd *cmd_list)
 	return (data->last_exit_status);
 }
 
-/*Main execution function */
 int	execute(t_shell *data)
 {
 	int	result;

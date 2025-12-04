@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 16:09:35 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/28 17:52:17 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:34:55 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-
 int	execute_builtin(t_shell *data, t_cmd *cmd, int in_child)
 {
 	char	*name;
@@ -53,11 +52,11 @@ int	execute_builtin(t_shell *data, t_cmd *cmd, int in_child)
 		return (ft_export(data, cmd->args));
 	if (ft_strcmp(name, "unset") == 0)
 		return (ft_unset(data, cmd->args));
-	 if (strcmp(name, "exit") == 0)
-    {
-        if (in_child)
-            return 0;
-        return ft_exit(data, cmd);
-    }
+	if (strcmp(name, "exit") == 0)
+	{
+		if (in_child)
+			return (0);
+		return (ft_exit(data, cmd));
+	}
 	return (0);
 }

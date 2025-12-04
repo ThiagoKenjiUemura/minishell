@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* expander_utils.c                                   :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/11/22 17:16:35 by tkenji-u          #+#    #+#             */
-/* Updated: 2025/12/03 15:44:36 by tkenji-u         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 09:59:17 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/12/04 10:00:00 by tkenji-u         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -76,12 +76,7 @@ static char	*handle_dollar(t_shell *data, char *result, char **read_ptr)
 
 	key_len = get_var_key_len(*read_ptr);
 	if (key_len == 0)
-	{
-		// [FIX] Se nao for uma chave valida (ex: "$ "), eh um $ literal.
-		// Nao incrementamos *read_ptr aqui pois ele aponta para o char DEPOIS do $
-		// e esse char deve ser processado normalmente na proxima iteracao.
 		return (garbage_strjoin(data, result, "$"));
-	}
 	expanded = get_expanded_value(data, *read_ptr, key_len);
 	if (!expanded)
 		return (NULL);

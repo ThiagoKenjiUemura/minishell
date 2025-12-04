@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* execute_external.c                                 :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/11/27 10:36:24 by liferrei          #+#    #+#             */
-/* Updated: 2025/12/03 13:40:06 by liferrei         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_external.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 10:47:04 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/12/04 10:47:06 by tkenji-u         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -80,7 +80,6 @@ void	execute_child_process(t_shell *data, t_cmd *cmd)
 	signal(SIGQUIT, SIG_DFL);
 	if (apply_redirections(cmd))
 	{
-		// [FIX] Limpar memória antes de sair em caso de erro no redirecionamento
 		free_shell(data);
 		exit(1);
 	}
@@ -111,7 +110,6 @@ void	execute_child_process(t_shell *data, t_cmd *cmd)
 	exit(1);
 }
 
-/* Executes external commands. */
 int	execute_external(t_shell *data, t_cmd *cmd)
 {
 	pid_t	pid;

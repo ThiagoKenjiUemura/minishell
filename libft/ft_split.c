@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 14:48:42 by liferrei          #+#    #+#             */
-/*   Updated: 2025/12/03 13:14:46 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/04 11:06:18 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,24 @@ static int	count_words(char const *s, char c)
 	return (count);
 }
 
-static int is_delim(char ch, char c)
+static int	is_delim(char ch, char c)
 {
-    return (ch == c || ch == '\n' || ch == '\t' || ch == '\r' || ch == '\v' || ch == '\f');
+	return (ch == c || ch == '\n'
+		|| ch == '\t' || ch == '\r' || ch == '\v' || ch == '\f');
 }
 
-static char *get_next_word(char const **s, char c)
+static char	*get_next_word(char const **s, char c)
 {
-    const char  *start;
-    size_t      len;
+	const char	*start;
+	size_t		len;
 
-    while (is_delim(**s, c))
-        (*s)++;
-
-    start = *s;
-
-    while (**s && !is_delim(**s, c))
-        (*s)++;
-
-    len = *s - start;
-
-    return ft_substr(start, 0, len);
+	while (is_delim(**s, c))
+		(*s)++;
+	start = *s;
+	while (**s && !is_delim(**s, c))
+		(*s)++;
+	len = *s - start;
+	return (ft_substr(start, 0, len));
 }
 
 char	**ft_split(char const *s, char c)

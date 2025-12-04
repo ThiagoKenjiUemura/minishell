@@ -1,20 +1,17 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* parser_utils2.c                                    :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/11/28 15:49:21 by tkenji-u          #+#    #+#             */
-/* Updated: 2025/11/28 15:54:18 by tkenji-u         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 10:11:51 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/12/04 10:12:01 by tkenji-u         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* [FIX] A funcao expand_tokens ja removeu as aspas e tratou a concatenacao.
-   O parser recebe o token limpo. Tentar remover aspas aqui novamente estragaria
-   nomes de arquivos validos ou seria redundante. Apenas duplicamos a string. */
 static char	*clean_token_value(t_shell *data, char *s)
 {
 	if (!s)

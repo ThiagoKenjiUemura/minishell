@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/05 12:14:57 by liferrei          #+#    #+#             */
-/*   Updated: 2025/11/28 17:56:33 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/04 10:30:03 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int is_n_flag(char *arg)
+static int	is_n_flag(char *arg)
 {
-    int i;
+	int	i;
 
-    if (!arg || arg[0] != '-')
-        return (0);
-    i = 1;
-    while (arg[i])
-    {
-        if (arg[i] != 'n')
-            return (0);
-        i++;
-    }
-    return (1);
+	if (!arg || arg[0] != '-')
+		return (0);
+	i = 1;
+	while (arg[i])
+	{
+		if (arg[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	ft_echo(char **args)

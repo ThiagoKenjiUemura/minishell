@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* builtin_export.c                                   :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/11/05 12:30:09 by liferrei          #+#    #+#             */
-/* Updated: 2025/12/03 20:30:00 by liferrei         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 10:32:55 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/12/04 10:33:28 by tkenji-u         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
@@ -38,9 +38,9 @@ static void	print_export_error(char *arg)
 
 int	ft_export(t_shell *data, char **args)
 {
-	int i;
-	char *eq;
-	int status;
+	int		i;
+	int		status;
+	char	*eq;
 
 	i = 1;
 	status = 0;

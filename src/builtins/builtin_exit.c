@@ -1,22 +1,20 @@
 /* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* builtin_exit.c                                     :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/11/05 12:30:07 by liferrei          #+#    #+#             */
-/* Updated: 2025/12/03 14:52:36 by liferrei         ###   ########.fr       */
-/* */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/04 10:30:51 by tkenji-u          #+#    #+#             */
+/*   Updated: 2025/12/04 10:32:14 by tkenji-u         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	ft_exit(t_shell *shell, t_cmd *cmd)
 {
-	// "exit" impresso no stdout ao sair é o comportamento padrao do bash interativo
-	ft_putendl_fd("exit", 1); 
-
+	ft_putendl_fd("exit", 1);
 	if (!cmd->args[1])
 	{
 		shell->running = 0;
@@ -27,7 +25,6 @@ int	ft_exit(t_shell *shell, t_cmd *cmd)
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(cmd->args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		
 		shell->running = 0;
 		shell->last_exit_status = 2;
 		return (2);
@@ -52,9 +49,6 @@ int	ft_exit_pipe(t_shell *data, t_cmd *cmd)
 	{
 		if (!ft_str_is_numeric(cmd->args[1]))
 		{
-			// Erro no pipe tambem deve ir para stderr se necessário, 
-			// mas geralmente bash nao imprime "exit" dentro do pipe.
-			// O erro numerico porem, deve aparecer.
 			ft_putstr_fd("minishell: exit: ", 2);
 			ft_putstr_fd(cmd->args[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
