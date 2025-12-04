@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 10:47:28 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/04 14:21:48 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/04 16:47:58 by tkenji-u         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_last_signal = 0;
- 
+int	g_last_signal = 0;
+
 static	void	update_exit_status(t_shell *data, int status)
 {
 	if (g_last_signal != 0)
