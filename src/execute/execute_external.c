@@ -85,7 +85,7 @@ void	execute_child_process(t_shell *data, t_cmd *cmd)
 		exit(1);
 	}
 	handle_fds(cmd);
-	if (!cmd->args[0])
+	if (!cmd->args || !cmd->args[0])
 	{
 		free_shell(data);
 		exit(0);
