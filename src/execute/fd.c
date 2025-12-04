@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_external.c                                 :+:      :+:    :+:   */
+/*   fd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/04 10:47:04 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/04 14:06:50 by liferrei         ###   ########.fr       */
+/*   Created: 2025/12/04 14:06:14 by liferrei          #+#    #+#             */
+/*   Updated: 2025/12/04 14:10:51 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execute_external(t_shell *data, t_cmd *cmd)
+void	setup_cmd_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2])
 {
-	pid_t	pid;
-	int		status;
+	if (cmd->next)
+		pipe(fd_pipe);
+	cmd->input_fd = *fd_in;
+	if (cmd->next && !has_output_redirection(cmd))
+		cmd->output_fd = fd_pipe[1];
+	else
+		cmd->output_fd = STDOUT_FILENO;
+}
 
-	pid = fork();
-	if (pid < 0)
+void	cleanup_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2])
+{
+	if (*fd_in != STDIN_FILENO)
+		close(*fd_in);
+	if (cmd->next)
 	{
-		perror("fork");
-		return (1);
+		close(fd_pipe[1]);
+		*fd_in = fd_pipe[0];
 	}
-	if (pid == 0)
-	{
-		init_child_signals();
-		execute_child_process(data, cmd);
-	}
-	waitpid(pid, &status, 0);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (1);
 }

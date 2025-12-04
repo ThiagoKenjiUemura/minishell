@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkenji-u <tkenji-u@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 11:06:52 by tkenji-u          #+#    #+#             */
-/*   Updated: 2025/12/04 11:42:40 by tkenji-u         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:08:09 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,12 @@ void	execute_child_process(t_shell *data, t_cmd *cmd);
 int		execute_external(t_shell *data, t_cmd *cmd);
 int		execute(t_shell *data);
 char	*find_in_path(const char *cmd, char **envp);
+void	handle_fds(t_cmd *cmd);
+void	print_exec_error(char *cmd, char *msg);
+int		setup_builtin_redirs(t_cmd *cmd);
+void	check_dir_and_perm(char *path, char *cmd_name, t_shell *data);
+char	*get_cmd_path(t_shell *data, char *cmd_name);
+int		execute_pipeline(t_shell *data, t_cmd *cmd_list);
 // Redirection
 int		execute_builtin_with_redirs(t_cmd *cmd, t_shell *data, int in_child);
 int		has_output_redirection(t_cmd *cmd);
@@ -164,6 +170,7 @@ int		apply_outfile(t_cmd *cmd, t_redir *r);
 int		apply_append(t_cmd *cmd, t_redir *r);
 int		apply_delimiter(t_cmd *cmd, t_redir *r);
 int		apply_redirections(t_cmd *cmd);
+void	wait_for_children(t_shell *data, pid_t last_pid);
 // Builtins
 int		replace_env_var(char **env, const char *key, char *new_var);
 int		add_env_var(char ***env, char *new_var);
@@ -190,6 +197,9 @@ int		execute_builtin(t_shell *data, t_cmd *cmd, int in_child);
 void	free_shell(t_shell *data);
 void	free_envp(char **envp);
 char	**init_envp(char **envp);
+// Fd
+void	setup_cmd_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2]);
+void	cleanup_fds(t_cmd *cmd, int *fd_in, int fd_pipe[2]);
 // Memory Leak
 void	free_args(char **args);
 void	free_redirs(t_redir *r);

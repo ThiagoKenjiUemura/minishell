@@ -6,13 +6,11 @@
 /*   By: liferrei <liferrei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 19:31:07 by thiagouemur       #+#    #+#             */
-/*   Updated: 2025/12/04 13:34:42 by liferrei         ###   ########.fr       */
+/*   Updated: 2025/12/04 13:41:39 by liferrei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_last_signal = 0;
 
 void	init_signals(void)
 {
